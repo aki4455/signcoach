@@ -1,0 +1,725 @@
+{
+ "_doc": "Sign catalogue (CLAUDE.md §11.2). Official texts are copied verbatim from ПДД РФ in M2 and checked by a Russian-speaking team member; until then verified=false and the English name is a working draft. `detectable` is computed at runtime from the active class map.",
+ "signs": [
+  {
+   "code": "3.24",
+   "key": "speed_limit",
+   "category": "prohibitory",
+   "shape": "round",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Maximum speed limit",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "speed_limit_{value}",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 3 «Запрещающие знаки»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/bf1f4781b8aa1172e9993c89c36db0dcdc88c495/"
+   },
+   "verified": false
+  },
+  {
+   "code": "3.25",
+   "key": "end_speed_limit",
+   "category": "prohibitory",
+   "shape": "round",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "End of maximum speed limit",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "end_speed_limit",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 3 «Запрещающие знаки»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/bf1f4781b8aa1172e9993c89c36db0dcdc88c495/"
+   },
+   "verified": false
+  },
+  {
+   "code": "3.31",
+   "key": "end_all_restrictions",
+   "category": "prohibitory",
+   "shape": "round",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "End of all restrictions",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "end_all_restrictions",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 3 «Запрещающие знаки»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/bf1f4781b8aa1172e9993c89c36db0dcdc88c495/"
+   },
+   "verified": false
+  },
+  {
+   "code": "3.1",
+   "key": "no_entry",
+   "category": "prohibitory",
+   "shape": "round",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "No entry",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "no_entry",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 3 «Запрещающие знаки»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/bf1f4781b8aa1172e9993c89c36db0dcdc88c495/"
+   },
+   "verified": false
+  },
+  {
+   "code": "3.18.1",
+   "key": "no_right_turn",
+   "category": "prohibitory",
+   "shape": "round",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "No right turn",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "no_right_turn",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 3 «Запрещающие знаки»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/bf1f4781b8aa1172e9993c89c36db0dcdc88c495/"
+   },
+   "verified": false
+  },
+  {
+   "code": "3.18.2",
+   "key": "no_left_turn",
+   "category": "prohibitory",
+   "shape": "round",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "No left turn",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "no_left_turn",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 3 «Запрещающие знаки»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/bf1f4781b8aa1172e9993c89c36db0dcdc88c495/"
+   },
+   "verified": false
+  },
+  {
+   "code": "3.19",
+   "key": "no_u_turn",
+   "category": "prohibitory",
+   "shape": "round",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "No U-turn",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "no_u_turn",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 3 «Запрещающие знаки»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/bf1f4781b8aa1172e9993c89c36db0dcdc88c495/"
+   },
+   "verified": false
+  },
+  {
+   "code": "3.20",
+   "key": "no_overtaking",
+   "category": "prohibitory",
+   "shape": "round",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "No overtaking",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "no_overtaking",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 3 «Запрещающие знаки»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/bf1f4781b8aa1172e9993c89c36db0dcdc88c495/"
+   },
+   "verified": false
+  },
+  {
+   "code": "3.21",
+   "key": "end_no_overtaking",
+   "category": "prohibitory",
+   "shape": "round",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "End of no-overtaking zone",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "end_no_overtaking",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 3 «Запрещающие знаки»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/bf1f4781b8aa1172e9993c89c36db0dcdc88c495/"
+   },
+   "verified": false
+  },
+  {
+   "code": "3.27",
+   "key": "no_stopping",
+   "category": "prohibitory",
+   "shape": "round",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "No stopping",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "no_stopping",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 3 «Запрещающие знаки»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/bf1f4781b8aa1172e9993c89c36db0dcdc88c495/"
+   },
+   "verified": false
+  },
+  {
+   "code": "3.28",
+   "key": "no_parking",
+   "category": "prohibitory",
+   "shape": "round",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "No parking",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "no_parking",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 3 «Запрещающие знаки»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/bf1f4781b8aa1172e9993c89c36db0dcdc88c495/"
+   },
+   "verified": false
+  },
+  {
+   "code": "2.1",
+   "key": "main_road",
+   "category": "priority",
+   "shape": "diamond",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Main road",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "main_road",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 2 «Знаки приоритета»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/f813c443e749db7b760a9fb7729a4e4ccdb2f3ea/"
+   },
+   "verified": false
+  },
+  {
+   "code": "2.2",
+   "key": "end_main_road",
+   "category": "priority",
+   "shape": "diamond",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "End of main road",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "end_main_road",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 2 «Знаки приоритета»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/f813c443e749db7b760a9fb7729a4e4ccdb2f3ea/"
+   },
+   "verified": false
+  },
+  {
+   "code": "2.4",
+   "key": "give_way",
+   "category": "priority",
+   "shape": "inverted_triangle",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Give way",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "give_way",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 2 «Знаки приоритета»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/f813c443e749db7b760a9fb7729a4e4ccdb2f3ea/"
+   },
+   "verified": false
+  },
+  {
+   "code": "2.5",
+   "key": "stop",
+   "category": "priority",
+   "shape": "octagon",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Stop",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "stop",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 2 «Знаки приоритета»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/f813c443e749db7b760a9fb7729a4e4ccdb2f3ea/"
+   },
+   "verified": false
+  },
+  {
+   "code": "4.1.1",
+   "key": "mandatory_straight",
+   "category": "mandatory",
+   "shape": "round",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Straight only",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "mandatory_straight",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 4 «Предписывающие знаки»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/cfcce287ebd89cee09dc5b780337286c556b0978/"
+   },
+   "verified": false
+  },
+  {
+   "code": "4.1.2",
+   "key": "mandatory_right",
+   "category": "mandatory",
+   "shape": "round",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Right turn only",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "mandatory_right",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 4 «Предписывающие знаки»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/cfcce287ebd89cee09dc5b780337286c556b0978/"
+   },
+   "verified": false
+  },
+  {
+   "code": "4.1.3",
+   "key": "mandatory_left",
+   "category": "mandatory",
+   "shape": "round",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Left turn only",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "mandatory_left",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 4 «Предписывающие знаки»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/cfcce287ebd89cee09dc5b780337286c556b0978/"
+   },
+   "verified": false
+  },
+  {
+   "code": "4.1.4",
+   "key": "mandatory_straight_or_right",
+   "category": "mandatory",
+   "shape": "round",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Straight or right only",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "mandatory_straight_or_right",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 4 «Предписывающие знаки»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/cfcce287ebd89cee09dc5b780337286c556b0978/"
+   },
+   "verified": false
+  },
+  {
+   "code": "4.1.5",
+   "key": "mandatory_straight_or_left",
+   "category": "mandatory",
+   "shape": "round",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Straight or left only",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "mandatory_straight_or_left",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 4 «Предписывающие знаки»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/cfcce287ebd89cee09dc5b780337286c556b0978/"
+   },
+   "verified": false
+  },
+  {
+   "code": "4.1.6",
+   "key": "mandatory_right_or_left",
+   "category": "mandatory",
+   "shape": "round",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Right or left only",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "mandatory_right_or_left",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 4 «Предписывающие знаки»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/cfcce287ebd89cee09dc5b780337286c556b0978/"
+   },
+   "verified": false
+  },
+  {
+   "code": "4.3",
+   "key": "roundabout",
+   "category": "mandatory",
+   "shape": "round",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Roundabout",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "roundabout",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 4 «Предписывающие знаки»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/cfcce287ebd89cee09dc5b780337286c556b0978/"
+   },
+   "verified": false
+  },
+  {
+   "code": "5.19.1",
+   "key": "pedestrian_crossing",
+   "category": "special",
+   "shape": "square",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Pedestrian crossing",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "pedestrian_crossing",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 5 «Знаки особых предписаний»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/abf54a3a53893a59aab95ff7cfb06d2ce2b47435/"
+   },
+   "verified": false
+  },
+  {
+   "code": "5.19.2",
+   "key": "pedestrian_crossing",
+   "category": "special",
+   "shape": "square",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Pedestrian crossing",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "pedestrian_crossing",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 5 «Знаки особых предписаний»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/abf54a3a53893a59aab95ff7cfb06d2ce2b47435/"
+   },
+   "verified": false
+  },
+  {
+   "code": "5.20",
+   "key": "speed_bump",
+   "category": "special",
+   "shape": "square",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Speed bump",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "speed_bump",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 5 «Знаки особых предписаний»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/abf54a3a53893a59aab95ff7cfb06d2ce2b47435/"
+   },
+   "verified": false
+  },
+  {
+   "code": "5.23.1",
+   "key": "settlement_start",
+   "category": "special",
+   "shape": "rectangle",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Start of built-up area",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "settlement_start",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 5 «Знаки особых предписаний»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/abf54a3a53893a59aab95ff7cfb06d2ce2b47435/"
+   },
+   "verified": false
+  },
+  {
+   "code": "5.24.1",
+   "key": "settlement_end",
+   "category": "special",
+   "shape": "rectangle",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "End of built-up area",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "settlement_end",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 5 «Знаки особых предписаний»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/abf54a3a53893a59aab95ff7cfb06d2ce2b47435/"
+   },
+   "verified": false
+  },
+  {
+   "code": "1.17",
+   "key": "speed_bump_ahead",
+   "category": "warning",
+   "shape": "triangle",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Speed bump ahead",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "speed_bump_ahead",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 1 «Предупреждающие знаки»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/b284ec5e9ad7be3925387bbb60d7916447e5f3fe/"
+   },
+   "verified": false
+  },
+  {
+   "code": "1.22",
+   "key": "pedestrian_crossing_ahead",
+   "category": "warning",
+   "shape": "triangle",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Pedestrian crossing ahead",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "pedestrian_crossing_ahead",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 1 «Предупреждающие знаки»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/b284ec5e9ad7be3925387bbb60d7916447e5f3fe/"
+   },
+   "verified": false
+  },
+  {
+   "code": "1.23",
+   "key": "children",
+   "category": "warning",
+   "shape": "triangle",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Children",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": "children",
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 1 «Предупреждающие знаки»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/b284ec5e9ad7be3925387bbb60d7916447e5f3fe/"
+   },
+   "verified": false
+  },
+  {
+   "code": "8.1.1",
+   "key": "plate_distance",
+   "category": "plate",
+   "shape": "rectangle",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Plate: distance to object",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": null,
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 8 «Знаки дополнительной информации (таблички)»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/d507c6724f67c7a6ff27ba125eb7db3e4d36a3a6/"
+   },
+   "verified": false
+  },
+  {
+   "code": "8.2.1",
+   "key": "plate_zone",
+   "category": "plate",
+   "shape": "rectangle",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Plate: zone of action",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": null,
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 8 «Знаки дополнительной информации (таблички)»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/d507c6724f67c7a6ff27ba125eb7db3e4d36a3a6/"
+   },
+   "verified": false
+  },
+  {
+   "code": "8.5.4",
+   "key": "plate_time",
+   "category": "plate",
+   "shape": "rectangle",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Plate: time of action",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": null,
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 8 «Знаки дополнительной информации (таблички)»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/d507c6724f67c7a6ff27ba125eb7db3e4d36a3a6/"
+   },
+   "verified": false
+  },
+  {
+   "code": "8.13",
+   "key": "plate_main_road_direction",
+   "category": "plate",
+   "shape": "rectangle",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Plate: direction of the main road",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": null,
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 8 «Знаки дополнительной информации (таблички)»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/d507c6724f67c7a6ff27ba125eb7db3e4d36a3a6/"
+   },
+   "verified": false
+  },
+  {
+   "code": "8.22.1",
+   "key": "plate_obstacle",
+   "category": "plate",
+   "shape": "rectangle",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Plate: obstacle",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": null,
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 8 «Знаки дополнительной информации (таблички)»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/d507c6724f67c7a6ff27ba125eb7db3e4d36a3a6/"
+   },
+   "verified": false
+  },
+  {
+   "code": "8.22.3",
+   "key": "plate_obstacle",
+   "category": "plate",
+   "shape": "rectangle",
+   "official": {
+    "name_ru": "TODO",
+    "meaning_ru": "TODO"
+   },
+   "name": "Plate: obstacle",
+   "meaning": "TODO: draft translation of the official text (M2)",
+   "voice_key": null,
+   "source": {
+    "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
+    "edition": "ред. от 28.08.2026",
+    "section": "Приложение 1, раздел 8 «Знаки дополнительной информации (таблички)»",
+    "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/d507c6724f67c7a6ff27ba125eb7db3e4d36a3a6/"
+   },
+   "verified": false
+  }
+ ]
+}

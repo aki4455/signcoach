@@ -1,0 +1,46 @@
+# Class map for the placeholder detector StreetSignSense YOLO12s (European signs, 63 classes; CLAUDE.md §14.1).
+# Maps the model's class name -> catalogue sign code (Russian GOST number, §11.1) + km/h value.
+# Only signs whose European design matches a catalogue sign are mapped; the rest stay unmapped
+# (sign_code = null, debug only). Class names were printed from model.names on 2026-10-10.
+model: streetsignsense_y12s
+classes:
+  # Speed limits (forb_speed_over_<value>)
+  forb_speed_over_5: {code: "3.24", value: 5}
+  forb_speed_over_10: {code: "3.24", value: 10}
+  forb_speed_over_20: {code: "3.24", value: 20}
+  forb_speed_over_30: {code: "3.24", value: 30}
+  forb_speed_over_40: {code: "3.24", value: 40}
+  forb_speed_over_50: {code: "3.24", value: 50}
+  forb_speed_over_60: {code: "3.24", value: 60}
+  forb_speed_over_70: {code: "3.24", value: 70}
+  forb_speed_over_80: {code: "3.24", value: 80}
+  forb_speed_over_90: {code: "3.24", value: 90}
+  forb_speed_over_100: {code: "3.24", value: 100}
+  forb_speed_over_110: {code: "3.24", value: 110}
+  forb_speed_over_120: {code: "3.24", value: 120}
+  forb_speed_over_130: {code: "3.24", value: 130}
+  # Prohibitory
+  forb_no_entry: {code: "3.1"}
+  forb_turn_right: {code: "3.18.1"}
+  forb_turn_left: {code: "3.18.2"}
+  forb_u_turn: {code: "3.19"}
+  forb_overtake_car: {code: "3.20"}
+  forb_no_stopping: {code: "3.27"}
+  forb_no_parking: {code: "3.28"}
+  # Priority
+  prio_priority_road: {code: "2.1"}
+  prio_give_way: {code: "2.4"}
+  prio_stop: {code: "2.5"}
+  # Mandatory directions and roundabout
+  mand_go_straight: {code: "4.1.1"}
+  mand_go_right: {code: "4.1.2"}
+  mand_go_left: {code: "4.1.3"}
+  mand_go_straight_right: {code: "4.1.4"}
+  mand_go_straight_left: {code: "4.1.5"}
+  mand_go_left_right: {code: "4.1.6"}
+  mand_roundabout: {code: "4.3"}
+  # Pedestrians, children, speed bumps
+  info_crosswalk: {code: "5.19.1"}
+  warn_crosswalk: {code: "1.22"}
+  warn_children: {code: "1.23"}
+  warn_hump: {code: "1.17"}

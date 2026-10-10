@@ -54,7 +54,8 @@ class Settings:
 
     @property
     def models_dir(self) -> Path:
-        return self.data_dir / "models"
+        # Tests use a throw-away data folder but the real weights, hence the separate override.
+        return Path(os.environ.get("SIGNCOACH_MODELS") or self.data_dir / "models").expanduser()
 
     def ensure_dirs(self) -> None:
         for d in (self.db_path.parent, self.uploads_dir, self.jobs_dir, self.media_dir):

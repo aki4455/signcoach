@@ -1,29 +1,25 @@
-import { useEffect, useState } from "react";
+import LessonsPage from "./pages/LessonsPage";
+import ReportPage from "./pages/ReportPage";
+import UploadPage from "./pages/UploadPage";
+import { linkProps, usePath } from "./router";
+import { t } from "./i18n";
 
-type Health = { ok: boolean; git_sha: string; model: string; device: string; queue_length: number };
-
-/** Placeholder home page (M0). The upload and report pages arrive in M1 and M4. */
+/** Page frame + routing: / upload, /lessons list, /lessons/<id> report. */
 export default function App() {
-  const [health, setHealth] = useState<Health | null>(null);
-
-  useEffect(() => {
-    fetch("/health")
-      .then((r) => r.json())
-      .then(setHealth)
-      .catch(() => setHealth(null));
-  }, []);
-
+  const path = usePath();
+  const report = path.match(/^\/lessons\/([\w-]+)$/);
   return (
-    <main className="mx-auto max-w-xl px-4 py-12 font-sans text-slate-800">
-      <h1 className="text-3xl font-semibold">SignCoach</h1>
-      <p className="mt-3 text-lg">
-        AI co-instructor for driving schools. Upload a lesson video and get a report of every road sign, the rules
-        in force and where they were broken.
-      </p>
-      <p className="mt-6 rounded-lg bg-amber-50 p-4 text-amber-900">The app is being built. Uploads open soon.</p>
-      <p className="mt-6 text-sm text-slate-500">
-        {health ? `Version ${health.git_sha.slice(0, 7)} · model ${health.model} · ${health.device}` : "Checking service…"}
-      </p>
-    </main>
+    <div className="min-h-screen bg-slate-50 text-slate-800">
+      <header className="border-b border-slate-200 bg-white">
+        <nav className="mx-auto flex max-w-4xl items-center gap-5 px-4 py-3">
+          <a {...linkProps("/")} className="text-lg font-semibold text-slate-900">{t("app.title")}</a>
+          <a {...linkProps("/")} className="text-sm text-slate-600 hover:text-slate-900">Upload</a>
+          <a {...linkProps("/lessons")} className="text-sm text-slate-600 hover:text-slate-900">Lessons</a>
+        </nav>
+      </header>
+      <main className="mx-auto max-w-4xl px-4 py-6">
+        {report ? <ReportPage id={report[1]} /> : path === "/lessons" ? <LessonsPage /> : <UploadPage />}
+      </main>
+    </div>
   );
 }

@@ -7,5 +7,6 @@ const backend = "http://127.0.0.1:8000";
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  server: { proxy: { "/api": backend, "/media": backend, "/health": backend } },
+  // fs.allow: the app imports config/i18n/en.json and config/rules/signs.json from the repo root.
+  server: { proxy: { "/api": backend, "/media": backend, "/health": backend }, fs: { allow: [".."] } },
 });

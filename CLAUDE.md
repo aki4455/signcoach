@@ -19,9 +19,10 @@
 - Until the fine-tuned model exists, everything is built **model-independent**: the sign detector sits behind an adapter (§10.3) with a replay implementation (detections from JSON) and an Ultralytics implementation (placeholder now, fine-tuned later). Swapping models is a config change.
 
 **Order of work from now:**
-1. **M0** skeleton + deploy: PR #1 open, Funnel live at https://signcoach.taild1ce46.ts.net, runner registered; goes live when the runner service is installed (`sudo bash deploy/setup_host.sh` again) and PR #1 is merged.
+**One Claude Code session does all the work, in this order** (team decision, Saturday 23:30 — no second session): M1 → M2 → M6 (when training ends) → M4 → M3 → M5 → M7 → M8.
+1. **M0** done: merged and deployed (Saturday 23:25); https://signcoach.taild1ce46.ts.net/health shows the deployed commit.
 2. **M1** the whole pipeline without depending on the final model (ingest, frames, detector adapter, voting, relevance, vehicles, blur, render, report, API, worker). Runs end to end with the replay detector and the placeholder model.
-3. **M2** rules engine and **M4** frontend only need the §9 contracts and the fixture (both exist after M0) — a second Claude Code session can do them in parallel (M2 first, then M4), working in its own `git worktree` on its own branch. If you are that second session, leave M0, M1 and the training track to the first session, and don't edit this file — ask the first session to.
+3. **M2** rules engine and **M4** frontend only need the §9 contracts and the fixture, so they stay independent of the pipeline code.
 4. **Training track T** (§14.2): T1–T4 done, T5 running. Report training progress in every review.
 5. While training runs the GPU is busy: run the app and tests with `SIGNCOACH_DEVICE=cpu`.
 
@@ -72,14 +73,14 @@
 - Ask before: adding heavy dependencies, changing a data contract in `pipeline/types.py`, deleting files, or changing a decision in this file.
 - Small commits, conventional messages (`feat:`, `fix:`, `chore:`, `test:`, `docs:`).
 - Every module gets a top docstring explaining what it does and why, in plain English. Thresholds live in config, not in code.
-- Two Claude Code sessions may run in parallel (e.g. pipeline vs. frontend/rules). The contracts in §9 and the sample fixture `tests/fixtures/report.sample.json` make that possible — keep them stable.
+- One Claude Code session does the milestones in sequence (Saturday 23:30). The contracts in §9 and the sample fixture `tests/fixtures/report.sample.json` keep modules independent — keep them stable.
 
 ## 4. Environment
 
 - **Machine:** Windows host with WSL2, Ubuntu 24.04. GPU: NVIDIA RTX 3070 Ti, 8 GB VRAM (about 1.4 GB already used by the host). CPU: AMD Ryzen 9 5900X, 24 threads. RAM: 32 GB. The same machine trains the model and serves the website.
 - **No Docker.** Python via `uv`; the app runs as a `systemd` service; deploy through a GitHub Actions self-hosted runner; public HTTPS via Tailscale Funnel (§16).
 - **GPU sharing:** while training runs (it uses most of the VRAM), run the app and tests with `SIGNCOACH_DEVICE=cpu` on short clips. The app must support `cpu` and `cuda:0` via that variable.
-- **Data directory** (outside the repo, path in `.env` as `SIGNCOACH_DATA`, default `~/signcoach-data`). Shared data sits at the top; each app instance (`SIGNCOACH_INSTANCE` = `prod` for the deployed site, `dev` for development, `test` for tests) has its own state folder, so a dev server never takes production jobs:
+- **Data directory** (outside the repo, path in `.env` as `SIGNCOACH_DATA`, default `~/signcoach-data`; `SIGNCOACH_MODELS` can point to another weights folder — tests use it; `SIGNCOACH_WORKER=off` disables the worker in tests). Shared data sits at the top; each app instance (`SIGNCOACH_INSTANCE` = `prod` for the deployed site, `dev` for development, `test` for tests) has its own state folder, so a dev server never takes production jobs:
   ```
   ~/signcoach-data/
     datasets/
@@ -294,7 +295,7 @@ All models forbid unknown fields. `tests/fixtures/report.sample.json` is generat
 - Quality checks on sampled frames → warnings: portrait orientation, low light (mean luma), blur (Laplacian variance), very short clip (< 10 s).
 
 ### 10.2 Frames (`frames.py`)
-- Iterate the normalized video at `analysis_fps` with exact timestamps. **Two passes:** the analysis pass feeds detection, vehicles, ego-motion and faces (boxes are stored per frame); the render pass decodes again (cheap) once the rules engine has run, and reuses the stored face/vehicle boxes. Rendering cannot share the first pass: it needs the rules results, and buffering 3 minutes of 720p frames would take ~7.5 GB of RAM.
+- Iterate the normalized video at `min(analysis_fps, video fps)` with exact timestamps (never analyse duplicated frames). **Two passes:** the analysis pass feeds detection, vehicles, ego-motion and faces (boxes are stored per frame); the render pass decodes again (cheap) once the rules engine has run, and reuses the stored face/vehicle boxes. Rendering cannot share the first pass: it needs the rules results, and buffering 3 minutes of 720p frames would take ~7.5 GB of RAM.
 
 ### 10.3 Sign detection and tracking (`detect.py`) — behind an adapter
 The final model does not exist yet, so nothing outside `detect.py` may depend on a specific model.
@@ -302,6 +303,7 @@ The final model does not exist yet, so nothing outside `detect.py` may depend on
 - `ReplayDetector`: reads detections from a JSON file. Used by tests, by the frontend fixtures, and to develop every later stage without a GPU.
 - `UltralyticsDetector(model_name)`: loads weights and class map from config and runs `model.track(frame, persist=True, tracker="bytetrack.yaml", imgsz=detect.imgsz, conf=detect.conf, device=...)` frame by frame. Used with the placeholder now and the fine-tuned model later.
 - Selected by `detect.backend` (`ultralytics` | `replay`) and `detect.model`.
+- Ultralytics 8.4 notes: its default tracker is TrackTrack, so `bytetrack.yaml` is passed explicitly; FP16 is `quantize=16` (`half` is deprecated); `reset()` resets the trackers and their id counter between videos.
 - Map `model.names[class_id]` → `sign_code` (+ `value` for speed limits) using `config/class_maps/<model>.yaml`. Classes not in the map are kept with `sign_code=None` (shown only in debug). Swapping the model must only require a config change and a class map.
 - `scripts/dump_detections.py` runs a detector over a video and saves the JSON that `ReplayDetector` reads, so later stages can be iterated without re-running detection.
 
@@ -312,7 +314,7 @@ The final model does not exist yet, so nothing outside `detect.py` may depend on
 
 ### 10.5 Relevance (`relevance.py`)
 Heuristics, each recorded in `relevance_reason`:
-- **Side:** box centre right of the frame centre (with margin) → `right`; above the horizon and wide/central → `overhead`; else `left`. Right and overhead are relevant; left is irrelevant unless overhead.
+- **Side:** high and central → `overhead`; otherwise the sideways drift of the box while it grows decides (driving forward, right-side signs stream right, left-side signs stream left; ≥ `relevance.side_motion_min` of the width); small drift → position of the largest box (right of centre + margin → `right`, else `left`). Right and overhead are relevant; left is irrelevant unless overhead.
 - **Facing:** for round/square signs, box width/height < 0.6 → likely facing a side road → irrelevant.
 - **Approaching:** box area must grow over the track; shrinking or static → irrelevant.
 - **Conditional:** if the model has supplementary-plate classes (8.x), a plate box directly under the sign (within 1.5× sign width) → `conditional=true`; the rules engine then downgrades violations to `possible`.
@@ -384,13 +386,12 @@ If a required class is missing from the detector, report it in the M6 review and
   "name": "Maximum speed limit (draft translation)",
   "meaning": "Draft translation of the official text: ...",
   "voice_key": "speed_limit_{value}",
-  "detectable": true,
   "source": {"document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)", "edition": "ред. от 28.08.2026",
              "section": "Приложение 1, раздел 3", "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/bf1f4781b8aa1172e9993c89c36db0dcdc88c495/"},
   "verified": false
 }
 ```
-`shape` feeds the facing heuristic (§10.5); `detectable` = the current detector's class map contains the code (signs that cannot be detected are left out of "signs not met yet").
+`shape` feeds the facing heuristic (§10.5). Whether a sign is *detectable* is not stored: it is computed at runtime from the active class map (signs the detector cannot output are left out of "signs not met yet").
 
 **Where the official text is** (current edition on ConsultantPlus, checked Saturday 23:10: ред. от 28.08.2026): full rules https://www.consultant.ru/document/cons_doc_LAW_2709/ — Appendix 1 *Дорожные знаки* by group: 1 warning `…/b284ec5e9ad7be3925387bbb60d7916447e5f3fe/`, 2 priority `…/f813c443e749db7b760a9fb7729a4e4ccdb2f3ea/`, 3 prohibitory `…/bf1f4781b8aa1172e9993c89c36db0dcdc88c495/` (also the zone-of-action rules for 3.24 etc.), 4 mandatory `…/cfcce287ebd89cee09dc5b780337286c556b0978/`, 5 special regulations `…/abf54a3a53893a59aab95ff7cfb06d2ce2b47435/`, 8 plates `…/d507c6724f67c7a6ff27ba125eb7db3e4d36a3a6/`; section 10 *Скорость движения* (default limits) `…/803907f6876a655f77995888208488d4bfccf247/`.
 
@@ -468,7 +469,7 @@ Pages:
 
 ### 14.1 Placeholder model (interim — used until the fine-tuned model is ready)
 - `AlessandroFerrante/StreetSignSenseY12s` on Hugging Face, file `streetsignsense-yolo12s.pt`; 63 classes of European/International signs; licence CC BY 4.0 / MIT (verify the LICENSE file and record it). Trained at 640 px, so it may miss small distant signs.
-- `scripts/download_models.py` downloads it to `models/`, writes a sha256, prints `model.names`; build `config/class_maps/streetsignsense_y12s.yaml` from those names (map only signs that match our catalogue).
+- `scripts/download_models.py` downloads it (and YOLO11s/n, YuNet) to `models/` with pinned sha256s; `--names` prints `model.names`. `config/class_maps/streetsignsense_y12s.yaml` maps the European classes that match our catalogue — including **3.18.1/3.18.2/3.19** (`forb_turn_right`, `forb_turn_left`, `forb_u_turn`), which the fine-tuned model lacks (relevant for M6). On a held-out Russian clip it found 2 detections where the fine-tuned checkpoint found the labelled signs (qualitative check only; numbers come from T6).
 
 ### 14.2 Fine-tune (runs in the background; never blocks pipeline work)
 - **Data:** `Dognellaf/russian-road-signs` (Hugging Face dataset, CC BY 4.0): 43,851 video frames, 89 classes (signs by Russian GOST number + traffic-light states), YOLO format.
@@ -522,16 +523,16 @@ Scripts (each writes `eval/results/<name>.json` and a markdown table):
 
 | # | Milestone | Target | Acceptance |
 |---|---|---|---|
-| M0 | Skeleton + deploy | 23:15 (code done 22:45; deploy needs the humans' `gh` login + `sudo bash deploy/setup_host.sh` + Tailscale login) | Repo layout, `uv` project, `settings.yaml`, `types.py`, `report.sample.json`, FastAPI `/health` + static placeholder page, service file, workflow, Funnel live. A push to `main` redeploys and `/health` shows the new SHA; page opens on a phone over mobile data. |
+| M0 | Skeleton + deploy | **done 23:25** (merged + deployed; public /health verified) | Repo layout, `uv` project, `settings.yaml`, `types.py`, `report.sample.json`, FastAPI `/health` + static placeholder page, service file, workflow, Funnel live. A push to `main` redeploys and `/health` shows the new SHA; page opens on a phone over mobile data. |
 | T1–T4 | Completeness, inventory, split, smoke test | **done 22:28** | Completeness verified; class inventory reported (core signs present/missing); split by video; smoke test passed (§14.2). |
 | T5 | Full training (background) | 22:29 → ≈ 02:50 | Running detached; checkpoint every epoch; progress in every review; app on `cpu` meanwhile. |
-| M1 | Pipeline end to end, model-independent | 01:30 | Chunked upload → job → ingest → frames → detector adapter (replay + placeholder) → tracking, voting, relevance → vehicle detection + face/plate blur → render → `report.json` → bare report page. A clip with no signs returns a valid report with a "no signs" note. Works on `cpu` and `cuda:0`. |
-| M2 | Rules engine + catalogue | 01:30 if a parallel session runs, else after M1 | `signs.json`/`rules.json` with all §11.1 entries (texts TODO), engine, ≥ 15 passing scenarios. Pure Python — a parallel session can start right after M0 is merged. |
-| M4 | Report UI | 03:00 | §13 complete against the fixture, then wired to real reports; voice sync (TTS MP3s); English; works on a phone. |
-| M6 | Model comparison + swap | after T5 (≈ 03:00–03:30) | `eval/results/model_comparison.md` posted; humans pick; class map switched; samples re-seeded. |
-| M3 | Ego-motion from video (speed, turns, stops) | 05:00 | BEV speed, yaw/turns, stops; synthetic BEV-shift test passes; if clips with an on-screen speed exist, calibration + accuracy measured on them (otherwise speed stays an uncalibrated estimate). Model-independent — start as soon as M1 is merged. |
+| M1 | Pipeline end to end, model-independent | 00:15 (code done 23:50) | Chunked upload → job → ingest → frames → detector adapter (replay + placeholder) → tracking, voting, relevance → vehicle detection + face/plate blur → render → `report.json` → bare report page. A clip with no signs returns a valid report with a "no signs" note. Works on `cpu` and `cuda:0`. |
+| M2 | Rules engine + catalogue | 01:45 | `signs.json`/`rules.json` with all §11.1 entries (texts TODO), engine, ≥ 15 passing scenarios. Pure Python — a parallel session can start right after M0 is merged. |
+| M4 | Report UI | 04:15 | §13 complete against the fixture, then wired to real reports; voice sync (TTS MP3s); English; works on a phone. |
+| M6 | Model comparison + swap | ≈ 02:15–02:45 (after T5) | `eval/results/model_comparison.md` posted; humans pick; class map switched; samples re-seeded. |
+| M3 | Ego-motion from video (speed, turns, stops) | 06:00 | BEV speed, yaw/turns, stops; synthetic BEV-shift test passes; if clips with an on-screen speed exist, calibration + accuracy measured on them (otherwise speed stays an uncalibrated estimate). Model-independent — start as soon as M1 is merged. |
 | M5 | Privacy hardening + quality warnings | 07:00 | Blur verified on every output and thumbnail (spot-check gallery); audio stripped; quality warnings shown; temp frames deleted. |
-| M7 | Evaluation | 10:00 | All §15 scripts run on the team's ground truth; results committed; failure gallery exported. |
+| M7 | Evaluation | 09:30 | All §15 scripts run on the team's ground truth; results committed; failure gallery exported. |
 | M8 | Hardening + docs | 12:30 | §18 edge cases pass; `seed_samples.py` produces 2–3 sample lessons (day, night, with violations); README + DATA_SOURCES complete; `docs/HOW_IT_WORKS.md` (one page per module, for the team's Q&A prep); tag `final-submission` before 13:00. |
 
 If time runs short, cut in this order: student progress page → conditional-plate handling → turn bans (keep as explanations only, flag `turn_bans_enabled: false`). Never cut privacy, evaluation or the deploy pipeline.

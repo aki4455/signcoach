@@ -35,5 +35,15 @@
   "error.queue_full": "Too many videos are waiting. Please try again in a few minutes.",
   "error.upload_incomplete": "The upload is incomplete. Please try again.",
   "error.processing_failed": "Processing failed. Please try again or upload a different clip.",
-  "error.timeout": "Processing took too long and was stopped."
+  "error.timeout": "Processing took too long and was stopped.",
+  "error.not_found": "This lesson or job does not exist (the link may be wrong).",
+
+  "stage.queued": "Waiting in line",
+  "stage.starting": "Starting",
+  "stage.ingest": "Preparing the video",
+  "stage.analysis": "Looking for road signs",
+  "stage.render": "Making the annotated video",
+  "stage.report": "Writing the report",
+  "stage.done": "Done",
+  "stage.failed": "Failed"
 }

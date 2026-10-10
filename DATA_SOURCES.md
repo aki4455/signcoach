@@ -16,10 +16,10 @@ Weights and datasets are not in this repository; they are downloaded into `$SIGN
 |---|---|---|---|---|
 | YOLO11s (COCO) | https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11s.pt | Starting point for fine-tuning the sign detector | AGPL-3.0 (Ultralytics) | `85a76fe86dd8afe384648546b56a7a78580c7cb7b404fc595f97969322d502d5` |
 | YOLO11n (COCO) | https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11n.pt | Vehicles and persons (plate/head blur, masks for speed) | AGPL-3.0 (Ultralytics) | `0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1` |
-| StreetSignSense YOLO12s | https://huggingface.co/AlessandroFerrante/StreetSignSenseY12s | Placeholder sign detector until the fine-tuned model is ready | CC BY 4.0 (model card); trained with Ultralytics (AGPL-3.0) | recorded by `scripts/download_models.py` (M1) |
+| StreetSignSense YOLO12s | https://huggingface.co/AlessandroFerrante/StreetSignSenseY12s | Placeholder sign detector until the fine-tuned model is ready | CC BY 4.0 (model card; README also shows an MIT badge); trained with Ultralytics (AGPL-3.0) | `ea716000d066b3c48de91583210e8934de1865cb1956857c9c0fb89f7ec9ef9e` |
 | SignCoach sign detector (fine-tuned YOLO11s) | trained by us (`training/`) | Sign detection | AGPL-3.0 (derived from Ultralytics weights) | recorded after training (M6) |
-| YuNet face detector | OpenCV Zoo — to be verified in M1 | Face blur | to be verified | — |
-| Licence-plate detector | to be decided in M1 | Plate blur (fallback: blur band inside vehicle boxes) | to be verified | — |
+| YuNet face detector (`face_detection_yunet_2023mar.onnx`) | https://huggingface.co/opencv/face_detection_yunet (OpenCV Zoo) | Face blur | MIT (LICENSE file checked 2026-10-10), © 2020 Shiqi Yu | `8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4` |
+| Licence-plate detector | not used | Plates are hidden by pixelating a band in the lower middle of every vehicle box (`privacy.plate_band`) | — | — |
 | Text-to-speech model for English voice prompts | to be decided in M4 | Pre-generated voice prompt MP3s | to be verified | — |
 
 ## Software

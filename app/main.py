@@ -1,26 +1,34 @@
-"""FastAPI application: API routes, media files and the built frontend.
+"""FastAPI application: API routes, the processing worker, media files and the built frontend.
 
-Run locally:  uv run uvicorn app.main:app --reload
+Run locally:  uv run uvicorn app.main:app --reload --port 8001
 In production systemd starts uvicorn from the deploy checkout (deploy/signcoach.service).
 
-The frontend is the Vite build in ``web/dist``. Any path that is not an API or media route gets
-``index.html`` so client-side routes like /lessons/<id> work on reload. Before the first frontend
-build, a small placeholder page is served instead.
+- /api/...    uploads, jobs, lessons (see app/api/)
+- /media/...  blurred lesson media (annotated.mp4, poster, thumbnails); served by StaticFiles,
+              which answers HTTP Range requests, so the video player can seek
+- /health     liveness + deployed git SHA
+- anything else: the single-page frontend from web/dist (index.html for client-side routes),
+  or a placeholder page before the first frontend build.
 """
 
 from __future__ import annotations
 
+import logging
+import os
 from contextlib import asynccontextmanager
-from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.responses import FileResponse, HTMLResponse
+from fastapi.staticfiles import StaticFiles
 
-from app.api import health
+from app.api import health, jobs, lessons, uploads
+from app.api.errors import ApiError, api_error_handler
 from app.db import init_db
 from app.settings import REPO_DIR, get_settings
+from app.worker import Worker
 
 WEB_DIST = REPO_DIR / "web" / "dist"
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 
 PLACEHOLDER = """<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>SignCoach</title></head>
@@ -30,15 +38,21 @@ PLACEHOLDER = """<!doctype html><html lang="en"><head><meta charset="utf-8">
 
 
 @asynccontextmanager
-async def lifespan(_: FastAPI):
+async def lifespan(app: FastAPI):
     settings = get_settings()
     settings.ensure_dirs()
     init_db(settings.db_path)
+    if os.environ.get("SIGNCOACH_WORKER", "on") != "off":  # tests switch the worker off
+        app.state.worker = Worker(settings)
+        app.state.worker.start()
     yield
 
 
 app = FastAPI(title="SignCoach", lifespan=lifespan)
-app.include_router(health.router)
+app.add_exception_handler(ApiError, api_error_handler)
+for module in (health, uploads, jobs, lessons):
+    app.include_router(module.router)
+app.mount("/media", StaticFiles(directory=get_settings().media_dir, check_dir=False), name="media")
 
 
 @app.get("/{path:path}", include_in_schema=False)

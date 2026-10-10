@@ -48,6 +48,8 @@ models:                           # weights live in {data}/models, never in git
     weights: yolo11n.pt           # COCO; cars, buses, trucks, motorcycles, persons
     imgsz: 640
     conf: 0.3
+  faces:
+    weights: face_detection_yunet_2023mar.onnx   # OpenCV Zoo YuNet, MIT
 
 vote:
   min_frames: 3
@@ -58,6 +60,7 @@ vote:
 
 relevance:
   side_margin: 0.03               # box centre must be this fraction of width right of centre for "right"
+  side_motion_min: 0.10           # sideways drift (fraction of width) that decides right/left by motion
   overhead_max_bottom: 0.35       # box bottom above this fraction of height (and central) -> "overhead"
   overhead_central_band: 0.6      # central fraction of width counted as "central"
   left_side_relevant: false
