@@ -3,7 +3,8 @@ import en from "../../config/i18n/en.json";
 import catalogue from "../../config/rules/signs.json";
 
 const strings: Record<string, string> = en;
-const signs = new Map(catalogue.signs.map((s) => [s.code, s]));
+export type SignEntry = (typeof catalogue.signs)[number];
+const signs = new Map<string, SignEntry>(catalogue.signs.map((s) => [s.code, s]));
 
 /** Text for an i18n key, with {placeholders} filled from params. */
 export function t(key: string, params: Record<string, unknown> = {}): string {
@@ -11,13 +12,24 @@ export function t(key: string, params: Record<string, unknown> = {}): string {
   return template.replace(/\{(\w+)\}/g, (_, name: string) => String(params[name] ?? `{${name}}`));
 }
 
-/** English working name of a sign, e.g. "Maximum speed limit 60". */
+export function hasKey(key: string): boolean {
+  return key in strings;
+}
+
+/** Catalogue entry of a sign code (official text, English translation, source). */
+export function signEntry(code: string | null): SignEntry | undefined {
+  return code ? signs.get(code) : undefined;
+}
+
+/** English name of a sign, e.g. "Maximum speed limit 60". */
 export function signName(code: string | null, value: number | null = null): string {
   if (!code) return "";
   const name = signs.get(code)?.name ?? code;
   return value != null ? `${name} ${value}` : name;
 }
 
-export function isVerified(code: string | null): boolean {
-  return code != null && signs.get(code)?.verified === true;
+/** Text of a voice prompt (used when the MP3 cannot be played). */
+export function voiceText(key: string): string {
+  const limit = key.match(/^speed_limit_(\d+)$/);
+  return limit ? t("voice.speed_limit", { value: limit[1] }) : t(`voice.${key}`);
 }
