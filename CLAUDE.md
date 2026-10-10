@@ -12,6 +12,7 @@
 - We **fine-tune** a sign detector on the Dognellaf dataset (§14.2). **Training (T5) is running** detached in tmux session `signcoach-train` (started 22:29, 40 epochs, ~6.5 min/epoch, expected end ≈ 02:50). Check progress in `~/signcoach-data/train_runs/dognellaf_y11s_1024_*/results.csv`.
 - **Deadline: Sunday 11 October 2026, 13:00 Asia/Tashkent.**
 - **Demo footage is Russian dashcam video** that the team gives the jury to upload. Sign codes are the **Russian GOST numbers** used by the training data (e.g. 3.24 = speed limit). No Uzbek numbering layer.
+- **Input is the dashcam video only** (scope clarified Saturday 23:20): no phone app, no live streaming, no GPS logger / GPX upload. Everything — signs, speed, stops, turns — comes from the video.
 - **English only.** No UZ/RU localisation; voice prompts are **English, generated with a text-to-speech model** (not recorded by the team).
 - `MODEL_COVERAGE_TEST.md` is **dropped** (it only decided whether to fine-tune). M6 uses the comparison method defined in §14.2 T6; "core signs" = the §11.1 list.
 - The review fixes approved on Saturday 22:00 are folded into this file (§9 `Report.signs`, §10.1 fps/HDR, §10.2 two passes, §11.4 semantics, §12 API/worker, §16 service).
@@ -36,11 +37,11 @@
 
 ## 1. Product
 
-**One sentence:** a driving-school instructor uploads the dashcam or phone video of a student's lesson and gets a report of every road sign the car passed, what it means, which rule was in force, and where the student broke it — with video evidence.
+**One sentence:** a driving-school instructor uploads the dashcam video of a student's lesson and gets a report of every road sign the car passed, what it means, which rule was in force, and where the student broke it — with video evidence.
 
 - **Users:** driving schools in Uzbekistan (instructors and students). Startup mode.
 - **Demo:** the jury uploads Russian dashcam recordings that the team provides. The interface and voice prompts are in English.
-- **Flow:** record the lesson with a phone camera on the windshield or any dashcam → (optional) record a GPX track with a GPS logger app → upload on the website → processing → lesson report.
+- **Flow:** the car's dashcam records the lesson → the instructor uploads the video on the website → processing → lesson report (signs, events, statistics). The video file is the only input: no phone app, no live streaming, no GPS logger.
 - **Report (see §13 for layout):** annotated, privacy-blurred video with a speed/limit overlay; voice prompts played at the moments they would have sounded in the car; event list (sign explained, speeding, possible speeding, stop not made, turn-ban violation/compliance) that jumps the video; summary score; signs not yet met.
 - **No live mode.** Upload only. Live in-car prompts are a roadmap item for the deck, not something to build.
 
@@ -105,9 +106,8 @@
 | Deep learning | PyTorch with CUDA |
 | Vision | OpenCV (`opencv-python-headless`), NumPy |
 | Video | `ffmpeg` / `ffprobe` via `subprocess` (normalize, rotate, encode); render by piping raw frames to `ffmpeg` stdin rather than `cv2.VideoWriter` |
-| GPS | `gpxpy` |
 | Backend | FastAPI, Uvicorn, Pydantic v2, stdlib `sqlite3`, one background worker thread |
-| Frontend | React + Vite + TypeScript + Tailwind, built to `web/dist` and served by FastAPI; HTML5 `<video>`; Leaflet only when a GPX track exists |
+| Frontend | React + Vite + TypeScript + Tailwind, built to `web/dist` and served by FastAPI; HTML5 `<video>` |
 | Voice | English MP3s pre-generated offline with a local text-to-speech model (licence recorded in `DATA_SOURCES.md`; not an LLM, not called by the pipeline); browser `speechSynthesis` fallback |
 | Tests | `pytest` |
 | Faces | OpenCV Zoo YuNet face detector (verify licence) |
@@ -123,7 +123,6 @@
   (ffprobe, normalize,               ├──> vehicle detector (COCO) ──> masks for speed, plate blur     │
    rotation, strip audio)            ├──> ego-motion: speed (road-plane BEV), yaw/turns, stops ───────┤
                                      └──> faces (YuNet) ──> blur                                       │
-  optional GPX ──> speed/course, time alignment ───────────────────────────────────────────────────────┤
                                                                                                        ▼
                                           rules engine (rules.json + signs.json, deterministic) ──> lesson events
                                                                                                        │
@@ -162,7 +161,6 @@ signcoach/
     signs.py                    # track voting -> SignEvent
     relevance.py                # does this sign apply to us?
     egomotion.py                # BEV speed, yaw/turns, stops, quality
-    gps.py                      # GPX parse, speed/course, alignment
     rules_engine.py             # pure, deterministic state machine
     privacy.py                  # face/plate blur
     render.py                   # annotated video, thumbnails
@@ -181,13 +179,13 @@ signcoach/
   deploy/signcoach.service  deploy/sudoers.example  deploy/setup_host.sh  deploy/FUNNEL.md
   .github/workflows/deploy.yml
   tests/
-    test_contracts.py  test_rules_engine.py  test_signs_voting.py  test_relevance.py  test_egomotion_synthetic.py  test_gps_align.py  test_api_smoke.py
+    test_contracts.py  test_rules_engine.py  test_signs_voting.py  test_relevance.py  test_egomotion_synthetic.py  test_api_smoke.py
     fixtures/report.sample.json  fixtures/make_report_sample.py  fixtures/rule_scenarios/*.json
 ```
 
 ## 8. Configuration (`config/settings.yaml`) — starting defaults
 
-The table lists the main keys. The file also holds the relevance thresholds (`relevance.*`, incl. `conditional_plate_codes`), model files (`models.*`), privacy options (`privacy.*`), GPS alignment (`gps.*`), the job timeout (`job.timeout_s`), `turn_bans_enabled`, the voting baseline flag (`vote.single_frame_baseline`), the render debug flag and the cost inputs (`cost.*`).
+The table lists the main keys. The file also holds the relevance thresholds (`relevance.*`, incl. `conditional_plate_codes`), model files (`models.*`), privacy options (`privacy.*`), the job timeout (`job.timeout_s`), `turn_bans_enabled`, the voting baseline flag (`vote.single_frame_baseline`), the render debug flag and the cost inputs (`cost.*`).
 
 | Key | Default | Note |
 |---|---|---|
@@ -327,15 +325,15 @@ Heuristics, each recorded in `relevance_reason`:
 4. Mask BEV pixels covered by vehicle boxes (bottom edges projected) from `vehicles.py`.
 5. Forward shift between consecutive BEV frames with `cv2.phaseCorrelate` (Hanning window); shift (px) × `m_per_px` × `analysis_fps` × `speed.scale_k` × 3.6 = km/h. The phase-correlation response and texture energy give `quality`.
 6. Robust smoothing over `speed.smooth_s` (median + simple Kalman). Low-quality samples → `speed_kmh=None`.
-7. `speed_err_kmh` from `speed.err_model` (calibrated).
+7. `speed_err_kmh` from `speed.err_model`. There is no GPS, so accuracy is measured (and `scale_k` fitted) on clips whose dashcam shows its GPS speed on screen, read by a human (§15). Without that measurement the speed is an uncalibrated estimate: the HUD says "est." and speeding is only ever reported as `possible_speeding`.
+- Stops (speed ≈ 0) and turns (heading change) do not depend on calibration — zero motion and angles need no scale.
 - Speed is proportional to camera height: a per-upload `height_m` scales the result linearly.
-**Yaw and turns:** sparse optical flow (`goodFeaturesToTrack` + LK) above the horizon (distant scenery); median horizontal flow → yaw rate `atan(dx/f)·analysis_fps`; integrate to heading. A turn is a heading change ≥ `turn.min_angle_deg` within `turn.max_window_s`; U-turn ≥ `turn.uturn_angle_deg`. With GPX, use GPS course instead.
+**Yaw and turns:** sparse optical flow (`goodFeaturesToTrack` + LK) above the horizon (distant scenery); median horizontal flow → yaw rate `atan(dx/f)·analysis_fps`; integrate to heading. A turn is a heading change ≥ `turn.min_angle_deg` within `turn.max_window_s`; U-turn ≥ `turn.uturn_angle_deg`.
 **Stops:** speed < `stop.speed_kmh` for ≥ `stop.min_duration_s` (BEV shift near zero is the most reliable output of this method).
 
-### 10.7 GPS (`gps.py`) — optional input
-- Parse GPX (`gpxpy`), compute speed (haversine/Δt, smoothed) and course.
-- Align to video time: initial offset from `creation_time` vs. GPX start; refine by cross-correlating video speed with GPS speed over ±60 s; allow a manual offset in the upload form.
-- When GPS is present it is the speed source and the course source; the video estimate is still computed and stored (used by `eval_speed.py`).
+### 10.7 GPS — out of scope
+- The only input is the dashcam video: no GPX upload, no GPS logger. `MotionSample.source` / `Report.speed_source` keep the value `"gps"` in the contract (unchanged) but the pipeline never produces it.
+- Burned-in dashcam speed overlays are not read by the app; humans may read them for evaluation (§15).
 - Map/junction lookup (OpenStreetMap) is **out of scope** unless everything else is done.
 
 ### 10.8 Rules engine (`rules_engine.py`) — see §11
@@ -434,8 +432,7 @@ If a required class is missing from the detector, report it in the M6 review and
 | POST | `/api/uploads/init` | `{filename, size_bytes}` → `{upload_id, chunk_bytes}` |
 | PUT | `/api/uploads/{id}/chunk?index=n` | raw bytes of chunk `n` |
 | GET | `/api/uploads/{id}` | `{received: [chunk indices], size_bytes, chunk_bytes}` — lets the browser resume an interrupted upload |
-| POST | `/api/uploads/{id}/gpx` | optional small GPX file |
-| POST | `/api/uploads/{id}/complete` | `{student, lesson_label, camera_height_m?, hfov_deg?, gps_offset_s?, consent: true}` → `{job_id}` |
+| POST | `/api/uploads/{id}/complete` | `{student, lesson_label, camera_height_m?, hfov_deg?, consent: true}` → `{job_id}` |
 | GET | `/api/jobs/{id}` | `{status: queued|processing|done|failed, stage, progress 0..1, queue_position, error_key, lesson_id}` |
 | GET | `/api/lessons?ids=a,b` | sample lessons + the lessons whose ids the browser asks for (the ones it uploaded); never a public list of everyone's uploads |
 | GET | `/api/lessons/{id}/report` | `report.json` |
@@ -451,7 +448,7 @@ If a required class is missing from the detector, report it in the M6 review and
 ## 13. Frontend (`web/`)
 
 Pages:
-1. **Upload:** drag-and-drop video, optional GPX, student name, lesson label, optional camera height, consent checkbox; chunked upload with progress; then a job view (stage name, progress bar, queue position) that redirects to the report when done. Clear messages for every `error_key`.
+1. **Upload:** drag-and-drop dashcam video, student name, lesson label, optional camera height and field of view (advanced, collapsed), consent checkbox; chunked upload with progress; then a job view (stage name, progress bar, queue position) that redirects to the report when done. Clear messages for every `error_key`.
 2. **Report** (layout agreed with the team):
    - Header: lesson name, student, duration, route label, speed source. English only — no language toggle.
    - Annotated video player (HUD is burned into the video).
@@ -494,17 +491,17 @@ Pages:
 
 ## 15. Evaluation (`eval/`) — every number in the deck comes from here
 
-Ground truth from the team's own clips — the demo dashcam recordings for signs and limits, and a drive with a GPX track for speed (humans create these; formats documented in `eval/ground_truth/README.md`):
+Ground truth from the team's own collected dashcam clips (not from the training data; humans create these; formats documented in `eval/ground_truth/README.md`):
 - `signs_<route>.csv`: `t_seconds, sign_code, value, side, relevant(y/n), notes` — one row per physical sign passed.
 - `limit_<route>.csv`: `t_start, t_end, limit_kmh` — the limit in force over time.
 - `stops_<route>.csv`: `t_seconds, full_stop(y/n)`.
-- `gps_<route>.gpx` recorded at the same time as the video.
+- `speed_<route>.csv`: `t_seconds, speed_kmh` — only for clips whose dashcam shows its GPS speed on screen; a human writes it down every ~5 s.
 
 Scripts (each writes `eval/results/<name>.json` and a markdown table):
 - `eval_detector.py`: Ultralytics val mAP on the held-out Dognellaf videos.
 - `eval_events.py`: event-level precision/recall (match = same code within ±1.5 s), relevant signs only; with and without voting (ablation); day vs night.
-- `eval_speed.py`: video speed vs GPS — MAE, p90 absolute error, % of time with a valid estimate; day vs night; separately for the calibration and test routes.
-- `scripts/calibrate_speed.py`: fit `speed.scale_k` (median of v_gps/v_video for v ≥ 10 km/h) and the error model `a + b·v` on the **calibration route only**.
+- `eval_speed.py`: video speed vs the on-screen speed readings — MAE, p90 absolute error, % of time with a valid estimate; day vs night; calibration clips vs test clips. If no clip has an on-screen speed, the deck says the speed estimate is uncalibrated and unmeasured.
+- `scripts/calibrate_speed.py`: fit `speed.scale_k` (median of v_screen/v_video for v ≥ 10 km/h) and the error model `a + b·v` on the **calibration clips only** (never on the test clips).
 - `eval_limit_timeline.py`: % of driving time with the correct limit in force.
 - `benchmark.py`: processing seconds per minute of video, per stage; frames per second; peak VRAM; GPU-seconds per minute. Cost per lesson-hour = formula with inputs in config (`electricity_price_per_kwh`, `gpu_power_w`, or `cloud_gpu_price_per_hour`) — humans fill the prices.
 - `failure_gallery.py`: exports the worst misses and false positives (blurred) as images for the deck.
@@ -532,16 +529,16 @@ Scripts (each writes `eval/results/<name>.json` and a markdown table):
 | M2 | Rules engine + catalogue | 01:30 if a parallel session runs, else after M1 | `signs.json`/`rules.json` with all §11.1 entries (texts TODO), engine, ≥ 15 passing scenarios. Pure Python — a parallel session can start right after M0 is merged. |
 | M4 | Report UI | 03:00 | §13 complete against the fixture, then wired to real reports; voice sync (TTS MP3s); English; works on a phone. |
 | M6 | Model comparison + swap | after T5 (≈ 03:00–03:30) | `eval/results/model_comparison.md` posted; humans pick; class map switched; samples re-seeded. |
-| M3 | Ego-motion + GPS | 05:00 (calibration needs a daylight drive → after ~06:30) | BEV speed, yaw/turns, stops, GPX alignment; synthetic BEV-shift test passes; calibration script runs on the team's calibration route. Model-independent — start as soon as M1 is merged. |
+| M3 | Ego-motion from video (speed, turns, stops) | 05:00 | BEV speed, yaw/turns, stops; synthetic BEV-shift test passes; if clips with an on-screen speed exist, calibration + accuracy measured on them (otherwise speed stays an uncalibrated estimate). Model-independent — start as soon as M1 is merged. |
 | M5 | Privacy hardening + quality warnings | 07:00 | Blur verified on every output and thumbnail (spot-check gallery); audio stripped; quality warnings shown; temp frames deleted. |
 | M7 | Evaluation | 10:00 | All §15 scripts run on the team's ground truth; results committed; failure gallery exported. |
 | M8 | Hardening + docs | 12:30 | §18 edge cases pass; `seed_samples.py` produces 2–3 sample lessons (day, night, with violations); README + DATA_SOURCES complete; `docs/HOW_IT_WORKS.md` (one page per module, for the team's Q&A prep); tag `final-submission` before 13:00. |
 
-If time runs short, cut in this order: student progress page → Leaflet map → conditional-plate handling → turn bans (keep as explanations only, flag `turn_bans_enabled: false`). Never cut privacy, evaluation or the deploy pipeline.
+If time runs short, cut in this order: student progress page → conditional-plate handling → turn bans (keep as explanations only, flag `turn_bans_enabled: false`). Never cut privacy, evaluation or the deploy pipeline.
 
 ## 18. Edge cases (the jury's clip)
 
-- iPhone HEVC `.mov`, portrait video, 60 fps, 4K, very short (< 10 s), over 3 minutes (clear rejection), no signs at all, night, rain/dirty windshield, camera mounted at an unknown height (speed marked "estimate, uncalibrated"), no GPX, GPX that doesn't overlap the video (ignore with warning), upload interrupted (resume chunks), same file uploaded twice, a non-video file.
+- iPhone HEVC `.mov`, portrait video, 60 fps, 4K, very short (< 10 s), over 3 minutes (clear rejection), no signs at all, night, rain/dirty windshield, camera mounted at an unknown height (speed marked "estimate, uncalibrated"), wide-angle/fisheye dashcam lens, burned-in date/speed overlays, upload interrupted (resume chunks), same file uploaded twice, a non-video file.
 - Every case ends in either a valid report with honest warnings or a clear error message — never a crash or a spinner that never ends.
 
 ## 19. What you need from the humans (ask for it at the right milestone)
@@ -549,7 +546,7 @@ If time runs short, cut in this order: student progress page → Leaflet map →
 - M0: done except re-running `sudo bash deploy/setup_host.sh` (installs the runner service) and merging PR #1.
 - M1 (now): Russian dashcam test clips — a teammate collects them (licence/permission recorded, not from the training data, 30–180 s, landscape, many signs, some with violations, some at night).
 - M2: a Russian-speaking team member checks `docs/RULES_CHECKLIST.md` against ПДД and marks entries verified (§11.2).
-- M3: calibration route video + GPX (daylight), measured camera height and the phone model (for field of view).
+- M3: if possible, 2–3 collected clips whose dashcam shows its GPS speed on screen, with the speed written down every ~5 s (`speed_<clip>.csv`).
 - M4: nothing — voice prompts are generated with a TTS model (Claude provides the list of keys and texts for review).
 - M6: the decision on which model to use.
 - M7: ground-truth CSVs for the demo/test clips (day and night).
@@ -568,7 +565,7 @@ If time runs short, cut in this order: student progress page → Leaflet map →
 | Dataset download stalls | Train on complete pairs only; top up scarce core signs with targeted downloads (§14.2). |
 | Training still running near the demo | Use the best checkpoint so far (`best.pt` is updated every epoch); stop training before seeding samples and benchmarking. |
 | GPU out of memory while training | App and tests on `SIGNCOACH_DEVICE=cpu`; training `batch=4`. |
-| Video speed poor on a clip | `quality` gate → `speed_kmh=None`, "speed not checked" warning; GPX path when available. |
+| Video speed poor on a clip | `quality` gate → `speed_kmh=None`, "speed not checked" warning. |
 | Turn detection unreliable | `turn_bans_enabled: false` → bans shown as explanations only. |
 | Plate detector licence unclear | Fallback blur band; documented. |
 | Processing slower than real time | Lower `detect.imgsz` to 1024, `analysis_fps` to 10; report the change. |

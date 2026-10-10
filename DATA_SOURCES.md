@@ -32,7 +32,7 @@ Weights and datasets are not in this repository; they are downloaded into `$SIGN
 | NumPy | BSD-3-Clause |
 | FastAPI, Pydantic, python-multipart | MIT / Apache-2.0 |
 | Uvicorn | BSD-3-Clause |
-| PyYAML, python-dotenv, gpxpy, huggingface_hub, lap | MIT / BSD / Apache-2.0 / Apache-2.0 / BSD-2-Clause |
+| PyYAML, python-dotenv, huggingface_hub, lap | MIT / BSD / Apache-2.0 / BSD-2-Clause |
 | FFmpeg (system package) | LGPL/GPL |
 | React, Vite, Tailwind CSS, TypeScript | MIT / MIT / MIT / Apache-2.0 |
 

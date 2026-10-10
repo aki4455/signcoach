@@ -99,10 +99,6 @@ turn:
 turn_bans_enabled: true           # false -> bans are explained but never judged
 ban_scope: {until_turn: true, max_distance_m: 300, max_time_s: 60}   # approximation of "until the next junction" (no map)
 
-gps:
-  align_search_s: 60              # cross-correlation search window
-  clock_offsets_h: [0, 5, -5]     # dashcams often store local time (UTC+5) without a zone
-
 score:
   weights: {violation: 10, possible: 3}   # score = max(0, 100 - sum); shown as "indicative"
 
