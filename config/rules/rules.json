@@ -1,0 +1,266 @@
+{
+ "_doc": "Effects and scopes of signs (CLAUDE.md §11.3, §11.4). Legal values (default limits, scopes) come from ПДД РФ and stay verified=false until checked. While a default limit is null, limit_source='unknown' and no speeding is reported without a speed-limit sign.",
+ "defaults": {
+  "speed_limit_kmh": {
+   "in_settlement": null,
+   "outside_settlement": null
+  },
+  "assume_in_settlement": true,
+  "source": {
+   "section": "ПДД РФ, раздел 10 «Скорость движения»",
+   "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/803907f6876a655f77995888208488d4bfccf247/"
+  },
+  "verified": false
+ },
+ "signs": {
+  "3.24": {
+   "effects": [
+    {
+     "type": "set_speed_limit",
+     "value_from": "detection"
+    }
+   ],
+   "scope": {
+    "ends_on": [
+     "sign:3.24",
+     "sign:3.25",
+     "sign:3.31",
+     "sign:5.24.1",
+     "turn"
+    ],
+    "max_distance_m": null,
+    "_todo": "verify the zone of action in ПДД Приложение 1, раздел 3"
+   }
+  },
+  "3.25": {
+   "effects": [
+    {
+     "type": "end_speed_limit"
+    }
+   ]
+  },
+  "3.31": {
+   "effects": [
+    {
+     "type": "end_speed_limit"
+    },
+    {
+     "type": "end_bans"
+    }
+   ]
+  },
+  "3.1": {
+   "effects": [
+    {
+     "type": "no_entry"
+    }
+   ]
+  },
+  "3.18.1": {
+   "effects": [
+    {
+     "type": "add_ban",
+     "ban": "right"
+    }
+   ],
+   "scope": {
+    "ends_on": [
+     "turn"
+    ],
+    "use_settings_ban_scope": true
+   }
+  },
+  "3.18.2": {
+   "effects": [
+    {
+     "type": "add_ban",
+     "ban": "left"
+    }
+   ],
+   "scope": {
+    "ends_on": [
+     "turn"
+    ],
+    "use_settings_ban_scope": true
+   }
+  },
+  "3.19": {
+   "effects": [
+    {
+     "type": "add_ban",
+     "ban": "uturn"
+    }
+   ],
+   "scope": {
+    "ends_on": [
+     "turn"
+    ],
+    "use_settings_ban_scope": true
+   }
+  },
+  "2.5": {
+   "effects": [
+    {
+     "type": "require_stop"
+    }
+   ]
+  },
+  "4.1.1": {
+   "effects": [
+    {
+     "type": "mandatory",
+     "allowed": [
+      "straight"
+     ]
+    }
+   ],
+   "scope": {
+    "ends_on": [
+     "turn"
+    ],
+    "use_settings_ban_scope": true
+   }
+  },
+  "4.1.2": {
+   "effects": [
+    {
+     "type": "mandatory",
+     "allowed": [
+      "right"
+     ]
+    }
+   ],
+   "scope": {
+    "ends_on": [
+     "turn"
+    ],
+    "use_settings_ban_scope": true
+   }
+  },
+  "4.1.3": {
+   "effects": [
+    {
+     "type": "mandatory",
+     "allowed": [
+      "left"
+     ]
+    }
+   ],
+   "scope": {
+    "ends_on": [
+     "turn"
+    ],
+    "use_settings_ban_scope": true
+   }
+  },
+  "4.1.4": {
+   "effects": [
+    {
+     "type": "mandatory",
+     "allowed": [
+      "straight",
+      "right"
+     ]
+    }
+   ],
+   "scope": {
+    "ends_on": [
+     "turn"
+    ],
+    "use_settings_ban_scope": true
+   }
+  },
+  "4.1.5": {
+   "effects": [
+    {
+     "type": "mandatory",
+     "allowed": [
+      "straight",
+      "left"
+     ]
+    }
+   ],
+   "scope": {
+    "ends_on": [
+     "turn"
+    ],
+    "use_settings_ban_scope": true
+   }
+  },
+  "4.1.6": {
+   "effects": [
+    {
+     "type": "mandatory",
+     "allowed": [
+      "right",
+      "left"
+     ]
+    }
+   ],
+   "scope": {
+    "ends_on": [
+     "turn"
+    ],
+    "use_settings_ban_scope": true
+   }
+  },
+  "5.23.1": {
+   "effects": [
+    {
+     "type": "settlement",
+     "inside": true
+    }
+   ]
+  },
+  "5.24.1": {
+   "effects": [
+    {
+     "type": "settlement",
+     "inside": false
+    }
+   ]
+  },
+  "3.20": {
+   "effects": []
+  },
+  "3.21": {
+   "effects": []
+  },
+  "3.27": {
+   "effects": []
+  },
+  "3.28": {
+   "effects": []
+  },
+  "2.1": {
+   "effects": []
+  },
+  "2.2": {
+   "effects": []
+  },
+  "2.4": {
+   "effects": []
+  },
+  "4.3": {
+   "effects": []
+  },
+  "5.19.1": {
+   "effects": []
+  },
+  "5.19.2": {
+   "effects": []
+  },
+  "5.20": {
+   "effects": []
+  },
+  "1.17": {
+   "effects": []
+  },
+  "1.22": {
+   "effects": []
+  },
+  "1.23": {
+   "effects": []
+  }
+ }
+}
