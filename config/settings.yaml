@@ -1,0 +1,128 @@
+# SignCoach settings — every threshold and path lives here (CLAUDE.md §8), never in code.
+#
+# Environment variables (see .env.example) override a few values:
+#   SIGNCOACH_DATA      shared data root: datasets, models, training runs (default ~/signcoach-data)
+#   SIGNCOACH_INSTANCE  prod | dev | test — each instance keeps its own db/uploads/jobs/media under
+#                       {data}/instances/<instance>/, so a dev server never steals production jobs
+#   SIGNCOACH_DEVICE    cpu | cuda:0 (use cpu while the GPU is training)
+
+device: cuda:0
+
+limits:
+  max_video_seconds: 180          # longer -> clear error
+  max_upload_bytes: 1610612736    # 1.5 GiB
+  max_gpx_bytes: 10485760         # 10 MiB
+  max_queued_jobs: 20             # protects the single GPU worker on a public site
+
+upload:
+  chunk_bytes: 8388608            # 8 MiB
+  stale_after_hours: 24           # unfinished uploads older than this are deleted
+
+ingest:
+  max_width: 1920                 # keep detail for small signs
+  fps_cap: 30                     # normalized fps = min(source fps, fps_cap) — never duplicate frames
+  crf: 20
+  preset: veryfast
+  tonemap_hdr: true               # iPhone HLG / Dolby Vision -> SDR, otherwise colours wash out
+  min_duration_s: 10              # shorter -> "very short clip" warning
+
+analysis_fps: 15                  # frames analysed per second
+
+detect:
+  backend: ultralytics            # ultralytics | replay
+  model: streetsignsense_y12s     # switched at the M6 decision
+  imgsz: 1280
+  conf: 0.25                      # low on purpose; voting filters
+  half: true                      # FP16 on CUDA
+  tracker: bytetrack.yaml
+  replay_file: null               # detections JSON for backend=replay
+
+models:                           # weights live in {data}/models, never in git
+  streetsignsense_y12s:
+    weights: streetsignsense-yolo12s.pt
+    class_map: streetsignsense_y12s.yaml
+  dognellaf_y11s:
+    weights: dognellaf_y11s_1024.pt
+    class_map: dognellaf_y11s.yaml
+  vehicles:
+    weights: yolo11n.pt           # COCO; cars, buses, trucks, motorcycles, persons
+    imgsz: 640
+    conf: 0.3
+
+vote:
+  min_frames: 3
+  min_conf: 0.5                   # mean confidence of the winning class
+  dedupe_window_s: 2.0            # merge same code split by ByteTrack ID switches
+  dedupe_max_center_dist: 0.15    # ... if box centres are within this fraction of frame width
+  single_frame_baseline: false    # true = no voting (ablation for eval/)
+
+relevance:
+  side_margin: 0.03               # box centre must be this fraction of width right of centre for "right"
+  overhead_max_bottom: 0.35       # box bottom above this fraction of height (and central) -> "overhead"
+  overhead_central_band: 0.6      # central fraction of width counted as "central"
+  left_side_relevant: false
+  facing_min_aspect: 0.6          # round/square signs narrower than w/h 0.6 face a side road
+  approach_min_area_growth: 1.3   # box area must grow at least this much over the track
+  plate_max_gap_widths: 1.5       # supplementary plate within this many sign widths below the sign
+  conditional_plate_codes: ["8.5.4", "8.2.1", "8.13", "8.1.1"]
+
+camera:
+  height_m: 1.3                   # overridable per upload
+  hfov_deg: 70                    # overridable per upload
+  horizon_fallback_frac: 0.45     # horizon row when no vanishing point is found
+
+bev:
+  x_range_m: [-3, 3]
+  z_range_m: [6, 26]
+  m_per_px: 0.05
+
+speed:
+  smooth_s: 1.0
+  scale_k: 1.0                    # set by scripts/calibrate_speed.py
+  err_model: {a: 3.0, b: 0.10}    # km/h, err = a + b * v; replaced by calibration results
+  min_quality: 0.3                # below -> speed_kmh = None
+
+stop:
+  speed_kmh: 2.0
+  min_duration_s: 1.0
+  window_s: [-2, 6]               # around passing a stop sign
+
+speeding:
+  tolerance_kmh: 0                # humans may change
+  min_duration_s: 3
+
+turn:
+  min_angle_deg: 60
+  uturn_angle_deg: 150
+  max_window_s: 10
+
+turn_bans_enabled: true           # false -> bans are explained but never judged
+ban_scope: {until_turn: true, max_distance_m: 300, max_time_s: 60}   # approximation of "until the next junction" (no map)
+
+score:
+  weights: {violation: 10, possible: 3}   # score = max(0, 100 - sum); shown as "indicative"
+
+quality:
+  low_light_luma: 60              # mean luma below -> warning
+  blur_laplacian_var: 50          # below -> warning
+  sample_frames: 20               # frames sampled for the quality checks
+
+privacy:
+  face_score_threshold: 0.6       # YuNet
+  blur_person_heads: true         # also blur the head area of COCO "person" boxes (YuNet misses small/side faces)
+  plate_band: {y_from: 0.55, y_to: 0.95, x_from: 0.2, x_to: 0.8}   # fallback plate area inside a vehicle box
+  delete_unblurred_after_processing: true   # raw upload + normalized video
+
+output:
+  height: 720
+  crf: 23
+  preset: veryfast
+  debug_draw_irrelevant: false    # draw irrelevant signs in grey
+
+job:
+  timeout_s: 900                  # checked between frames (a thread cannot be killed)
+
+cost:                             # humans fill; used by eval/benchmark.py
+  electricity_price_per_kwh: null
+  gpu_power_w: null
+  cloud_gpu_price_per_hour: null

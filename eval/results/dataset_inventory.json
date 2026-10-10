@@ -1,0 +1,989 @@
+{
+  "t1": {
+    "n_images": 43851,
+    "n_labels": 38918,
+    "images_without_labels": 4933,
+    "labels_without_images": 0,
+    "duplicate_names": 0,
+    "complete_pairs": 38918,
+    "empty_label_files": 0,
+    "dropped_label_lines": 0,
+    "clipped_boxes": 195,
+    "images_without_labels_sample": [
+      "PXL_20231121_162723698__img420Frames_11_30_22_24_48",
+      "PXL_20231121_162723698__img421Frames_11_30_22_24_48",
+      "PXL_20231121_162723698__img422Frames_11_30_22_24_48",
+      "PXL_20231121_162723698__img423Frames_11_30_22_24_48",
+      "PXL_20231121_162723698__img424Frames_11_30_22_24_48",
+      "PXL_20231121_162723698__img425Frames_11_30_22_24_48",
+      "PXL_20231121_162723698__img427Frames_11_30_22_24_48",
+      "PXL_20231121_162723698__img429Frames_11_30_22_24_48",
+      "PXL_20231121_162723698__img430Frames_11_30_22_24_48",
+      "PXL_20231121_162723698__img431Frames_11_30_22_24_48",
+      "PXL_20231121_162723698__img432Frames_11_30_22_24_48",
+      "PXL_20231121_162723698__img437Frames_11_30_22_24_48",
+      "PXL_20231121_162723698__img438Frames_11_30_22_24_48",
+      "PXL_20231121_162723698__img439Frames_11_30_22_24_48",
+      "PXL_20231121_162723698__img440Frames_11_30_22_24_48",
+      "PXL_20231121_162723698__img441Frames_11_30_22_24_48",
+      "PXL_20231121_162723698__img442Frames_11_30_22_24_48",
+      "PXL_20231121_162723698__img446Frames_11_30_22_24_48",
+      "PXL_20231121_162723698__img448Frames_11_30_22_24_48",
+      "PXL_20231121_162723698__img451Frames_11_30_22_24_48"
+    ]
+  },
+  "source_videos": 730,
+  "classes": [
+    {
+      "id": 0,
+      "name": "redyellowTrafficLights",
+      "instances": 121,
+      "frames": 83,
+      "videos": 26
+    },
+    {
+      "id": 1,
+      "name": "5.19.2",
+      "instances": 3265,
+      "frames": 2807,
+      "videos": 148
+    },
+    {
+      "id": 2,
+      "name": "yellowTrafficLights",
+      "instances": 682,
+      "frames": 545,
+      "videos": 41
+    },
+    {
+      "id": 3,
+      "name": "3.27",
+      "instances": 4345,
+      "frames": 3986,
+      "videos": 153
+    },
+    {
+      "id": 4,
+      "name": "redTrafficLights",
+      "instances": 1793,
+      "frames": 1239,
+      "videos": 54
+    },
+    {
+      "id": 5,
+      "name": "5.16",
+      "instances": 1568,
+      "frames": 1546,
+      "videos": 100
+    },
+    {
+      "id": 6,
+      "name": "TrafficLights",
+      "instances": 854,
+      "frames": 670,
+      "videos": 52
+    },
+    {
+      "id": 7,
+      "name": "greenTrafficLights",
+      "instances": 2394,
+      "frames": 1479,
+      "videos": 85
+    },
+    {
+      "id": 8,
+      "name": "3.24.1",
+      "instances": 529,
+      "frames": 503,
+      "videos": 16
+    },
+    {
+      "id": 9,
+      "name": "3.1",
+      "instances": 1514,
+      "frames": 1360,
+      "videos": 110
+    },
+    {
+      "id": 10,
+      "name": "5.19.1",
+      "instances": 6916,
+      "frames": 4734,
+      "videos": 195
+    },
+    {
+      "id": 11,
+      "name": "2.3.1",
+      "instances": 529,
+      "frames": 529,
+      "videos": 39
+    },
+    {
+      "id": 12,
+      "name": "3.24.7",
+      "instances": 818,
+      "frames": 620,
+      "videos": 58
+    },
+    {
+      "id": 13,
+      "name": "3.21",
+      "instances": 571,
+      "frames": 505,
+      "videos": 36
+    },
+    {
+      "id": 14,
+      "name": "4.1.5",
+      "instances": 202,
+      "frames": 192,
+      "videos": 24
+    },
+    {
+      "id": 15,
+      "name": "2.1",
+      "instances": 3333,
+      "frames": 3059,
+      "videos": 155
+    },
+    {
+      "id": 16,
+      "name": "3.24.10",
+      "instances": 619,
+      "frames": 448,
+      "videos": 16
+    },
+    {
+      "id": 17,
+      "name": "3.20",
+      "instances": 1392,
+      "frames": 1216,
+      "videos": 66
+    },
+    {
+      "id": 18,
+      "name": "3.24.9",
+      "instances": 552,
+      "frames": 396,
+      "videos": 25
+    },
+    {
+      "id": 19,
+      "name": "2.4",
+      "instances": 3179,
+      "frames": 3059,
+      "videos": 155
+    },
+    {
+      "id": 20,
+      "name": "5.7.1",
+      "instances": 808,
+      "frames": 767,
+      "videos": 27
+    },
+    {
+      "id": 21,
+      "name": "6.16",
+      "instances": 2009,
+      "frames": 1906,
+      "videos": 83
+    },
+    {
+      "id": 22,
+      "name": "3.31",
+      "instances": 133,
+      "frames": 124,
+      "videos": 21
+    },
+    {
+      "id": 23,
+      "name": "1.22",
+      "instances": 974,
+      "frames": 924,
+      "videos": 90
+    },
+    {
+      "id": 24,
+      "name": "5.6",
+      "instances": 987,
+      "frames": 986,
+      "videos": 36
+    },
+    {
+      "id": 25,
+      "name": "6.4",
+      "instances": 2718,
+      "frames": 2295,
+      "videos": 83
+    },
+    {
+      "id": 26,
+      "name": "2.6",
+      "instances": 947,
+      "frames": 933,
+      "videos": 18
+    },
+    {
+      "id": 27,
+      "name": "3.24.4",
+      "instances": 1630,
+      "frames": 1524,
+      "videos": 69
+    },
+    {
+      "id": 28,
+      "name": "3.24.2",
+      "instances": 1042,
+      "frames": 994,
+      "videos": 42
+    },
+    {
+      "id": 29,
+      "name": "1.34.2",
+      "instances": 915,
+      "frames": 895,
+      "videos": 30
+    },
+    {
+      "id": 30,
+      "name": "1.17",
+      "instances": 1286,
+      "frames": 1270,
+      "videos": 58
+    },
+    {
+      "id": 31,
+      "name": "5.20",
+      "instances": 1782,
+      "frames": 1717,
+      "videos": 71
+    },
+    {
+      "id": 32,
+      "name": "1.23",
+      "instances": 1618,
+      "frames": 1439,
+      "videos": 59
+    },
+    {
+      "id": 33,
+      "name": "4.2.1",
+      "instances": 1088,
+      "frames": 1004,
+      "videos": 81
+    },
+    {
+      "id": 34,
+      "name": "8.22.1",
+      "instances": 987,
+      "frames": 953,
+      "videos": 76
+    },
+    {
+      "id": 35,
+      "name": "4.1.1",
+      "instances": 1728,
+      "frames": 1653,
+      "videos": 109
+    },
+    {
+      "id": 36,
+      "name": "6.3.1",
+      "instances": 858,
+      "frames": 819,
+      "videos": 24
+    },
+    {
+      "id": 37,
+      "name": "7.3",
+      "instances": 1061,
+      "frames": 1061,
+      "videos": 79
+    },
+    {
+      "id": 38,
+      "name": "6.7",
+      "instances": 895,
+      "frames": 889,
+      "videos": 35
+    },
+    {
+      "id": 39,
+      "name": "4.1.4",
+      "instances": 1018,
+      "frames": 865,
+      "videos": 53
+    },
+    {
+      "id": 40,
+      "name": "3.18.1",
+      "instances": 960,
+      "frames": 957,
+      "videos": 37
+    },
+    {
+      "id": 41,
+      "name": "4.1.2",
+      "instances": 1064,
+      "frames": 1056,
+      "videos": 80
+    },
+    {
+      "id": 42,
+      "name": "2.5",
+      "instances": 1157,
+      "frames": 1126,
+      "videos": 33
+    },
+    {
+      "id": 43,
+      "name": "4.2.3",
+      "instances": 2026,
+      "frames": 1526,
+      "videos": 89
+    },
+    {
+      "id": 44,
+      "name": "8.22.3",
+      "instances": 1558,
+      "frames": 1492,
+      "videos": 83
+    },
+    {
+      "id": 45,
+      "name": "3.24.6",
+      "instances": 1008,
+      "frames": 957,
+      "videos": 43
+    },
+    {
+      "id": 46,
+      "name": "3.24.8",
+      "instances": 916,
+      "frames": 862,
+      "videos": 24
+    },
+    {
+      "id": 47,
+      "name": "3.2",
+      "instances": 883,
+      "frames": 864,
+      "videos": 32
+    },
+    {
+      "id": 48,
+      "name": "1.31",
+      "instances": 852,
+      "frames": 416,
+      "videos": 8
+    },
+    {
+      "id": 49,
+      "name": "2.2",
+      "instances": 1013,
+      "frames": 975,
+      "videos": 44
+    },
+    {
+      "id": 50,
+      "name": "4.1.3",
+      "instances": 839,
+      "frames": 838,
+      "videos": 6
+    },
+    {
+      "id": 51,
+      "name": "1.11.1",
+      "instances": 1059,
+      "frames": 979,
+      "videos": 32
+    },
+    {
+      "id": 52,
+      "name": "3.24.3",
+      "instances": 1055,
+      "frames": 993,
+      "videos": 27
+    },
+    {
+      "id": 53,
+      "name": "5.5",
+      "instances": 1050,
+      "frames": 1009,
+      "videos": 51
+    },
+    {
+      "id": 54,
+      "name": "4.3",
+      "instances": 786,
+      "frames": 781,
+      "videos": 26
+    },
+    {
+      "id": 55,
+      "name": "3.24.5",
+      "instances": 976,
+      "frames": 888,
+      "videos": 45
+    },
+    {
+      "id": 56,
+      "name": "2.7",
+      "instances": 821,
+      "frames": 821,
+      "videos": 15
+    },
+    {
+      "id": 57,
+      "name": "3.36",
+      "instances": 872,
+      "frames": 793,
+      "videos": 14
+    },
+    {
+      "id": 58,
+      "name": "3.28",
+      "instances": 993,
+      "frames": 991,
+      "videos": 40
+    },
+    {
+      "id": 59,
+      "name": "1.33",
+      "instances": 958,
+      "frames": 955,
+      "videos": 35
+    },
+    {
+      "id": 60,
+      "name": "1.1",
+      "instances": 1496,
+      "frames": 1360,
+      "videos": 27
+    },
+    {
+      "id": 61,
+      "name": "4.1.6",
+      "instances": 104,
+      "frames": 95,
+      "videos": 10
+    },
+    {
+      "id": 62,
+      "name": "2.3",
+      "instances": 2,
+      "frames": 2,
+      "videos": 2
+    },
+    {
+      "id": 63,
+      "name": "7.4",
+      "instances": 271,
+      "frames": 271,
+      "videos": 17
+    },
+    {
+      "id": 64,
+      "name": "8.5.4",
+      "instances": 1,
+      "frames": 1,
+      "videos": 1
+    },
+    {
+      "id": 65,
+      "name": "5.1",
+      "instances": 831,
+      "frames": 820,
+      "videos": 22
+    },
+    {
+      "id": 66,
+      "name": "5.14",
+      "instances": 999,
+      "frames": 978,
+      "videos": 22
+    },
+    {
+      "id": 67,
+      "name": "6.3.2",
+      "instances": 8,
+      "frames": 8,
+      "videos": 2
+    },
+    {
+      "id": 68,
+      "name": "1.8",
+      "instances": 819,
+      "frames": 789,
+      "videos": 48
+    },
+    {
+      "id": 69,
+      "name": "6.8.3",
+      "instances": 47,
+      "frames": 47,
+      "videos": 2
+    },
+    {
+      "id": 70,
+      "name": "1.6",
+      "instances": 18,
+      "frames": 18,
+      "videos": 2
+    },
+    {
+      "id": 71,
+      "name": "3.24.11",
+      "instances": 1099,
+      "frames": 773,
+      "videos": 33
+    },
+    {
+      "id": 72,
+      "name": "8.2.1",
+      "instances": 1,
+      "frames": 1,
+      "videos": 1
+    },
+    {
+      "id": 73,
+      "name": "7.5",
+      "instances": 1,
+      "frames": 1,
+      "videos": 1
+    },
+    {
+      "id": 74,
+      "name": "3.13.35",
+      "instances": 8,
+      "frames": 8,
+      "videos": 1
+    },
+    {
+      "id": 75,
+      "name": "1.12.2",
+      "instances": 14,
+      "frames": 14,
+      "videos": 1
+    },
+    {
+      "id": 76,
+      "name": "1.27",
+      "instances": 18,
+      "frames": 18,
+      "videos": 1
+    },
+    {
+      "id": 77,
+      "name": "1.12",
+      "instances": 14,
+      "frames": 14,
+      "videos": 1
+    },
+    {
+      "id": 78,
+      "name": "1.15",
+      "instances": 2,
+      "frames": 2,
+      "videos": 1
+    },
+    {
+      "id": 79,
+      "name": "1.26",
+      "instances": 4,
+      "frames": 4,
+      "videos": 1
+    },
+    {
+      "id": 80,
+      "name": "1.19",
+      "instances": 1,
+      "frames": 1,
+      "videos": 1
+    },
+    {
+      "id": 81,
+      "name": "2.3.2",
+      "instances": 1,
+      "frames": 1,
+      "videos": 1
+    },
+    {
+      "id": 82,
+      "name": "2.3.3",
+      "instances": 1,
+      "frames": 1,
+      "videos": 1
+    },
+    {
+      "id": 83,
+      "name": "3.24",
+      "instances": 71,
+      "frames": 45,
+      "videos": 2
+    },
+    {
+      "id": 84,
+      "name": "8.13",
+      "instances": 2,
+      "frames": 2,
+      "videos": 1
+    },
+    {
+      "id": 85,
+      "name": "4.2.2",
+      "instances": 2,
+      "frames": 2,
+      "videos": 1
+    },
+    {
+      "id": 86,
+      "name": "1.25",
+      "instances": 2,
+      "frames": 2,
+      "videos": 1
+    },
+    {
+      "id": 87,
+      "name": "3.25",
+      "instances": 5,
+      "frames": 5,
+      "videos": 1
+    },
+    {
+      "id": 88,
+      "name": "8.1.1",
+      "instances": 2,
+      "frames": 2,
+      "videos": 1
+    },
+    {
+      "id": 89,
+      "name": "6.6",
+      "instances": 1,
+      "frames": 1,
+      "videos": 1
+    }
+  ],
+  "required_signs": [
+    {
+      "code": "3.24",
+      "key": "speed_limit",
+      "classes": [
+        "3.24.1",
+        "3.24.7",
+        "3.24.10",
+        "3.24.9",
+        "3.24.4",
+        "3.24.2",
+        "3.24.6",
+        "3.24.8",
+        "3.24.3",
+        "3.24.5",
+        "3.24.11",
+        "3.24"
+      ],
+      "instances": 10315,
+      "videos": 280,
+      "status": "ok"
+    },
+    {
+      "code": "3.25",
+      "key": "end_speed_limit",
+      "classes": [
+        "3.25"
+      ],
+      "instances": 5,
+      "videos": 1,
+      "status": "low"
+    },
+    {
+      "code": "3.31",
+      "key": "end_all_restrictions",
+      "classes": [
+        "3.31"
+      ],
+      "instances": 133,
+      "videos": 21,
+      "status": "low"
+    },
+    {
+      "code": "3.1",
+      "key": "no_entry",
+      "classes": [
+        "3.1"
+      ],
+      "instances": 1514,
+      "videos": 110,
+      "status": "ok"
+    },
+    {
+      "code": "3.18.1",
+      "key": "no_right_turn",
+      "classes": [
+        "3.18.1"
+      ],
+      "instances": 960,
+      "videos": 37,
+      "status": "ok"
+    },
+    {
+      "code": "3.18.2",
+      "key": "no_left_turn",
+      "classes": [],
+      "instances": 0,
+      "videos": 0,
+      "status": "missing"
+    },
+    {
+      "code": "3.19",
+      "key": "no_u_turn",
+      "classes": [],
+      "instances": 0,
+      "videos": 0,
+      "status": "missing"
+    },
+    {
+      "code": "3.20",
+      "key": "no_overtaking",
+      "classes": [
+        "3.20"
+      ],
+      "instances": 1392,
+      "videos": 66,
+      "status": "ok"
+    },
+    {
+      "code": "3.21",
+      "key": "end_no_overtaking",
+      "classes": [
+        "3.21"
+      ],
+      "instances": 571,
+      "videos": 36,
+      "status": "ok"
+    },
+    {
+      "code": "3.27",
+      "key": "no_stopping",
+      "classes": [
+        "3.27"
+      ],
+      "instances": 4345,
+      "videos": 153,
+      "status": "ok"
+    },
+    {
+      "code": "3.28",
+      "key": "no_parking",
+      "classes": [
+        "3.28"
+      ],
+      "instances": 993,
+      "videos": 40,
+      "status": "ok"
+    },
+    {
+      "code": "2.5",
+      "key": "stop",
+      "classes": [
+        "2.5"
+      ],
+      "instances": 1157,
+      "videos": 33,
+      "status": "ok"
+    },
+    {
+      "code": "2.4",
+      "key": "give_way",
+      "classes": [
+        "2.4"
+      ],
+      "instances": 3179,
+      "videos": 155,
+      "status": "ok"
+    },
+    {
+      "code": "2.1",
+      "key": "main_road",
+      "classes": [
+        "2.1"
+      ],
+      "instances": 3333,
+      "videos": 155,
+      "status": "ok"
+    },
+    {
+      "code": "2.2",
+      "key": "end_main_road",
+      "classes": [
+        "2.2"
+      ],
+      "instances": 1013,
+      "videos": 44,
+      "status": "ok"
+    },
+    {
+      "code": "4.1.1",
+      "key": "mandatory_straight",
+      "classes": [
+        "4.1.1"
+      ],
+      "instances": 1728,
+      "videos": 109,
+      "status": "ok"
+    },
+    {
+      "code": "4.1.2",
+      "key": "mandatory_right",
+      "classes": [
+        "4.1.2"
+      ],
+      "instances": 1064,
+      "videos": 80,
+      "status": "ok"
+    },
+    {
+      "code": "4.1.3",
+      "key": "mandatory_left",
+      "classes": [
+        "4.1.3"
+      ],
+      "instances": 839,
+      "videos": 6,
+      "status": "low"
+    },
+    {
+      "code": "4.1.4",
+      "key": "mandatory_straight_or_right",
+      "classes": [
+        "4.1.4"
+      ],
+      "instances": 1018,
+      "videos": 53,
+      "status": "ok"
+    },
+    {
+      "code": "4.1.5",
+      "key": "mandatory_straight_or_left",
+      "classes": [
+        "4.1.5"
+      ],
+      "instances": 202,
+      "videos": 24,
+      "status": "ok"
+    },
+    {
+      "code": "4.1.6",
+      "key": "mandatory_right_or_left",
+      "classes": [
+        "4.1.6"
+      ],
+      "instances": 104,
+      "videos": 10,
+      "status": "low"
+    },
+    {
+      "code": "4.3",
+      "key": "roundabout",
+      "classes": [
+        "4.3"
+      ],
+      "instances": 786,
+      "videos": 26,
+      "status": "ok"
+    },
+    {
+      "code": "5.19.1",
+      "key": "pedestrian_crossing",
+      "classes": [
+        "5.19.1"
+      ],
+      "instances": 6916,
+      "videos": 195,
+      "status": "ok"
+    },
+    {
+      "code": "5.19.2",
+      "key": "pedestrian_crossing",
+      "classes": [
+        "5.19.2"
+      ],
+      "instances": 3265,
+      "videos": 148,
+      "status": "ok"
+    },
+    {
+      "code": "1.22",
+      "key": "pedestrian_crossing_ahead",
+      "classes": [
+        "1.22"
+      ],
+      "instances": 974,
+      "videos": 90,
+      "status": "ok"
+    },
+    {
+      "code": "1.23",
+      "key": "children",
+      "classes": [
+        "1.23"
+      ],
+      "instances": 1618,
+      "videos": 59,
+      "status": "ok"
+    },
+    {
+      "code": "5.20",
+      "key": "speed_bump",
+      "classes": [
+        "5.20"
+      ],
+      "instances": 1782,
+      "videos": 71,
+      "status": "ok"
+    },
+    {
+      "code": "1.17",
+      "key": "speed_bump_ahead",
+      "classes": [
+        "1.17"
+      ],
+      "instances": 1286,
+      "videos": 58,
+      "status": "ok"
+    },
+    {
+      "code": "5.23.1",
+      "key": "settlement_start",
+      "classes": [],
+      "instances": 0,
+      "videos": 0,
+      "status": "missing"
+    },
+    {
+      "code": "5.23.2",
+      "key": "settlement_start",
+      "classes": [],
+      "instances": 0,
+      "videos": 0,
+      "status": "missing"
+    },
+    {
+      "code": "5.24.1",
+      "key": "settlement_end",
+      "classes": [],
+      "instances": 0,
+      "videos": 0,
+      "status": "missing"
+    },
+    {
+      "code": "5.24.2",
+      "key": "settlement_end",
+      "classes": [],
+      "instances": 0,
+      "videos": 0,
+      "status": "missing"
+    }
+  ]
+}

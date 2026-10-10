@@ -1,0 +1,19 @@
+# systemd unit for the SignCoach web app (CLAUDE.md §16).
+# Installed by deploy/setup_host.sh as /etc/systemd/system/signcoach.service.
+# It runs uvicorn straight from the deploy checkout's virtualenv: `uv run` could try to sync or
+# download packages on every restart; the deploy workflow already ran `uv sync --frozen`.
+[Unit]
+Description=SignCoach web app
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=akmal
+WorkingDirectory=/home/akmal/signcoach-deploy
+EnvironmentFile=/home/akmal/signcoach-deploy/.env
+ExecStart=/home/akmal/signcoach-deploy/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

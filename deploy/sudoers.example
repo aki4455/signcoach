@@ -1,0 +1,4 @@
+# /etc/sudoers.d/signcoach — installed by deploy/setup_host.sh (validated with `visudo -cf` first).
+# Lets the GitHub Actions runner (running as akmal) restart the app without a password.
+# It allows exactly this one command and nothing else.
+akmal ALL=(root) NOPASSWD: /usr/bin/systemctl restart signcoach

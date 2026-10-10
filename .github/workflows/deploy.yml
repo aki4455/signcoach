@@ -1,0 +1,63 @@
+# Deploys SignCoach on the team machine (CLAUDE.md §16).
+# Runs on our self-hosted runner, so it must never be triggered by pull requests from forks:
+# only pushes to main and manual runs (e.g. redeploying the `final-submission` tag).
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Git ref to deploy (branch, tag or SHA). Empty = the commit that triggered the run."
+        required: false
+        default: ""
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, signcoach]
+    timeout-minutes: 30
+    env:
+      DEPLOY_DIR: /home/akmal/signcoach-deploy
+      PATH: /home/akmal/.local/bin:/usr/local/bin:/usr/bin:/bin
+    steps:
+      - name: Check out the requested commit in the deploy directory
+        run: |
+          REF="${{ github.event.inputs.ref }}"
+          [ -n "$REF" ] || REF="${{ github.sha }}"
+          if [ ! -d "$DEPLOY_DIR/.git" ]; then
+            git clone "https://github.com/${{ github.repository }}.git" "$DEPLOY_DIR"
+          fi
+          cd "$DEPLOY_DIR"
+          git fetch --force --tags origin '+refs/heads/*:refs/remotes/origin/*'
+          SHA=$(git rev-parse --verify --quiet "origin/$REF^{commit}" || git rev-parse --verify "$REF^{commit}")
+          git checkout --force "$SHA"
+          echo "SHA=$SHA" >> "$GITHUB_ENV"
+          echo "Deploying $SHA"
+
+      - name: Install Python dependencies
+        run: cd "$DEPLOY_DIR" && uv sync --frozen
+
+      - name: Build the frontend
+        run: cd "$DEPLOY_DIR/web" && npm ci --no-audit --no-fund && npm run build
+
+      - name: Run fast tests
+        run: cd "$DEPLOY_DIR" && SIGNCOACH_DEVICE=cpu uv run pytest -q tests -m "not slow"
+
+      - name: Restart the service
+        run: sudo /usr/bin/systemctl restart signcoach
+
+      - name: Wait until /health reports the new commit
+        run: |
+          for i in $(seq 1 60); do
+            if curl -fsS http://127.0.0.1:8000/health | grep -q "\"git_sha\":\"$SHA\""; then
+              echo "Live: $SHA"; exit 0
+            fi
+            sleep 2
+          done
+          echo "/health never reported $SHA"; curl -sS http://127.0.0.1:8000/health || true
+          exit 1
