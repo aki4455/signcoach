@@ -1,0 +1,44 @@
+# Secrets and local config
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Frontend
+web/node_modules/
+web/dist/
+
+# Never commit data, media or weights (CLAUDE.md hard rule 8) — they live in $SIGNCOACH_DATA
+*.pt
+*.pth
+*.onnx
+*.engine
+*.mp4
+*.mov
+*.mkv
+*.avi
+*.MOV
+*.MP4
+*.gpx
+*.sqlite3
+*.db
+runs/
+data/
+datasets/
+uploads/
+jobs/
+media/
+models/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
