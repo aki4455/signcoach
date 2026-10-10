@@ -18,7 +18,7 @@
 - Until the fine-tuned model exists, everything is built **model-independent**: the sign detector sits behind an adapter (§10.3) with a replay implementation (detections from JSON) and an Ultralytics implementation (placeholder now, fine-tuned later). Swapping models is a config change.
 
 **Order of work from now:**
-1. **M0** skeleton + deploy (code done; waiting for the humans' GitHub login and root setup, §16).
+1. **M0** skeleton + deploy: PR #1 open, Funnel live at https://signcoach.taild1ce46.ts.net, runner registered; goes live when the runner service is installed (`sudo bash deploy/setup_host.sh` again) and PR #1 is merged.
 2. **M1** the whole pipeline without depending on the final model (ingest, frames, detector adapter, voting, relevance, vehicles, blur, render, report, API, worker). Runs end to end with the replay detector and the placeholder model.
 3. **M2** rules engine and **M4** frontend only need the §9 contracts and the fixture (both exist after M0) — a second Claude Code session can do them in parallel (M2 first, then M4), working in its own `git worktree` on its own branch. If you are that second session, leave M0, M1 and the training track to the first session, and don't edit this file — ask the first session to.
 4. **Training track T** (§14.2): T1–T4 done, T5 running. Report training progress in every review.
@@ -47,7 +47,7 @@
 ## 2. Hard rules (never break these)
 
 1. **No faked results.** Never hard-code outputs for any video, never hand-edit report JSON, never show a metric that was not produced by a script in `eval/`. Sample lessons are produced by the real pipeline (`scripts/seed_samples.py`).
-2. **Never invent official texts or legal values.** Sign meanings, default speed limits and how far a sign's effect extends must come from official road traffic rules, and every entry records its source document. Humans choose the source (the demo footage and sign numbering are Russian; the product targets Uzbekistan). Create the schema and placeholders marked `"verified": false` and `TODO`; humans fill them in. English working drafts are allowed but must be marked as drafts.
+2. **Never invent official texts or legal values.** Sign meanings, default speed limits and how far a sign's effect extends must come from the official **Russian Road Traffic Rules** (ПДД РФ, Government Decree No. 1090 of 23.10.1993, current edition — chosen by the team on Saturday 23:10 because the demo footage and sign numbering are Russian), and every entry records its source (section, edition, URL). Claude may copy official text **verbatim** from the source into the catalogue — never paraphrase it and present it as official. English versions are draft translations and are labelled as such. Every entry stays `"verified": false` until a Russian-speaking team member has checked it against the source (§11.2).
 3. **Never tell the driver an action is permitted** ("you may turn left"). The system only warns and explains.
 4. **Privacy:** no unblurred faces or licence plates in anything we publish or serve (annotated video, thumbnails, sample lessons, README images). Strip audio from all outputs.
 5. **Licences:** every dataset, model weight and third-party code goes into `DATA_SOURCES.md` with its licence. Do not copy code from repositories without a licence (e.g. `Aillustrate/traffic-sign-detection` may be cited as related work only).
@@ -67,7 +67,7 @@
   Known issues / shortcuts: <bullets>
   Next: <next milestone and what you need from humans>
   ```
-- Humans merge to `main`; a push to `main` deploys (§16).
+- Each milestone is a pull request on https://github.com/aki4455/signcoach. Humans merge to `main` (or tell Claude to merge with `gh pr merge`); a push to `main` deploys (§16).
 - Ask before: adding heavy dependencies, changing a data contract in `pipeline/types.py`, deleting files, or changing a decision in this file.
 - Small commits, conventional messages (`feat:`, `fix:`, `chore:`, `test:`, `docs:`).
 - Every module gets a top docstring explaining what it does and why, in plain English. Thresholds live in config, not in code.
@@ -382,15 +382,21 @@ If a required class is missing from the detector, report it in the M6 review and
 ```json
 {
   "code": "3.24", "key": "speed_limit", "category": "prohibitory", "shape": "round",
-  "name": "Maximum speed limit (draft)",
-  "meaning": "Draft: do not exceed the speed shown. TODO: official text",
+  "official": {"name_ru": "<verbatim from ПДД>", "meaning_ru": "<verbatim from ПДД>"},
+  "name": "Maximum speed limit (draft translation)",
+  "meaning": "Draft translation of the official text: ...",
   "voice_key": "speed_limit_{value}",
   "detectable": true,
-  "source": "TODO: official rules document + annex/section",
+  "source": {"document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)", "edition": "ред. от 28.08.2026",
+             "section": "Приложение 1, раздел 3", "url": "https://www.consultant.ru/document/cons_doc_LAW_2709/bf1f4781b8aa1172e9993c89c36db0dcdc88c495/"},
   "verified": false
 }
 ```
 `shape` feeds the facing heuristic (§10.5); `detectable` = the current detector's class map contains the code (signs that cannot be detected are left out of "signs not met yet").
+
+**Where the official text is** (current edition on ConsultantPlus, checked Saturday 23:10: ред. от 28.08.2026): full rules https://www.consultant.ru/document/cons_doc_LAW_2709/ — Appendix 1 *Дорожные знаки* by group: 1 warning `…/b284ec5e9ad7be3925387bbb60d7916447e5f3fe/`, 2 priority `…/f813c443e749db7b760a9fb7729a4e4ccdb2f3ea/`, 3 prohibitory `…/bf1f4781b8aa1172e9993c89c36db0dcdc88c495/` (also the zone-of-action rules for 3.24 etc.), 4 mandatory `…/cfcce287ebd89cee09dc5b780337286c556b0978/`, 5 special regulations `…/abf54a3a53893a59aab95ff7cfb06d2ce2b47435/`, 8 plates `…/d507c6724f67c7a6ff27ba125eb7db3e4d36a3a6/`; section 10 *Скорость движения* (default limits) `…/803907f6876a655f77995888208488d4bfccf247/`.
+
+**Process (M2):** Claude fetches those pages and copies, for every §11.1 sign, the official name and meaning verbatim into `official`, the zone-of-action rules into `rules.json` scopes and the default limits from section 10 into `rules.json` defaults, each with `source`; then writes English draft translations. It also generates `docs/RULES_CHECKLIST.md` (sign · official text · draft translation · link). A Russian-speaking team member checks each line against the source (~20 min) and sets `"verified": true`. Unverified entries are shown in the app with a "draft" label.
 
 ### 11.3 `rules.json`
 ```json
@@ -509,7 +515,8 @@ Scripts (each writes `eval/results/<name>.json` and a markdown table):
 - **Root steps** are in `deploy/setup_host.sh`, run by a human with `sudo bash deploy/setup_host.sh`: installs Tailscale, the sudoers rule, the service and the runner service. Step-by-step guide: `deploy/FUNNEL.md`.
 - **Deploy directory** is a separate git clone (`~/signcoach-deploy`), not the dev checkout.
 - **Workflow** `.github/workflows/deploy.yml`: triggers on push to `main` and `workflow_dispatch` (input: `ref`, for redeploying the submitted tag). Runs on `[self-hosted, signcoach]`. Steps: fetch + `git checkout --force <sha>` in the deploy dir → `uv sync --frozen` → `npm ci && npm run build` in `web/` → `uv run pytest -q tests -m "not slow"` → `sudo systemctl restart signcoach` (allowed by a sudoers rule for exactly that command; see `deploy/sudoers.example`) → poll `/health` until it returns the new git SHA, else fail.
-- **Public URL:** Tailscale Funnel to port 8000: `sudo tailscale funnel --bg 8000` (Funnel enabled for the tailnet in the admin console; machine named `signcoach` so the URL is `https://signcoach.<tailnet>.ts.net`). It can take ~10 minutes the first time. Document steps in `deploy/FUNNEL.md`; test from a phone on mobile data.
+- **Public URL:** **https://signcoach.taild1ce46.ts.net** — Tailscale Funnel to port 8000 (`sudo tailscale funnel --bg 8000`, machine `signcoach`; live since Saturday 23:00). Steps in `deploy/FUNNEL.md`; test from a phone on mobile data.
+- **Repo and runner:** https://github.com/aki4455/signcoach (public). Self-hosted runner `signcoach` (labels `self-hosted, signcoach`) in `~/actions-runner`, installed as a service by `deploy/setup_host.sh`. `gh` is logged in as `aki4455`.
 - **Runner security:** the repo is public and the runner executes code on this machine. The workflow triggers only on push to `main` and `workflow_dispatch`, never on pull requests; repo setting *Fork pull request workflows → require approval for all outside collaborators*; no fork PRs are merged during the event.
 - **Uptime:** the site is monitored after the deadline. Windows must not sleep or install updates, and WSL can stop when no WSL terminal is open — keep one open (see `deploy/FUNNEL.md`).
 - **Freeze:** at the deadline, tag `final-submission`; after that, only `workflow_dispatch` with that tag.
@@ -539,8 +546,9 @@ If time runs short, cut in this order: student progress page → Leaflet map →
 
 ## 19. What you need from the humans (ask for it at the right milestone)
 
-- M0: `gh auth login` (as the account whose SSH key is on this machine, `aki4455`) so Claude can create the repo, open PRs and register the runner; then `sudo bash deploy/setup_host.sh`, `sudo tailscale up --hostname=signcoach`, Funnel enabled, `sudo tailscale funnel --bg 8000`.
-- M2: official texts for `signs.json`, default speed limits and scope rules for `rules.json`, and which rules document is the source (until then: TODO placeholders).
+- M0: done except re-running `sudo bash deploy/setup_host.sh` (installs the runner service) and merging PR #1.
+- M1 (now): Russian dashcam test clips — a teammate collects them (licence/permission recorded, not from the training data, 30–180 s, landscape, many signs, some with violations, some at night).
+- M2: a Russian-speaking team member checks `docs/RULES_CHECKLIST.md` against ПДД and marks entries verified (§11.2).
 - M3: calibration route video + GPX (daylight), measured camera height and the phone model (for field of view).
 - M4: nothing — voice prompts are generated with a TTS model (Claude provides the list of keys and texts for review).
 - M6: the decision on which model to use.
