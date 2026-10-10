@@ -35,7 +35,8 @@ class RenderJob:
     normalized: Path
     width: int                                   # analysis (normalized) frame size
     height: int
-    fps: float
+    video_fps: float                             # normalized video frame rate
+    step: int                                    # every step-th frame is analysed and rendered
     objects_by_frame: list[list[ObjectBox]]      # analysis pass: people and vehicles per frame
     sign_boxes: dict[int, list[tuple[tuple, str, bool]]]  # frame -> [(box, label, relevant)]
     timeline: list[RuleState]
@@ -117,13 +118,14 @@ def render(job: RenderJob, out_dir: Path, log_path: Path, faces: FaceDetector | 
     log = open(log_path, "wb")  # ffmpeg messages stay in the private job folder
     enc = subprocess.Popen(
         ["ffmpeg", "-nostdin", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "bgr24", "-s", f"{w}x{h}",
-         "-r", f"{job.fps:.6f}", "-i", "-", "-an", "-c:v", "libx264", "-preset", out_cfg["preset"],
+         "-r", f"{job.video_fps / job.step:.6f}", "-i", "-", "-an", "-c:v", "libx264", "-preset", out_cfg["preset"],
          "-crf", str(out_cfg["crf"]), "-pix_fmt", "yuv420p", "-movflags", "+faststart",
          str(out_dir / "annotated.mp4")], stdin=subprocess.PIPE, stderr=log)
     saved: dict[str, str] = {}
     n = max(1, len(job.objects_by_frame))
     try:
-        for idx, t, frame in frames.iter_frames(job.normalized, job.width, job.height, job.fps, out_cfg["height"]):
+        for idx, t, frame in frames.iter_frames(job.normalized, job.width, job.height, job.video_fps, job.step,
+                                                out_cfg["height"]):
             check_deadline()
             objects = job.objects_by_frame[idx] if idx < len(job.objects_by_frame) else []
             blur_frame(frame, faces, objects, scale, privacy_cfg)            # 1. privacy first

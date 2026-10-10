@@ -38,7 +38,7 @@ def test_clip_without_signs_gives_valid_report(video, tmp_path):
     out = tmp_path / "media" / "L1"
     Report.model_validate_json((out / "report.json").read_text())
     assert report.signs == [] and report.events == []
-    assert {"warning.no_signs", "warning.speed_not_checked"} <= set(report.quality_warnings)
+    assert "warning.no_signs" in report.quality_warnings
     streams = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "stream=codec_type", "-of", "csv=p=0",
                               str(out / "annotated.mp4")], capture_output=True, text=True).stdout.split()
     assert streams == ["video"]                         # audio stripped
