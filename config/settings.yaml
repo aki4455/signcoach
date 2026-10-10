@@ -99,9 +99,9 @@ egomotion:
 
 speed:
   smooth_s: 1.0
-  scale_k: 1.0                    # set by scripts/calibrate_speed.py
+  scale_k: 1.014                    # set by scripts/calibrate_speed.py
   calibrated: false               # true once scale_k/err_model come from a calibration clip
-  err_model: {a: 3.0, b: 0.10}    # km/h, err = a + b * v; replaced by calibration results
+  err_model: {a: 1.0, b: 0.529}    # km/h, err = a + b * v; replaced by calibration results
   min_quality: 0.2                # correlation peak strength below this -> speed_kmh = None
 
 stop:

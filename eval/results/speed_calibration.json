@@ -1,0 +1,42 @@
+{
+  "video": "ru_01_moscow_kremlin_speedOSD.mp4",
+  "truth": "eval/ground_truth/speed_ru_01.csv",
+  "moments": 27,
+  "used_for_scale": 23,
+  "scale_k": 1.014,
+  "err_model": {
+    "a": 1.0,
+    "b": 0.529
+  },
+  "camera": {
+    "horizon_y": 425.0043335661293,
+    "horizon_method": "vanishing_point",
+    "hfov_deg": 70,
+    "fps": 12.5,
+    "width": 1280,
+    "height": 720
+  },
+  "bands": [
+    {
+      "band_kmh": [
+        0,
+        20
+      ],
+      "p68_error_kmh": 5.7
+    },
+    {
+      "band_kmh": [
+        20,
+        40
+      ],
+      "p68_error_kmh": 18.4
+    },
+    {
+      "band_kmh": [
+        40,
+        60
+      ],
+      "p68_error_kmh": 28.2
+    }
+  ]
+}
