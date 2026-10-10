@@ -3,7 +3,8 @@
 A driving-school instructor uploads the **dashcam video** of a student's lesson and gets a report of
 every road sign the car passed, what it means (official text of the traffic rules), which rule was in
 force, and where the student may have broken it — with the video moment as evidence, voice prompts at
-the moments they would have sounded in the car, and faces and number plates blurred.
+the moments they would have sounded in the car (when the sign is recognised, a median 2.2 s before
+passing it), and faces and number plates blurred.
 
 - **Live site:** https://signcoach.taild1ce46.ts.net
 - **Built for:** WIUT Hackathon 2026 final, Computer Vision track. Product target: driving schools in
