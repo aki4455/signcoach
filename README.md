@@ -62,6 +62,7 @@ Every number below is written into `eval/results/` by a script (`eval/*.py`, or 
 | Our detector vs a pretrained European sign model, on the signs both know (same frames) | mean AP50 **0.81 vs 0.65**; 17 vs 26 ms per image on an RTX 3070 Ti | [`model_comparison.md`](eval/results/model_comparison.md) |
 | Our sign tracker vs ByteTrack on 12 demo clips (8 Tashkent, 4 Moscow) | **254 vs 166** signs kept after voting (170 vs 115 judged to apply to us) | [`tracker_comparison.md`](eval/results/tracker_comparison.md) |
 | Speed from video vs the dashcam's on-screen GPS speed, test clip ru_02 (highway, 64–89 km/h) | estimate for 28% of moments, mean error 45.6 km/h — **fails at highway speed** | [`speed_eval.md`](eval/results/speed_eval.md) |
+| Processing time and energy (6 clips: 4 Tashkent 720p, 2 Moscow 1080p; RTX 3070 Ti) | **95 s per minute of video** (1.45–1.74× real time — slower than our real-time target); GPU board power 56 W on average → 0.089 kWh per lesson-hour | [`benchmark.md`](eval/results/benchmark.md) |
 | Failure cases on the held-out frames | the largest misses and most confident false alarms, as images | [`failure_gallery/`](eval/results/failure_gallery/) |
 
 ## Run it locally
@@ -138,7 +139,8 @@ Funnel publishes it over HTTPS. Setup steps: [`deploy/FUNNEL.md`](deploy/FUNNEL.
   estimate, can read 0 km/h on dark featureless asphalt, and misses some short stops. It is calibrated on
   one dashcam only, so speeding is reported as "possible" for all uploads.
 - **Relevance heuristics** can misjudge signs on wide roads, slip roads and sharp bends.
-- Processing is designed for uploads up to 3 minutes.
+- Processing is designed for uploads up to 3 minutes and takes about 1.6× the video's length on our RTX 3070 Ti
+  (analysis and rendering the blurred video take about half each); the target was real time.
 
 ## Data sources and licences
 
