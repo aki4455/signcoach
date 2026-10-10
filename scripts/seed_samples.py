@@ -29,7 +29,7 @@ SAMPLES = [  # file under CLIPS, lesson label — Tashkent clips used with the o
     ("tashkent/UZB_Toshkent_Qf6QPtOhC7I_s17-137.mp4", "Tashkent, Islam Karimov street"),
     ("tashkent/UZB_Toshkent_nxg4Fm4VazQ_s0-120.mp4", "Tashkent, Alisher Navoi street"),
     ("tashkent/UZB_Toshkent_EG0g-sB1lOk_s0-120.mp4", "Tashkent, downtown Presidential track"),
-    ("tashkent/UZB_Toshkent_ibv10yurtIg_s14-134.mp4", "Tashkent, Shota Rustaveli street"),
+    ("tashkent/UZB_Toshkent_Fr526_8i3r8_s7-127.mp4", "Tashkent, Qoraqamish"),
 ]
 
 
