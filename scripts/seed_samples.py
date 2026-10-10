@@ -3,7 +3,8 @@
 Each sample video goes through the real pipeline — `process_job`, exactly like an upload — and the
 lesson is marked as a sample. Nothing in the reports is edited by hand. After a full run the site's
 samples are exactly SAMPLES: older samples (also ones no longer listed) are removed with their
-generated media; `--only` re-seeds just the named files. Run it against the server's instance, with
+generated media — only after the new ones exist, so the site never shows no samples; `--only`
+re-seeds just the named files. Run it against the server's instance, with
 the GPU free:
 
     SIGNCOACH_INSTANCE=prod SIGNCOACH_DEVICE=cuda:0 uv run python scripts/seed_samples.py
@@ -43,11 +44,9 @@ def main() -> None:
     models = Models.load(s.cfg, s.models_dir, s.device)
     wanted = [x for x in SAMPLES if not args.only or x[0] in args.only]
 
-    with db.session(s.db_path) as con:  # remove the samples being replaced (all of them on a full run)
-        for row in con.execute("SELECT id, label FROM lessons WHERE is_sample = 1").fetchall():
-            if not args.only or any(row["label"] == label for _, label in wanted):
-                shutil.rmtree(s.media_dir / row["id"], ignore_errors=True)
-                con.execute("DELETE FROM lessons WHERE id = ?", (row["id"],))
+    with db.session(s.db_path) as con:  # samples to replace (all of them on a full run), removed at the end
+        replaced = [row["id"] for row in con.execute("SELECT id, label FROM lessons WHERE is_sample = 1").fetchall()
+                    if not args.only or any(row["label"] == label for _, label in wanted)]
 
     for name, label in wanted:
         job_id, lesson_id = f"sample-{secrets.token_hex(4)}", secrets.token_urlsafe(16)
@@ -63,6 +62,12 @@ def main() -> None:
         db.add_lesson(s.db_path, report.lesson, s.media_dir / lesson_id / "report.json",
                       s.media_dir / lesson_id / "annotated.mp4", is_sample=True)
         print(f"{label}: lesson {lesson_id} in {time.monotonic() - t:.0f} s — {report.summary}")
+
+    with db.session(s.db_path) as con:
+        for lesson_id in replaced:
+            shutil.rmtree(s.media_dir / lesson_id, ignore_errors=True)
+            con.execute("DELETE FROM lessons WHERE id = ?", (lesson_id,))
+    print(f"replaced {len(replaced)} older sample(s)")
 
 
 if __name__ == "__main__":
