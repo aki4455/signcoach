@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { ApiError, getJob, rememberLesson, uploadVideo } from "../api";
+import { ApiError, getJob, listLessons, rememberLesson, uploadVideo } from "../api";
 import { t } from "../i18n";
 import { linkProps, navigate } from "../router";
-import type { JobStatus } from "../types";
+import type { JobStatus, LessonSummary } from "../types";
 
 /** Upload a dashcam video (chunked), then follow the processing job until the report is ready. */
 export default function UploadPage() {
@@ -17,6 +17,11 @@ export default function UploadPage() {
   const [jobId, setJobId] = useState<string | null>(null);
   const [job, setJob] = useState<JobStatus | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [samples, setSamples] = useState<LessonSummary[]>([]);
+
+  useEffect(() => {
+    listLessons([]).then((all) => setSamples(all.filter((l) => l.is_sample))).catch(() => undefined);
+  }, []);
 
   useEffect(() => {
     if (!jobId) return;
@@ -126,6 +131,21 @@ export default function UploadPage() {
                     ? ` — ${job.queue_position} video(s) ahead` : ""}`} />
       )}
       {error && <p className="rounded-lg bg-red-50 p-3 text-red-800">{error}</p>}
+
+      {samples.length > 0 && (
+        <section>
+          <h2 className="mb-2 text-lg font-semibold">Or open a sample lesson</h2>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {samples.map((l) => (
+              <a key={l.id} {...linkProps(`/lessons/${l.id}`)}
+                 className="overflow-hidden rounded-xl border border-slate-200 bg-white hover:border-slate-400">
+                <img src={`/media/${l.id}/poster.jpg`} alt="" loading="lazy" className="aspect-video w-full bg-slate-200 object-cover" />
+                <span className="block p-2 text-sm font-medium">{l.label}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }
