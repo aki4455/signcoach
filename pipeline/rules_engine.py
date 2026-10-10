@@ -8,8 +8,9 @@ stores a `RuleState` snapshot every time they change. Then it judges speed and s
 What it reports (severity decides colour and score):
 - sign_explained   first time each sign code + value appears (explanation + voice prompt)
 - speeding         over the limit even after subtracting the speed error -> violation
-- possible_speeding over the limit but within the error, or the limit is uncertain (a default limit
-                   we cannot confirm without settlement signs, or a sign with a conditions plate)
+- possible_speeding over the limit but within the error, or the speed/limit is uncertain: a default
+                   limit we cannot confirm without settlement signs, a sign with a conditions plate,
+                   or a camera whose speed estimate was never calibrated (speed.calibrated = false)
 - stop_not_made / stop_ok   slowest speed around a stop sign above / below `stop.speed_kmh`;
                    no speed data there -> info "stop not checked", never a violation
 - turn_ban_violation / turn_ban_complied   a turn against a no-turn sign or outside a mandatory
@@ -249,7 +250,8 @@ def _judge_speed(motion: list[MotionSample], periods: list[tuple[float, _Limit]]
                 if current:
                     longest = max(longest, current[-1].t - current[0].t + dt)
             certain = longest >= min_dur - 1e-6
-            reason = "conditional" if lim.conditional else ("default_limit" if lim.source == "default" else None)
+            reason = ("conditional" if lim.conditional else "default_limit" if lim.source == "default"
+                      else None if settings["speed"].get("calibrated", False) else "uncalibrated")
             violation = certain and reason is None
             detail = {"limit_kmh": lim.value, "limit_source": lim.source,
                       "max_speed_kmh": round(max(m.speed_kmh for m in run), 1),

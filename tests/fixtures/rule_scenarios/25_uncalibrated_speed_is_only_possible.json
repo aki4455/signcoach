@@ -1,0 +1,46 @@
+{
+ "name": "25_uncalibrated_speed_is_only_possible",
+ "description": "Same drive as 03 but the camera was never calibrated: the speed is an estimate, so speeding is only 'possible'.",
+ "settings": {
+  "speed": {
+   "calibrated": false
+  }
+ },
+ "signs": [
+  {
+   "id": "s1",
+   "code": "3.24",
+   "value": 60,
+   "t": 2
+  }
+ ],
+ "speed": [
+  [
+   0,
+   10,
+   50
+  ],
+  [
+   10,
+   16,
+   75
+  ],
+  [
+   16,
+   30,
+   50
+  ]
+ ],
+ "expect": {
+  "events": [
+   {
+    "type": "possible_speeding",
+    "severity": "possible",
+    "t": 10,
+    "detail": {
+     "reason": "uncalibrated"
+    }
+   }
+  ]
+ }
+}

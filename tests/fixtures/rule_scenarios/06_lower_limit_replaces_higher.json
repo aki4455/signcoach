@@ -48,5 +48,10 @@
     40
    ]
   ]
+ },
+ "settings": {
+  "speed": {
+   "calibrated": true
+  }
  }
 }
