@@ -1,0 +1,50 @@
+{
+  "settings": {
+    "scale_k": 1.014,
+    "err_model": {
+      "a": 1.0,
+      "b": 0.529
+    },
+    "calibrated": false
+  },
+  "clips": {
+    "ru_02 (test)": {
+      "moments": 36,
+      "with_estimate": 10,
+      "coverage": 0.278,
+      "mae_kmh": 45.6,
+      "p90_abs_err_kmh": 70.4,
+      "bias_kmh": 8.4,
+      "stops_true": 0,
+      "stops_found": 0,
+      "false_stops": 0,
+      "camera": {
+        "horizon_y": 458.10428427564375,
+        "horizon_method": "vanishing_point",
+        "hfov_deg": 70,
+        "fps": 12.5,
+        "width": 1280,
+        "height": 720
+      }
+    },
+    "ru_01 (calibration clip, in-sample)": {
+      "moments": 36,
+      "with_estimate": 27,
+      "coverage": 0.75,
+      "mae_kmh": 12.6,
+      "p90_abs_err_kmh": 29.9,
+      "bias_kmh": 2.6,
+      "stops_true": 1,
+      "stops_found": 1,
+      "false_stops": 0,
+      "camera": {
+        "horizon_y": 425.0043335661293,
+        "horizon_method": "vanishing_point",
+        "hfov_deg": 70,
+        "fps": 12.5,
+        "width": 1280,
+        "height": 720
+      }
+    }
+  }
+}

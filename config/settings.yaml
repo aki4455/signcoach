@@ -30,8 +30,8 @@ analysis_fps: 15                  # frames analysed per second
 
 detect:
   backend: ultralytics            # ultralytics | replay
-  model: streetsignsense_y12s     # switched at the M6 decision
-  imgsz: 1280
+  model: dognellaf_y11s          # M6 decision (Sunday 02:10): our fine-tuned YOLO11s; eval/results/model_comparison.md
+  imgsz: 1280                     # trained at 1024; 1280 scored higher on held-out videos (0.81 vs 0.79)
   conf: 0.25                      # low on purpose; voting filters
   half: true                      # FP16 on CUDA
   tracker: bytetrack.yaml
@@ -99,9 +99,9 @@ egomotion:
 
 speed:
   smooth_s: 1.0
-  scale_k: 1.0                    # set by scripts/calibrate_speed.py
+  scale_k: 1.014                    # set by scripts/calibrate_speed.py
   calibrated: false               # true once scale_k/err_model come from a calibration clip
-  err_model: {a: 3.0, b: 0.10}    # km/h, err = a + b * v; replaced by calibration results
+  err_model: {a: 1.0, b: 0.529}    # km/h, err = a + b * v; replaced by calibration results
   min_quality: 0.2                # correlation peak strength below this -> speed_kmh = None
 
 stop:
