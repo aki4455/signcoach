@@ -40,7 +40,7 @@ so a second cheap decode is better than holding 7 GB of frames in memory.
 ## 4. Sign detection — `pipeline/detect.py`, `training/`
 
 **What.** YOLO11s fine-tuned by us on the Dognellaf Russian road-sign dataset (89 classes: signs by GOST
-number + traffic lights), at 1024 px, 40 epochs, with ByteTrack tracking across frames. A class map turns
+number + traffic lights), at 1024 px, 40 epochs. A class map turns
 model classes into sign codes and km/h values (3.24.1 … 3.24.11 = 10 … 110 km/h, read off example crops).
 
 **Training choices.** Split **by source video** (730 videos; 119 held out) — a random frame split would
@@ -52,7 +52,21 @@ into "no left turn" and mirror digits. Mosaic off in the last 3 epochs.
 held-out Russian frames it is much weaker — see `eval/results/model_comparison.md`.
 **Q: What can't it see?** No-left-turn, no-U-turn and settlement signs are absent from the training data.
 
-## 5. Track voting — `pipeline/signs.py`
+## 5. Tracking and voting — `pipeline/tracking.py`, `pipeline/signs.py`
+
+**Tracking (our own).** The detector works frame by frame; the tracker decides which boxes belong to the
+same physical sign. Each track predicts where its sign will be in the next frame from how it has been
+moving and growing; a new box joins the track it is closest to, measured in sign sizes; closest pairs are
+linked first, so two signs on one pole keep their own tracks. A track ends after 0.5 s unseen.
+
+**Why not ByteTrack** (Ultralytics' built-in tracker, our first version): it links boxes only when they
+overlap. At 12.5–15 analysed frames per second a sign close to the car moves more than its own width
+between frames, so ByteTrack dropped it — on the Moscow highway clip it found no sign at all although the
+detector saw a keep-right sign at 0.95 confidence in 9 frames in a row. Numbers: `eval/results/tracker_comparison.md`.
+
+**Q: Why not just analyse more frames per second?** Even at 25 fps the boxes of a close sign often overlap by
+less than ByteTrack needs, and it would double the GPU time.
+
 
 **What.** For each tracked sign, the class with the highest **sum** of confidences wins; the sign is kept only
 if seen in ≥3 frames with mean confidence ≥0.5. Tracks of the same sign split by a tracker id switch are

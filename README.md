@@ -16,7 +16,7 @@ the moments they would have sounded in the car, and faces and number plates blur
  upload (chunked, resumable) ──> job queue (SQLite, one worker, models stay loaded)
                           │
                           ▼
-  ingest ──> every n-th frame ──┬──> sign detector (our fine-tuned YOLO11s) + ByteTrack ──> track voting ──> relevance
+  ingest ──> every n-th frame ──┬──> sign detector (our fine-tuned YOLO11s) + our sign tracker ──> track voting ──> relevance
   (probe, limits, normalize:    ├──> vehicles & people (YOLO11n) + licence plates (YOLO11s) ──> blur, speed masks
    fps, HDR, no audio)          ├──> ego-motion from the video: speed (road seen from above), turns, stops
                                 └──> faces (YuNet) in the render pass
@@ -31,6 +31,9 @@ the moments they would have sounded in the car, and faces and number plates blur
 - **No LLM in the pipeline.** Everything is our own deterministic code plus our detectors.
 - **Sign detector:** YOLO11s fine-tuned on 17,066 frames of the Dognellaf Russian road-sign dataset
   (89 classes), split **by source video** so validation frames come from videos never seen in training.
+- **Sign tracker (ours):** links one sign's boxes from frame to frame by predicting where it moves
+  (direction, speed and growth on screen). Ultralytics' ByteTrack needs boxes to overlap, which fails for
+  close signs at city/highway speed — see [`eval/results/tracker_comparison.md`](eval/results/tracker_comparison.md).
 - **Track voting:** a sign counts only after several frames agree (sum of confidences per class).
 - **Relevance:** side of the road (by how the sign drifts as we approach), whether it faces us, whether
   we approach it — every decision is written down in words in the report.

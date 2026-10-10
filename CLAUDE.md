@@ -104,7 +104,7 @@
 | Area | Choice |
 |---|---|
 | Python | 3.12, managed with `uv` |
-| Detection & tracking | Ultralytics (YOLO11 / YOLO12), built-in ByteTrack via `model.track(..., persist=True, tracker="bytetrack.yaml")` |
+| Detection & tracking | Ultralytics (YOLO11 / YOLO12) `model.predict` (class-agnostic NMS) + **our sign tracker** `pipeline/tracking.py` (motion prediction; replaced ByteTrack on Sunday, team decision — ByteTrack lost close signs at speed; still selectable with `detect.tracker: bytetrack.yaml` for comparison) |
 | Deep learning | PyTorch with CUDA |
 | Vision | OpenCV (`opencv-python-headless`), NumPy |
 | Video | `ffmpeg` / `ffprobe` via `subprocess` (normalize, rotate, encode); render by piping raw frames to `ffmpeg` stdin rather than `cv2.VideoWriter` |
@@ -121,7 +121,7 @@
  upload (chunked) ──> job queue (SQLite, 1 worker)
                           │
                           ▼
-  ingest ──> frames @ analysis_fps ──┬──> sign detector + ByteTrack ──> track voting ──> relevance ──┐
+  ingest ──> frames @ analysis_fps ──┬──> sign detector + tracker ───> track voting ──> relevance ──┐
   (ffprobe, normalize,               ├──> vehicle detector (COCO) ──> masks for speed, plate blur     │
    rotation, strip audio)            ├──> ego-motion: speed (road-plane BEV), yaw/turns, stops ───────┤
                                      └──> faces (YuNet) ──> blur                                       │
@@ -302,15 +302,16 @@ All models forbid unknown fields. `tests/fixtures/report.sample.json` is generat
 The final model does not exist yet, so nothing outside `detect.py` may depend on a specific model.
 - `SignDetector` protocol: `reset()` (new video) and `detect(frame, t, frame_idx) -> list[Detection]` (with track ids).
 - `ReplayDetector`: reads detections from a JSON file. Used by tests, by the frontend fixtures, and to develop every later stage without a GPU.
-- `UltralyticsDetector(model_name)`: loads weights and class map from config and runs `model.track(frame, persist=True, tracker="bytetrack.yaml", imgsz=detect.imgsz, conf=detect.conf, device=...)` frame by frame. Used with the placeholder now and the fine-tuned model later.
+- `UltralyticsDetector(model_name)`: loads weights and class map from config and runs `model.predict(frame, imgsz=detect.imgsz, conf=detect.conf, agnostic_nms=True, device=...)` frame by frame; `SignTracker` (`pipeline/tracking.py`, thresholds under `track.*`) links the boxes into tracks by predicting each sign's motion (centre velocity + growth) and matching by distance in sign sizes, closest pairs first. `detect.tracker: bytetrack.yaml` switches back to Ultralytics' ByteTrack (`model.track(..., persist=True)`) for comparison (`eval/compare_trackers.py`).
 - Selected by `detect.backend` (`ultralytics` | `replay`) and `detect.model`.
-- Ultralytics 8.4 notes: its default tracker is TrackTrack, so `bytetrack.yaml` is passed explicitly; FP16 is `quantize=16` (`half` is deprecated); `reset()` resets the trackers and their id counter between videos.
+- Ultralytics 8.4 notes: its default tracker is TrackTrack, so `bytetrack.yaml` is passed explicitly when ByteTrack is chosen; FP16 is `quantize=16` (`half` is deprecated); `reset()` resets the tracker and its id counter between videos.
+- Why our own tracker: ByteTrack links boxes only when they overlap; at 12.5–15 analysed frames/s a close sign at 50–80 km/h moves more than its own width between frames, so ByteTrack dropped it (ru_02: 0 signs although the detector saw a keep-right sign at 0.95 in 9 consecutive frames).
 - Map `model.names[class_id]` → `sign_code` (+ `value` for speed limits) using `config/class_maps/<model>.yaml`. Classes not in the map are kept with `sign_code=None` (shown only in debug). Swapping the model must only require a config change and a class map.
 - `scripts/dump_detections.py` runs a detector over a video and saves the JSON that `ReplayDetector` reads, so later stages can be iterated without re-running detection.
 
 ### 10.4 Track voting (`signs.py`)
 - Per track: winning class = argmax of summed confidence; keep if `n_frames ≥ vote.min_frames` and mean winning conf ≥ `vote.min_conf`.
-- `t_pass` = last time seen. Merge tracks with the same code whose times overlap or are within `vote.dedupe_window_s` and whose boxes are near (ByteTrack ID switches).
+- `t_pass` = last time seen. Merge tracks with the same code whose times overlap or are within `vote.dedupe_window_s` and whose boxes are near (tracker ID switches).
 - Keep a single-frame baseline path (no voting) behind a flag so `eval/` can measure what voting adds.
 
 ### 10.5 Relevance (`relevance.py`)
