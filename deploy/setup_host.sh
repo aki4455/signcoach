@@ -40,7 +40,11 @@ fi
 echo "== 4/4 GitHub Actions runner service"
 if [ -f "$HOME_DIR/actions-runner/.runner" ]; then
   cd "$HOME_DIR/actions-runner"
-  ./svc.sh status >/dev/null 2>&1 || ./svc.sh install "$APP_USER"
+  if ls /etc/systemd/system/actions.runner.*.service >/dev/null 2>&1; then
+    echo "   runner service already installed"
+  else
+    ./svc.sh install "$APP_USER"
+  fi
   ./svc.sh start || true
 else
   echo "   (runner not configured yet — skip; run this script again after configuring it)"
