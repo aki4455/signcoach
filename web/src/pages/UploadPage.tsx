@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { ApiError, getJob, rememberLesson, uploadVideo } from "../api";
 import { t } from "../i18n";
-import { navigate } from "../router";
+import { linkProps, navigate } from "../router";
 import type { JobStatus } from "../types";
 
 /** Upload a dashcam video (chunked), then follow the processing job until the report is ready. */
 export default function UploadPage() {
   const [file, setFile] = useState<File | null>(null);
+  const [dragging, setDragging] = useState(false);
   const [student, setStudent] = useState("");
   const [label, setLabel] = useState("");
+  const [height, setHeight] = useState("");
+  const [fov, setFov] = useState("");
   const [consent, setConsent] = useState(false);
   const [uploaded, setUploaded] = useState<number | null>(null);
   const [jobId, setJobId] = useState<string | null>(null);
@@ -40,9 +43,13 @@ export default function UploadPage() {
     e.preventDefault();
     if (!file) return;
     setError(null);
+    setJob(null);
     setUploaded(0);
     try {
-      setJobId(await uploadVideo(file, { student, lesson_label: label, consent }, setUploaded));
+      setJobId(await uploadVideo(file, {
+        student, lesson_label: label, consent,
+        camera_height_m: height ? Number(height) : null, hfov_deg: fov ? Number(fov) : null,
+      }, setUploaded));
     } catch (err) {
       setUploaded(null);
       setError(err instanceof ApiError ? t(err.key, { max_minutes: 3, ...err.params }) : t("error.processing_failed"));
@@ -55,17 +62,24 @@ export default function UploadPage() {
       <section>
         <h1 className="text-2xl font-semibold">Upload a lesson video</h1>
         <p className="mt-1 text-slate-600">
-          Upload the dashcam video of a driving lesson. You get a report of every road sign, the rules in force and
-          where they were broken. Faces and number plates are blurred; sound is removed.
+          Upload the dashcam video of a driving lesson. SignCoach finds every road sign, explains it, keeps track of
+          the rules in force and points out where they were broken — with the video moments as evidence.{" "}
+          <a {...linkProps("/lessons")} className="underline">See lessons</a>.
         </p>
       </section>
+
       <form onSubmit={submit} className="space-y-4 rounded-xl border border-slate-200 bg-white p-4">
-        <label className="block">
-          <span className="text-sm font-medium">Dashcam video (up to 3 minutes)</span>
-          <input type="file" accept="video/*,.mov,.mkv,.avi" disabled={busy} required
-                 onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-                 className="mt-1 block w-full text-sm file:mr-3 file:rounded-md file:border-0 file:bg-slate-900 file:px-3 file:py-2 file:text-white" />
+        <label onDragOver={(e) => { e.preventDefault(); setDragging(true); }} onDragLeave={() => setDragging(false)}
+               onDrop={(e) => { e.preventDefault(); setDragging(false); if (!busy && e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]); }}
+               className={`flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-6 text-center ${dragging ? "border-slate-900 bg-slate-50" : "border-slate-300"}`}>
+          <input type="file" accept="video/*,.mov,.mkv,.avi" disabled={busy} className="sr-only"
+                 onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
+          <span className="font-medium">{file ? file.name : "Drop the dashcam video here or tap to choose"}</span>
+          <span className="mt-1 text-sm text-slate-500">
+            {file ? `${(file.size / 1e6).toFixed(1)} MB` : "MP4, MOV, MKV or AVI, up to 3 minutes"}
+          </span>
         </label>
+
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="block">
             <span className="text-sm font-medium">Student name</span>
@@ -78,23 +92,38 @@ export default function UploadPage() {
                    placeholder="e.g. City route, lesson 3" className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2" />
           </label>
         </div>
+
+        <details className="text-sm">
+          <summary className="cursor-pointer text-slate-600">Camera details (optional, improves the speed estimate)</summary>
+          <div className="mt-2 grid gap-4 sm:grid-cols-2">
+            <label className="block">
+              <span className="font-medium">Camera height above the road (m)</span>
+              <input type="number" step="0.05" min="0.5" max="3" value={height} onChange={(e) => setHeight(e.target.value)}
+                     placeholder="1.3" disabled={busy} className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2" />
+            </label>
+            <label className="block">
+              <span className="font-medium">Horizontal field of view (°)</span>
+              <input type="number" step="1" min="30" max="170" value={fov} onChange={(e) => setFov(e.target.value)}
+                     placeholder="70" disabled={busy} className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2" />
+            </label>
+          </div>
+        </details>
+
         <label className="flex items-start gap-2 text-sm">
-          <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} disabled={busy}
-                 className="mt-1" />
-          <span>I may upload this video. Faces and number plates will be blurred.</span>
+          <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} disabled={busy} className="mt-1" />
+          <span>I may upload this video. Faces and number plates will be blurred and the sound removed.</span>
         </label>
         <button type="submit" disabled={!file || !consent || !student || busy}
-                className="rounded-md bg-slate-900 px-4 py-2 font-medium text-white disabled:opacity-40">
+                className="w-full rounded-md bg-slate-900 px-4 py-3 font-medium text-white disabled:opacity-40 sm:w-auto">
           Upload and analyse
         </button>
       </form>
 
       {uploaded !== null && !jobId && <Progress label={`Uploading… ${Math.round(uploaded * 100)}%`} value={uploaded} />}
       {job && job.status !== "failed" && (
-        <Progress
-          label={`${t(`stage.${job.stage}`)}${job.status === "queued" && job.queue_position > 0
-            ? ` — ${job.queue_position} video(s) ahead` : ""}`}
-          value={job.progress} />
+        <Progress value={job.progress}
+                  label={`${t(`stage.${job.stage}`)}${job.status === "queued" && job.queue_position > 0
+                    ? ` — ${job.queue_position} video(s) ahead` : ""}`} />
       )}
       {error && <p className="rounded-lg bg-red-50 p-3 text-red-800">{error}</p>}
     </div>
