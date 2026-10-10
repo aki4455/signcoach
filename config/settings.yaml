@@ -128,6 +128,9 @@ turn:
 
 turn_bans_enabled: true           # false -> bans are explained but never judged
 ban_scope: {until_turn: true, max_distance_m: 300, max_time_s: 60}   # approximation of "until the next junction" (no map)
+no_entry:                         # a side no-entry sign closes the side road it stands at (team decision, Sunday 03:45)
+  require_turn_toward_sign: true  # report it only if we turned that way; overhead signs always count
+  turn_window_s: [-3, 8]          # the turn must overlap this window around passing the sign
 
 score:
   weights: {violation: 10, possible: 3}   # score = max(0, 100 - sum); shown as "indicative"

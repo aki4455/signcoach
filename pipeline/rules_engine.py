@@ -17,7 +17,10 @@ What it reports (severity decides colour and score):
                    direction (a left-turn arrow also covers a U-turn, ПДД Annex 1 §4); bans end at
                    our next turn or after ban_scope distance/time (no map: approximation of "the next
                    intersection")
-- no_entry_possible passing a relevant no-entry sign — always "possible"
+- no_entry_possible a relevant no-entry sign we may have driven into — always "possible": an overhead
+                   sign hangs over our own road; a sign at the side closes the side road it stands at,
+                   so it counts only if we turned that way around it (`no_entry` settings). Driving
+                   straight past it is only explained (no map to tell which road it closes)
 Violations caused by a sign with a supplementary plate (conditional) are downgraded to "possible".
 """
 
@@ -27,6 +30,19 @@ from dataclasses import dataclass, field
 
 from pipeline.catalogue import Catalogue
 from pipeline.types import LessonEvent, MotionSample, RuleState, SignEvent, TurnEvent
+
+
+def _may_have_entered(sign: SignEvent, turns: list[TurnEvent], cfg: dict) -> bool:
+    """Could we have driven into the road this no-entry sign closes?
+
+    An overhead sign hangs over our own road. A sign at the side of the road usually closes the side
+    road it stands at (e.g. the exit of a one-way service road): it matters only if we turned that way
+    within `turn_window_s` of passing it. Without a map we cannot tell more."""
+    if not cfg.get("require_turn_toward_sign", True) or sign.side == "overhead":
+        return True
+    before, after = cfg.get("turn_window_s", (-3.0, 8.0))
+    return any(tr.direction == sign.side and tr.t_end >= sign.t_pass + before and tr.t_start <= sign.t_pass + after
+               for tr in turns)
 
 
 @dataclass
@@ -171,7 +187,7 @@ def run(sign_events: list[SignEvent], motion: list[MotionSample], turns: list[Tu
                                        allowed=list(effect.get("allowed", [])), ended_by=why))
                 elif kind == "require_stop":
                     events.append(_judge_stop(s, motion, settings))
-                elif kind == "no_entry":
+                elif kind == "no_entry" and _may_have_entered(s, turns, settings.get("no_entry", {})):
                     events.append(_event(s.t_pass + 0.01, "no_entry_possible", "possible", s,
                                          detail={"reason": "conditional"} if s.conditional else {}))
             snapshot(s.t_pass)

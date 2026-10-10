@@ -1,7 +1,7 @@
 """Rules-engine scenarios (CLAUDE.md §11.4).
 
 Each JSON file in tests/fixtures/rule_scenarios/ is a lesson in miniature:
-- "signs":  [{"id", "code", "value", "t", "relevant"?, "conditional"?}]  (t = moment we pass the sign)
+- "signs":  [{"id", "code", "value", "t", "relevant"?, "conditional"?, "side"?}]  (t = moment we pass the sign; side: right)
 - "speed":  [[t_start, t_end, km/h or null], ...]  -> motion sampled every 0.2 s, error = 3 + 0.1*v
 - "turns":  [{"t_start", "t_end", "direction", "angle_deg"}]
 - "settings" / "defaults": overrides (defaults are fixed here so the tests don't depend on rules.json)
@@ -42,7 +42,7 @@ def build(sc: dict):
     settings = merge(merge(get_settings().cfg, SCENARIO_ERR_MODEL), sc.get("settings", {}))
     err = settings["speed"]["err_model"]
     signs = [SignEvent(id=s["id"], sign_code=s["code"], value=s.get("value"), t_first=s["t"] - 2, t_last=s["t"],
-                       t_pass=s["t"], conf=0.9, n_frames=20, side="right", relevant=s.get("relevant", True),
+                       t_pass=s["t"], conf=0.9, n_frames=20, side=s.get("side", "right"), relevant=s.get("relevant", True),
                        relevance_reason="scenario", conditional=s.get("conditional", False), best_frame_idx=0,
                        best_bbox=(0, 0, 1, 1)) for s in sc.get("signs", [])]
     motion = []

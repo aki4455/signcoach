@@ -1,6 +1,6 @@
 {
  "name": "19_no_entry_is_only_possible",
- "description": "Passing a relevant no-entry sign is reported as possible, never a hard violation.",
+ "description": "Turning toward a relevant no-entry sign right after passing it is reported as possible, never a hard violation.",
  "signs": [
   {
    "id": "s1",
@@ -24,5 +24,13 @@
     "t": 10
    }
   ]
- }
+ },
+ "turns": [
+  {
+   "t_start": 11,
+   "t_end": 15,
+   "direction": "right",
+   "angle_deg": 88
+  }
+ ]
 }
