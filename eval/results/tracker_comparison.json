@@ -329,5 +329,23 @@
   "bytetrack_relevant": 115,
   "signcoach_signs": 254,
   "signcoach_relevant": 170
+ },
+ "announce_lead": {
+  "bytetrack": {
+   "signs": 115,
+   "median_s": 1.9,
+   "p25_s": 1.1,
+   "p75_s": 3.3,
+   "share_ge_1s": 0.79,
+   "share_ge_2s": 0.45
+  },
+  "signcoach": {
+   "signs": 170,
+   "median_s": 2.2,
+   "p25_s": 1.2,
+   "p75_s": 3.3,
+   "share_ge_1s": 0.85,
+   "share_ge_2s": 0.54
+  }
  }
 }

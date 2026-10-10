@@ -143,6 +143,15 @@ limit band and coloured event markers, voice prompts played when playback passes
 English MP3s; iPhones need one tap to unlock audio), summary, events with the official sign text, every sign
 detected, how it was computed.
 
+**Voice timing.** A sign is said when it is *confirmed* (seen in 3 frames as its final class) — when a system
+in the car could speak — not when we pass it; its rule still starts at the sign. Across the 12 demo clips
+that is a median 2.2 s before passing (`eval/results/tracker_comparison.md`). Prompts never cut each other
+off: one due while another is speaking follows it joined by "and" ("Main road… and pedestrian crossing");
+a prompt more than 4 s late is dropped; burned-in subtitles that overlap share one line.
+
+**Q: Why not announce earlier, e.g. 5 s before?** We would have to use frames from the future; a real
+in-car system can only speak once it has recognised the sign.
+
 ## 12. Deployment — `.github/workflows/deploy.yml`, `deploy/`
 
 A push to `main` deploys to the team machine (self-hosted runner, systemd, Tailscale Funnel). The workflow

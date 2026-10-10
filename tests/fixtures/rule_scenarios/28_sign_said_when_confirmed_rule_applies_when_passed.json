@@ -1,0 +1,40 @@
+{
+ "name": "28_sign_said_when_confirmed_rule_applies_when_passed",
+ "description": "A 40 km/h sign confirmed at 7.5 s and passed at 10 s: explained (and said) at 7.5 s while approaching; the new limit applies from 10 s.",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "3.24",
+   "value": 40,
+   "t": 10,
+   "announce": 7.5
+  }
+ ],
+ "speed": [
+  [
+   0,
+   20,
+   30
+  ]
+ ],
+ "check_explained": true,
+ "expect": {
+  "events": [
+   {
+    "type": "sign_explained",
+    "severity": "info",
+    "t": 7.5
+   }
+  ],
+  "limit_at": [
+   [
+    9,
+    60
+   ],
+   [
+    10.5,
+    40
+   ]
+  ]
+ }
+}

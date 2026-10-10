@@ -1,7 +1,8 @@
 """Rules-engine scenarios (CLAUDE.md §11.4).
 
 Each JSON file in tests/fixtures/rule_scenarios/ is a lesson in miniature:
-- "signs":  [{"id", "code", "value", "t", "relevant"?, "conditional"?, "side"?}]  (t = moment we pass the sign; side: right)
+- "signs":  [{"id", "code", "value", "t", "relevant"?, "conditional"?, "side"?, "announce"?}]
+            (t = moment we pass the sign; side: right; announce = moment it is confirmed and said)
 - "speed":  [[t_start, t_end, km/h or null], ...]  -> motion sampled every 0.2 s, error = 3 + 0.1*v
 - "turns":  [{"t_start", "t_end", "direction", "angle_deg"}]
 - "settings" / "defaults": overrides (defaults are fixed here so the tests don't depend on rules.json)
@@ -58,14 +59,16 @@ def build(sc: dict):
     rules["defaults"] = merge(rules["defaults"], {"speed_limit_kmh": {"in_settlement": 60, "outside_settlement": 90},
                                                   "assume_in_settlement": True} | sc.get("defaults", {}))
     catalogue = Catalogue(signs=CATALOGUE.signs, rules=rules)
-    return signs, motion, turns, catalogue, settings
+    announce_at = {s["id"]: s["announce"] for s in sc.get("signs", []) if "announce" in s}
+    return signs, motion, turns, catalogue, settings, announce_at
 
 
 @pytest.mark.parametrize("path", SCENARIOS, ids=[p.stem for p in SCENARIOS])
 def test_scenario(path: Path):
     sc = json.loads(path.read_text(encoding="utf-8"))
-    signs, motion, turns, catalogue, settings = build(sc)
-    events, timeline = run(signs, motion, turns, catalogue, settings, duration_s=sc.get("duration"))
+    signs, motion, turns, catalogue, settings, announce_at = build(sc)
+    events, timeline = run(signs, motion, turns, catalogue, settings, duration_s=sc.get("duration"),
+                           announce_at=announce_at)
 
     got = [e for e in events if sc.get("check_explained") or e.type != "sign_explained"]
     want = sc["expect"]["events"]

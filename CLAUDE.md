@@ -462,6 +462,7 @@ Pages:
    - Annotated video player (HUD is burned into the video).
    - Timeline under the player with event markers coloured by severity (grey info, red violation, amber possible, green complied); click → seek.
    - Voice prompts: when playback crosses an event with a `voice_key`, play `assets/voice/en/<voice_key>.mp3` (TTS-generated; fallback: `speechSynthesis` with the English text). A toggle turns voice on/off. iPhones block audio that is not started by a tap, so the first tap on Play unlocks one shared audio element that all prompts reuse.
+   - Voice timing (team, Sunday 04:00): `sign_explained` is placed when the sign is **confirmed** (the `vote.min_frames`-th sighting of its final class, `voice.announce_at: confirmed`) — what an in-car system could do — not when we pass it; its rule still applies from `t_pass`. Median 2.2 s before passing on the 12 demo clips (`eval/results/tracker_comparison.md`). Prompts never cut each other off: one due while another speaks waits and follows joined by "and" (`and.mp3`); > 4 s late → dropped; seeking clears the queue; overlapping burned-in subtitles merge into one line.
    - Summary cards: score (labelled indicative), signs passed, violations, possible.
    - Event list: time, sign icon/thumbnail, title, detail, severity pill; click → seek to `clip[0]`.
    - "Signs not met yet" chips.

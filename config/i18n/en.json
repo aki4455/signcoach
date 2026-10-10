@@ -70,6 +70,7 @@
   "voice.speed_bump_ahead": "Speed bump ahead.",
   "voice.settlement_start": "Start of a built-up area.",
   "voice.settlement_end": "End of the built-up area.",
+  "voice.and": "and",
   "voice.speeding": "Over the speed limit.",
   "voice.stop_not_made": "No full stop at the stop sign.",
   "voice.turn_ban_violation": "This turn was against the sign.",
