@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ApiError, getReport } from "../api";
+import SpeedChart from "../components/SpeedChart";
 import Timeline from "../components/Timeline";
 import { SEVERITY_PILL, clock, eventDetail, eventTitle } from "../format";
 import { signEntry, signName, t } from "../i18n";
@@ -80,6 +81,7 @@ export default function ReportPage({ id }: { id: string }) {
                onSeeked={() => (lastTime.current = video.current?.currentTime ?? 0)}
                className="max-h-[70vh] w-full rounded-xl bg-black" />
         <Timeline duration={duration} events={report.events} timeline={report.timeline} time={time} onSeek={seek} />
+        <SpeedChart duration={duration} motion={report.motion} timeline={report.timeline} time={time} onSeek={seek} />
         <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
           <Legend />
           <button onClick={() => setVoiceOn(!voiceOn)}
