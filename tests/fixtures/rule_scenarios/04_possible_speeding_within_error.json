@@ -1,0 +1,41 @@
+{
+ "name": "04_possible_speeding_within_error",
+ "description": "65 km/h under 60: over, but 65 - 9.5 is not -> possible.",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "3.24",
+   "value": 60,
+   "t": 2
+  }
+ ],
+ "speed": [
+  [
+   0,
+   10,
+   50
+  ],
+  [
+   10,
+   16,
+   65
+  ],
+  [
+   16,
+   30,
+   50
+  ]
+ ],
+ "expect": {
+  "events": [
+   {
+    "type": "possible_speeding",
+    "severity": "possible",
+    "t": 10,
+    "detail": {
+     "limit_kmh": 60
+    }
+   }
+  ]
+ }
+}

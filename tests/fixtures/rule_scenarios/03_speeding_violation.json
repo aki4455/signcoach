@@ -1,0 +1,42 @@
+{
+ "name": "03_speeding_violation",
+ "description": "75 km/h for 6 s under a 60 sign: even minus the error (10.5) it is over.",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "3.24",
+   "value": 60,
+   "t": 2
+  }
+ ],
+ "speed": [
+  [
+   0,
+   10,
+   50
+  ],
+  [
+   10,
+   16,
+   75
+  ],
+  [
+   16,
+   30,
+   50
+  ]
+ ],
+ "expect": {
+  "events": [
+   {
+    "type": "speeding",
+    "severity": "violation",
+    "t": 10,
+    "detail": {
+     "limit_kmh": 60,
+     "max_speed_kmh": 75.0
+    }
+   }
+  ]
+ }
+}

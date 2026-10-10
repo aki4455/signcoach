@@ -1,0 +1,40 @@
+{
+ "name": "17_turn_against_mandatory_direction",
+ "description": "Left turn after 'straight only' -> violation (kind mandatory).",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "4.1.1",
+   "value": null,
+   "t": 10
+  }
+ ],
+ "speed": [
+  [
+   0,
+   30,
+   25
+  ]
+ ],
+ "turns": [
+  {
+   "t_start": 14,
+   "t_end": 17,
+   "direction": "left",
+   "angle_deg": 85
+  }
+ ],
+ "expect": {
+  "events": [
+   {
+    "type": "turn_ban_violation",
+    "severity": "violation",
+    "t": 14,
+    "detail": {
+     "kind": "mandatory",
+     "turn_direction": "left"
+    }
+   }
+  ]
+ }
+}

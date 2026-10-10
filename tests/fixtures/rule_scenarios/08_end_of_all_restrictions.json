@@ -1,0 +1,43 @@
+{
+ "name": "08_end_of_all_restrictions",
+ "description": "3.31 also ends the speed-limit zone.",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "3.24",
+   "value": 40,
+   "t": 2
+  },
+  {
+   "id": "s2",
+   "code": "3.31",
+   "value": null,
+   "t": 10
+  }
+ ],
+ "speed": [
+  [
+   0,
+   10,
+   35
+  ],
+  [
+   10,
+   25,
+   55
+  ]
+ ],
+ "expect": {
+  "events": [],
+  "limit_at": [
+   [
+    5,
+    40
+   ],
+   [
+    12,
+    60
+   ]
+  ]
+ }
+}

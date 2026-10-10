@@ -1,0 +1,45 @@
+{
+ "name": "23_limit_ends_at_our_turn",
+ "description": "No map: a limit zone ends at our next turn (approximates the next intersection).",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "3.24",
+   "value": 40,
+   "t": 2
+  }
+ ],
+ "speed": [
+  [
+   0,
+   10,
+   35
+  ],
+  [
+   10,
+   30,
+   55
+  ]
+ ],
+ "turns": [
+  {
+   "t_start": 10,
+   "t_end": 13,
+   "direction": "right",
+   "angle_deg": 88
+  }
+ ],
+ "expect": {
+  "events": [],
+  "limit_at": [
+   [
+    5,
+    40
+   ],
+   [
+    15,
+    60
+   ]
+  ]
+ }
+}

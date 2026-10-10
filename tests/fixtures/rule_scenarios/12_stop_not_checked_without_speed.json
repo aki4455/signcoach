@@ -1,0 +1,28 @@
+{
+ "name": "12_stop_not_checked_without_speed",
+ "description": "No speed near the stop sign -> info, never a violation.",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "2.5",
+   "value": null,
+   "t": 10
+  }
+ ],
+ "speed": [
+  [
+   0,
+   30,
+   null
+  ]
+ ],
+ "expect": {
+  "events": [
+   {
+    "type": "info",
+    "severity": "info",
+    "t": 10
+   }
+  ]
+ }
+}

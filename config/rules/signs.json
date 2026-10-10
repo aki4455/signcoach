@@ -1,5 +1,5 @@
 {
- "_doc": "Sign catalogue (CLAUDE.md §11.2). Official texts are copied verbatim from ПДД РФ in M2 and checked by a Russian-speaking team member; until then verified=false and the English name is a working draft. `detectable` is computed at runtime from the active class map.",
+ "_doc": "Sign catalogue (CLAUDE.md §11.2). `official` is copied verbatim from ПДД РФ by scripts/extract_pdd.py; `name`/`meaning` are draft English translations. verified=false until a Russian-speaking team member has checked the entry against the source (docs/RULES_CHECKLIST.md). Detectability comes from the class map.",
  "signs": [
   {
    "code": "3.24",
@@ -7,11 +7,12 @@
    "category": "prohibitory",
    "shape": "round",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Ограничение максимальной скорости",
+    "meaning_ru": "Запрещается движение со скоростью (км/ч), превышающей указанную на знаке.",
+    "notes_ru": []
    },
    "name": "Maximum speed limit",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Driving faster than the speed (km/h) shown on the sign is prohibited.",
    "voice_key": "speed_limit_{value}",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -27,11 +28,12 @@
    "category": "prohibitory",
    "shape": "round",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Конец зоны ограничения максимальной скорости",
+    "meaning_ru": "",
+    "notes_ru": []
    },
    "name": "End of maximum speed limit",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "End of the maximum speed limit zone.",
    "voice_key": "end_speed_limit",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -47,11 +49,12 @@
    "category": "prohibitory",
    "shape": "round",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Конец зоны всех ограничений",
+    "meaning_ru": "Обозначение конца зоны действия одновременно нескольких знаков из следующих: 3.16, 3.20, 3.22, 3.24, 3.26 - 3.30.",
+    "notes_ru": []
    },
    "name": "End of all restrictions",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "End of the zone of several of these signs at once: 3.16, 3.20, 3.22, 3.24, 3.26–3.30.",
    "voice_key": "end_all_restrictions",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -67,11 +70,12 @@
    "category": "prohibitory",
    "shape": "round",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Въезд запрещен",
+    "meaning_ru": "Запрещается въезд всех транспортных средств в данном направлении. Знак 3.1 может быть применен совместно с табличками 8.4.1 - 8.4.8, 8.5.1 - 8.5.7 и 8.4.9 - 8.4.16.",
+    "notes_ru": []
    },
    "name": "No entry",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Entry of all vehicles in this direction is prohibited. May be used with plates 8.4.1–8.4.8, 8.5.1–8.5.7 and 8.4.9–8.4.16.",
    "voice_key": "no_entry",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -87,11 +91,12 @@
    "category": "prohibitory",
    "shape": "round",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Поворот направо запрещен",
+    "meaning_ru": "",
+    "notes_ru": []
    },
    "name": "No right turn",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Right turn prohibited. Applies to the intersection in front of which the sign stands.",
    "voice_key": "no_right_turn",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -107,11 +112,12 @@
    "category": "prohibitory",
    "shape": "round",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Поворот налево запрещен",
+    "meaning_ru": "",
+    "notes_ru": []
    },
    "name": "No left turn",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Left turn prohibited. Applies to the intersection in front of which the sign stands.",
    "voice_key": "no_left_turn",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -127,11 +133,12 @@
    "category": "prohibitory",
    "shape": "round",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Разворот запрещен",
+    "meaning_ru": "",
+    "notes_ru": []
    },
    "name": "No U-turn",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "U-turn prohibited.",
    "voice_key": "no_u_turn",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -147,11 +154,12 @@
    "category": "prohibitory",
    "shape": "round",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Обгон запрещен",
+    "meaning_ru": "Запрещается обгон всех транспортных средств, кроме тихоходных транспортных средств, гужевых повозок, велосипедов, мопедов и двухколесных мотоциклов без бокового прицепа.",
+    "notes_ru": []
    },
    "name": "No overtaking",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Overtaking any vehicle is prohibited, except slow-moving vehicles, horse-drawn carts, bicycles, mopeds and two-wheeled motorcycles without a sidecar.",
    "voice_key": "no_overtaking",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -167,11 +175,12 @@
    "category": "prohibitory",
    "shape": "round",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Конец зоны запрещения обгона",
+    "meaning_ru": "",
+    "notes_ru": []
    },
    "name": "End of no-overtaking zone",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "End of the no-overtaking zone.",
    "voice_key": "end_no_overtaking",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -187,11 +196,12 @@
    "category": "prohibitory",
    "shape": "round",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Остановка запрещена",
+    "meaning_ru": "Запрещаются остановка и стоянка транспортных средств.",
+    "notes_ru": []
    },
    "name": "No stopping",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Stopping and parking are prohibited.",
    "voice_key": "no_stopping",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -207,11 +217,12 @@
    "category": "prohibitory",
    "shape": "round",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Стоянка запрещена",
+    "meaning_ru": "Запрещается стоянка транспортных средств.",
+    "notes_ru": []
    },
    "name": "No parking",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Parking is prohibited.",
    "voice_key": "no_parking",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -227,11 +238,12 @@
    "category": "priority",
    "shape": "diamond",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Главная дорога",
+    "meaning_ru": "Дорога, на которой предоставлено право преимущественного проезда нерегулируемых перекрестков.",
+    "notes_ru": []
    },
    "name": "Main road",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "A road that has priority at intersections without traffic lights.",
    "voice_key": "main_road",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -247,11 +259,12 @@
    "category": "priority",
    "shape": "diamond",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Конец главной дороги",
+    "meaning_ru": "",
+    "notes_ru": []
    },
    "name": "End of main road",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "End of the main road.",
    "voice_key": "end_main_road",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -267,11 +280,12 @@
    "category": "priority",
    "shape": "inverted_triangle",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Уступите дорогу",
+    "meaning_ru": "Водитель должен уступить дорогу транспортным средствам, движущимся по пересекаемой дороге, а при наличии таблички 8.13 - по главной.",
+    "notes_ru": []
    },
    "name": "Give way",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "The driver must give way to vehicles on the road being crossed (with plate 8.13: on the main road).",
    "voice_key": "give_way",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -287,11 +301,14 @@
    "category": "priority",
    "shape": "octagon",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Движение без остановки запрещено",
+    "meaning_ru": "Запрещается движение без остановки перед стоп-линией, а если ее нет - перед краем пересекаемой проезжей части. Водитель должен уступить дорогу транспортным средствам, движущимся по пересекаемой, а при наличии таблички 8.13 - по главной дороге.",
+    "notes_ru": [
+     "Знак 2.5 может быть установлен перед железнодорожным переездом или карантинным постом. В этих случаях водитель должен остановиться перед стоп-линией, а при ее отсутствии - перед знаком."
+    ]
    },
    "name": "Stop",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Driving on without stopping is prohibited: stop at the stop line, or if there is none, at the edge of the road being crossed. Then give way to vehicles on the road being crossed (with plate 8.13: on the main road).",
    "voice_key": "stop",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -307,11 +324,16 @@
    "category": "mandatory",
    "shape": "round",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Движение прямо",
+    "meaning_ru": "Разрешается движение только в направлениях, указанных на знаках стрелками. Знаки, разрешающие поворот налево, разрешают и разворот (могут быть применены знаки 4.1.1 - 4.1.6 с конфигурацией стрелок, соответствующей требуемым направлениям движения на конкретном пересечении).",
+    "notes_ru": [
+     "Действие знаков 4.1.1 - 4.1.6 не распространяется на маршрутные транспортные средства.",
+     "Действие знаков 4.1.1 - 4.1.6 распространяется на пересечение проезжих частей, перед которым установлен знак.",
+     "Действие знака 4.1.1, установленного в начале участка дороги, распространяется до ближайшего перекрестка. Знак не запрещает поворот направо во дворы и на другие прилегающие к дороге территории."
+    ]
    },
    "name": "Straight only",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Only the directions shown by the arrows. A left-turn arrow also covers a U-turn. Applies to the intersection in front of which the sign stands; at the start of a road section, up to the nearest intersection (turning right into yards and other side areas is not prohibited).",
    "voice_key": "mandatory_straight",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -327,11 +349,16 @@
    "category": "mandatory",
    "shape": "round",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Движение направо",
+    "meaning_ru": "Разрешается движение только в направлениях, указанных на знаках стрелками. Знаки, разрешающие поворот налево, разрешают и разворот (могут быть применены знаки 4.1.1 - 4.1.6 с конфигурацией стрелок, соответствующей требуемым направлениям движения на конкретном пересечении).",
+    "notes_ru": [
+     "Действие знаков 4.1.1 - 4.1.6 не распространяется на маршрутные транспортные средства.",
+     "Действие знаков 4.1.1 - 4.1.6 распространяется на пересечение проезжих частей, перед которым установлен знак.",
+     "Действие знака 4.1.1, установленного в начале участка дороги, распространяется до ближайшего перекрестка. Знак не запрещает поворот направо во дворы и на другие прилегающие к дороге территории."
+    ]
    },
    "name": "Right turn only",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Only the directions shown by the arrows. Applies to the intersection in front of which the sign stands.",
    "voice_key": "mandatory_right",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -347,11 +374,16 @@
    "category": "mandatory",
    "shape": "round",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Движение налево",
+    "meaning_ru": "Разрешается движение только в направлениях, указанных на знаках стрелками. Знаки, разрешающие поворот налево, разрешают и разворот (могут быть применены знаки 4.1.1 - 4.1.6 с конфигурацией стрелок, соответствующей требуемым направлениям движения на конкретном пересечении).",
+    "notes_ru": [
+     "Действие знаков 4.1.1 - 4.1.6 не распространяется на маршрутные транспортные средства.",
+     "Действие знаков 4.1.1 - 4.1.6 распространяется на пересечение проезжих частей, перед которым установлен знак.",
+     "Действие знака 4.1.1, установленного в начале участка дороги, распространяется до ближайшего перекрестка. Знак не запрещает поворот направо во дворы и на другие прилегающие к дороге территории."
+    ]
    },
    "name": "Left turn only",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Only the directions shown by the arrows. A left-turn arrow also covers a U-turn. Applies to the intersection in front of which the sign stands.",
    "voice_key": "mandatory_left",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -367,11 +399,16 @@
    "category": "mandatory",
    "shape": "round",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Движение прямо или направо",
+    "meaning_ru": "Разрешается движение только в направлениях, указанных на знаках стрелками. Знаки, разрешающие поворот налево, разрешают и разворот (могут быть применены знаки 4.1.1 - 4.1.6 с конфигурацией стрелок, соответствующей требуемым направлениям движения на конкретном пересечении).",
+    "notes_ru": [
+     "Действие знаков 4.1.1 - 4.1.6 не распространяется на маршрутные транспортные средства.",
+     "Действие знаков 4.1.1 - 4.1.6 распространяется на пересечение проезжих частей, перед которым установлен знак.",
+     "Действие знака 4.1.1, установленного в начале участка дороги, распространяется до ближайшего перекрестка. Знак не запрещает поворот направо во дворы и на другие прилегающие к дороге территории."
+    ]
    },
    "name": "Straight or right only",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Only the directions shown by the arrows. Applies to the intersection in front of which the sign stands.",
    "voice_key": "mandatory_straight_or_right",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -387,11 +424,16 @@
    "category": "mandatory",
    "shape": "round",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Движение прямо или налево",
+    "meaning_ru": "Разрешается движение только в направлениях, указанных на знаках стрелками. Знаки, разрешающие поворот налево, разрешают и разворот (могут быть применены знаки 4.1.1 - 4.1.6 с конфигурацией стрелок, соответствующей требуемым направлениям движения на конкретном пересечении).",
+    "notes_ru": [
+     "Действие знаков 4.1.1 - 4.1.6 не распространяется на маршрутные транспортные средства.",
+     "Действие знаков 4.1.1 - 4.1.6 распространяется на пересечение проезжих частей, перед которым установлен знак.",
+     "Действие знака 4.1.1, установленного в начале участка дороги, распространяется до ближайшего перекрестка. Знак не запрещает поворот направо во дворы и на другие прилегающие к дороге территории."
+    ]
    },
    "name": "Straight or left only",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Only the directions shown by the arrows. A left-turn arrow also covers a U-turn. Applies to the intersection in front of which the sign stands.",
    "voice_key": "mandatory_straight_or_left",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -407,11 +449,16 @@
    "category": "mandatory",
    "shape": "round",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Движение направо или налево",
+    "meaning_ru": "Разрешается движение только в направлениях, указанных на знаках стрелками. Знаки, разрешающие поворот налево, разрешают и разворот (могут быть применены знаки 4.1.1 - 4.1.6 с конфигурацией стрелок, соответствующей требуемым направлениям движения на конкретном пересечении).",
+    "notes_ru": [
+     "Действие знаков 4.1.1 - 4.1.6 не распространяется на маршрутные транспортные средства.",
+     "Действие знаков 4.1.1 - 4.1.6 распространяется на пересечение проезжих частей, перед которым установлен знак.",
+     "Действие знака 4.1.1, установленного в начале участка дороги, распространяется до ближайшего перекрестка. Знак не запрещает поворот направо во дворы и на другие прилегающие к дороге территории."
+    ]
    },
    "name": "Right or left only",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Only the directions shown by the arrows. A left-turn arrow also covers a U-turn. Applies to the intersection in front of which the sign stands.",
    "voice_key": "mandatory_right_or_left",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -427,11 +474,12 @@
    "category": "mandatory",
    "shape": "round",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Круговое движение",
+    "meaning_ru": "Разрешается движение в указанном стрелками направлении.",
+    "notes_ru": []
    },
    "name": "Roundabout",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Drive around in the direction shown by the arrows.",
    "voice_key": "roundabout",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -447,11 +495,14 @@
    "category": "special",
    "shape": "square",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Пешеходный переход",
+    "meaning_ru": "",
+    "notes_ru": [
+     "При отсутствии на переходе разметки 1.14.1 или 1.14.2 знак 5.19.1 устанавливается справа от дороги на ближней границе перехода относительно приближающихся транспортных средств, а знак 5.19.2 - слева от дороги на дальней границе перехода."
+    ]
    },
    "name": "Pedestrian crossing",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Pedestrian crossing. Without road markings 1.14.1/1.14.2, sign 5.19.1 stands on the right at the near edge of the crossing and 5.19.2 on the left at the far edge.",
    "voice_key": "pedestrian_crossing",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -467,11 +518,14 @@
    "category": "special",
    "shape": "square",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Пешеходный переход",
+    "meaning_ru": "",
+    "notes_ru": [
+     "При отсутствии на переходе разметки 1.14.1 или 1.14.2 знак 5.19.1 устанавливается справа от дороги на ближней границе перехода относительно приближающихся транспортных средств, а знак 5.19.2 - слева от дороги на дальней границе перехода."
+    ]
    },
    "name": "Pedestrian crossing",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Pedestrian crossing. Without road markings 1.14.1/1.14.2, sign 5.19.1 stands on the right at the near edge of the crossing and 5.19.2 on the left at the far edge.",
    "voice_key": "pedestrian_crossing",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -487,11 +541,14 @@
    "category": "special",
    "shape": "square",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Искусственная неровность",
+    "meaning_ru": "Обозначает границы искусственной неровности.",
+    "notes_ru": [
+     "Знак устанавливается на ближайшей границе искусственной неровности относительно приближающихся транспортных средств."
+    ]
    },
    "name": "Speed bump",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Marks the edges of a speed bump; the sign stands at the edge nearest to approaching vehicles.",
    "voice_key": "speed_bump",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -507,11 +564,12 @@
    "category": "special",
    "shape": "rectangle",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Начало населенного пункта",
+    "meaning_ru": "Начало населенного пункта, в котором действуют требования Правил дорожного движения Российской Федерации, устанавливающие порядок движения в населенных пунктах.",
+    "notes_ru": []
    },
    "name": "Start of built-up area",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Start of a built-up area where the traffic rules for built-up areas apply.",
    "voice_key": "settlement_start",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -527,11 +585,12 @@
    "category": "special",
    "shape": "rectangle",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Конец населенного пункта",
+    "meaning_ru": "Место, с которого на данной дороге утрачивают силу требования Правил дорожного движения Российской Федерации, устанавливающие порядок движения в населенных пунктах.",
+    "notes_ru": []
    },
    "name": "End of built-up area",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Place from which the traffic rules for built-up areas no longer apply on this road.",
    "voice_key": "settlement_end",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -547,11 +606,12 @@
    "category": "warning",
    "shape": "triangle",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Искусственная неровность",
+    "meaning_ru": "Участок дороги с искусственной неровностью (неровностями) для принудительного снижения скорости.",
+    "notes_ru": []
    },
    "name": "Speed bump ahead",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Road section with a speed bump (or bumps) that forces drivers to slow down.",
    "voice_key": "speed_bump_ahead",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -567,11 +627,12 @@
    "category": "warning",
    "shape": "triangle",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Пешеходный переход",
+    "meaning_ru": "Пешеходный переход, обозначенный знаками 5.19.1, 5.19.2 и (или) разметкой 1.14.1 и 1.14.2.",
+    "notes_ru": []
    },
    "name": "Pedestrian crossing ahead",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Pedestrian crossing ahead, marked with signs 5.19.1/5.19.2 and/or road markings 1.14.1/1.14.2.",
    "voice_key": "pedestrian_crossing_ahead",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -587,11 +648,12 @@
    "category": "warning",
    "shape": "triangle",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Дети",
+    "meaning_ru": "Участок дороги вблизи детского учреждения (школы, оздоровительного лагеря и тому подобного), на проезжей части которого возможно появление детей.",
+    "notes_ru": []
    },
    "name": "Children",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Road section near a children's facility (school, summer camp, etc.) where children may appear on the road.",
    "voice_key": "children",
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -607,11 +669,12 @@
    "category": "plate",
    "shape": "rectangle",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Расстояние до объекта",
+    "meaning_ru": "Указывает расстояние от знака до начала опасного участка, места введения соответствующего ограничения или определенного объекта (места), находящегося впереди по ходу движения.",
+    "notes_ru": []
    },
    "name": "Plate: distance to object",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Shows the distance from the sign to the start of a dangerous section, the place where a restriction starts, or an object ahead.",
    "voice_key": null,
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -627,11 +690,12 @@
    "category": "plate",
    "shape": "rectangle",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Зона действия",
+    "meaning_ru": "Указывает протяженность опасного участка дороги, обозначенного предупреждающими знаками, или зону действия запрещающих знаков, а также знаков 5.16, 6.2 и 6.4.",
+    "notes_ru": []
    },
    "name": "Plate: zone of action",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Shows the length of a dangerous section marked by warning signs, or the zone of action of prohibitory signs and of signs 5.16, 6.2 and 6.4.",
    "voice_key": null,
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -647,11 +711,12 @@
    "category": "plate",
    "shape": "rectangle",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Время действия",
+    "meaning_ru": "Указывает время суток, в течение которого действует знак.",
+    "notes_ru": []
    },
    "name": "Plate: time of action",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Shows the time of day during which the sign applies.",
    "voice_key": null,
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -667,11 +732,12 @@
    "category": "plate",
    "shape": "rectangle",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Направление главной дороги",
+    "meaning_ru": "Указывает направление главной дороги на перекрестке.",
+    "notes_ru": []
    },
    "name": "Plate: direction of the main road",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Shows the direction of the main road at the intersection.",
    "voice_key": null,
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -687,11 +753,12 @@
    "category": "plate",
    "shape": "rectangle",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Препятствие",
+    "meaning_ru": "Обозначают препятствие и направление его объезда. Применяются со знаками 4.2.1 - 4.2.3.",
+    "notes_ru": []
    },
    "name": "Plate: obstacle",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Marks an obstacle and the direction to pass it; used with signs 4.2.1–4.2.3.",
    "voice_key": null,
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",
@@ -707,11 +774,12 @@
    "category": "plate",
    "shape": "rectangle",
    "official": {
-    "name_ru": "TODO",
-    "meaning_ru": "TODO"
+    "name_ru": "Препятствие",
+    "meaning_ru": "Обозначают препятствие и направление его объезда. Применяются со знаками 4.2.1 - 4.2.3.",
+    "notes_ru": []
    },
    "name": "Plate: obstacle",
-   "meaning": "TODO: draft translation of the official text (M2)",
+   "meaning": "Marks an obstacle and the direction to pass it; used with signs 4.2.1–4.2.3.",
    "voice_key": null,
    "source": {
     "document": "ПДД РФ (Постановление Правительства РФ от 23.10.1993 N 1090)",

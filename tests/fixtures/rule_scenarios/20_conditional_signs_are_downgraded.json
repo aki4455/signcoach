@@ -1,0 +1,57 @@
+{
+ "name": "20_conditional_signs_are_downgraded",
+ "description": "Signs with a conditions plate: violations become 'possible'.",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "3.24",
+   "value": 60,
+   "t": 2,
+   "conditional": true
+  },
+  {
+   "id": "s2",
+   "code": "2.5",
+   "value": null,
+   "t": 25,
+   "conditional": true
+  }
+ ],
+ "speed": [
+  [
+   0,
+   12,
+   50
+  ],
+  [
+   12,
+   18,
+   80
+  ],
+  [
+   18,
+   40,
+   25
+  ]
+ ],
+ "expect": {
+  "events": [
+   {
+    "type": "possible_speeding",
+    "severity": "possible",
+    "t": 12,
+    "detail": {
+     "reason": "conditional"
+    }
+   },
+   {
+    "type": "stop_not_made",
+    "severity": "possible",
+    "t": 25,
+    "detail": {
+     "reason": "conditional"
+    }
+   }
+  ]
+ }
+}

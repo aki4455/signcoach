@@ -1,0 +1,34 @@
+{
+ "name": "22_default_limit_is_uncertain",
+ "description": "No sign: speeding against the default (60) is only 'possible' — we cannot see settlement signs.",
+ "speed": [
+  [
+   0,
+   5,
+   50
+  ],
+  [
+   5,
+   12,
+   85
+  ],
+  [
+   12,
+   20,
+   50
+  ]
+ ],
+ "expect": {
+  "events": [
+   {
+    "type": "possible_speeding",
+    "severity": "possible",
+    "t": 5,
+    "detail": {
+     "reason": "default_limit",
+     "limit_kmh": 60
+    }
+   }
+  ]
+ }
+}

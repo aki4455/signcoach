@@ -139,7 +139,7 @@ def process_job(job: JobInput, cfg: dict, models: Models, catalogue: Catalogue, 
             warnings.append("warning.speed_not_checked")
 
         # 5. Rules ------------------------------------------------------------------------------------
-        events, timeline = rules_engine.run(sign_events, motion, turns, catalogue, cfg)
+        events, timeline = rules_engine.run(sign_events, motion, turns, catalogue, cfg, duration_s=ninfo.duration_s)
         if not any(s.relevant for s in sign_events):
             warnings.append("warning.no_signs")
         timings["signs_and_rules"] = time.monotonic() - t

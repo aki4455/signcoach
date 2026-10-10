@@ -1,0 +1,43 @@
+{
+ "name": "07_end_of_limit_sign",
+ "description": "3.25 ends the 40 zone: the built-up-area default (60) applies again.",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "3.24",
+   "value": 40,
+   "t": 2
+  },
+  {
+   "id": "s2",
+   "code": "3.25",
+   "value": null,
+   "t": 10
+  }
+ ],
+ "speed": [
+  [
+   0,
+   10,
+   35
+  ],
+  [
+   10,
+   25,
+   55
+  ]
+ ],
+ "expect": {
+  "events": [],
+  "limit_at": [
+   [
+    5,
+    40
+   ],
+   [
+    12,
+    60
+   ]
+  ]
+ }
+}

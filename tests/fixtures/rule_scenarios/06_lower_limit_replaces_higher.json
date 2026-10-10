@@ -1,0 +1,52 @@
+{
+ "name": "06_lower_limit_replaces_higher",
+ "description": "60 then 40: 52 km/h after the 40 sign is speeding.",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "3.24",
+   "value": 60,
+   "t": 2
+  },
+  {
+   "id": "s2",
+   "code": "3.24",
+   "value": 40,
+   "t": 20
+  }
+ ],
+ "speed": [
+  [
+   0,
+   20,
+   55
+  ],
+  [
+   20,
+   30,
+   52
+  ]
+ ],
+ "expect": {
+  "events": [
+   {
+    "type": "speeding",
+    "severity": "violation",
+    "t": 20,
+    "detail": {
+     "limit_kmh": 40
+    }
+   }
+  ],
+  "limit_at": [
+   [
+    10,
+    60
+   ],
+   [
+    21,
+    40
+   ]
+  ]
+ }
+}

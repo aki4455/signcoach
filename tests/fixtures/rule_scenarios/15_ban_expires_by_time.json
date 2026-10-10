@@ -1,0 +1,32 @@
+{
+ "name": "15_ban_expires_by_time",
+ "description": "Slow driving: 300 m not reached, the ban ends after 60 s.",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "3.18.2",
+   "value": null,
+   "t": 10
+  }
+ ],
+ "speed": [
+  [
+   0,
+   100,
+   10
+  ]
+ ],
+ "duration": 100,
+ "expect": {
+  "events": [
+   {
+    "type": "turn_ban_complied",
+    "severity": "complied",
+    "t": 70,
+    "detail": {
+     "ended_by": "max_time"
+    }
+   }
+  ]
+ }
+}

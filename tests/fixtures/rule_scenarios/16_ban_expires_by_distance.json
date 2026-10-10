@@ -1,0 +1,32 @@
+{
+ "name": "16_ban_expires_by_distance",
+ "description": "54 km/h = 15 m/s: 300 m after 20 s.",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "3.19",
+   "value": null,
+   "t": 10
+  }
+ ],
+ "speed": [
+  [
+   0,
+   60,
+   54
+  ]
+ ],
+ "duration": 60,
+ "expect": {
+  "events": [
+   {
+    "type": "turn_ban_complied",
+    "severity": "complied",
+    "t": 30,
+    "detail": {
+     "ended_by": "max_distance"
+    }
+   }
+  ]
+ }
+}

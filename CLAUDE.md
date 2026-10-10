@@ -423,6 +423,9 @@ If a required class is missing from the detector, report it in the M6 review and
 - **turn bans:** while a ban is active, a matching `TurnEvent` → `turn_ban_violation` (`detail.kind = "ban"`); a ban that expires without a matching turn → `turn_ban_complied`. Mandatory-direction signs (4.1.x) work the same way: a turn outside the allowed directions → `turn_ban_violation` with `detail.kind = "mandatory"`. Scope per `ban_scope` (approximation, documented in the README).
 - **no entry:** a relevant no-entry sign passed → `no_entry_possible` (`possible`), never a hard violation.
 - **conditional signs:** any violation from a sign with `conditional=true` is downgraded: speeding becomes `possible_speeding`; other types keep their type with severity `possible` and `detail.reason = "conditional"`.
+- **default limit is uncertain:** speeding measured against a *default* limit (60/90 km/h from ПДД §10.2/10.3) is only `possible_speeding` (`detail.reason = "default_limit"`): the detector cannot see settlement signs, so whether we are inside a built-up area is an assumption.
+- **from the official text (M2):** 3.31 ends speed-limit and no-overtaking zones, not turn bans; a speed limit also ends at 5.23.x/5.24.x; 3.18.x and 4.1.x apply to the next intersection; a left-turn arrow (4.1.3/4.1.5/4.1.6) also covers a U-turn; a ban is judged only for its own direction (a U-turn under 3.18.2 is not reported); an unreadable limit value makes the limit `unknown`.
+- **implemented (M2):** `pipeline/rules_engine.py`, 24 scenarios in `tests/fixtures/rule_scenarios/`, official texts via `scripts/extract_pdd.py`, checklist `docs/RULES_CHECKLIST.md`.
 - **score:** `max(0, 100 − Σ weights)`; shown as "indicative".
 - Write at least 15 JSON scenarios in `tests/fixtures/rule_scenarios/` (input streams + expected events), covering every event type, limit replacement, end signs, unknown speed, conditional downgrade and ban expiry.
 
