@@ -6,6 +6,7 @@ In production systemd starts uvicorn from the deploy checkout (deploy/signcoach.
 - /api/...    uploads, jobs, lessons (see app/api/)
 - /media/...  blurred lesson media (annotated.mp4, poster, thumbnails); served by StaticFiles,
               which answers HTTP Range requests, so the video player can seek
+- /voice/...  pre-generated English voice prompts (assets/voice, scripts/generate_voice.py)
 - /health     liveness + deployed git SHA
 - anything else: the single-page frontend from web/dist (index.html for client-side routes),
   or a placeholder page before the first frontend build.
@@ -53,12 +54,13 @@ app.add_exception_handler(ApiError, api_error_handler)
 for module in (health, uploads, jobs, lessons):
     app.include_router(module.router)
 app.mount("/media", StaticFiles(directory=get_settings().media_dir, check_dir=False), name="media")
+app.mount("/voice", StaticFiles(directory=REPO_DIR / "assets" / "voice", check_dir=False), name="voice")
 
 
 @app.get("/{path:path}", include_in_schema=False)
 def frontend(path: str):
     """Serve the built single-page app (or the placeholder before the first build)."""
-    if path.startswith(("api/", "media/")):
+    if path.startswith(("api/", "media/", "voice/")):
         return HTMLResponse("Not found", status_code=404)
     candidate = (WEB_DIST / path).resolve()
     if path and candidate.is_file() and WEB_DIST.resolve() in candidate.parents:
