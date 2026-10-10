@@ -3,7 +3,9 @@
 A sign is usually seen in 10-60 consecutive frames, and a single frame can be wrong (a "60" read
 as "80", a reflection mistaken for a sign). The tracker gives each physical sign a track id; for each
 track we pick the class with the highest *sum* of confidences and keep the sign only if it was seen
-in enough frames with enough mean confidence. Tracks of the same sign split by an id switch are
+in enough frames with enough mean confidence. With `vote.weight: size` each frame's confidence is
+multiplied by the sign's size on screen (sqrt of the box area): far away the digits of a speed limit
+are a few blurry pixels and flicker between 40/60/80, close up they are sharp — the near views decide. Tracks of the same sign split by an id switch are
 merged first (same class, close in time and position).
 
 `vote.single_frame_baseline: true` skips voting (every confident detection counts on its own), so
@@ -60,13 +62,13 @@ class VotedSign:
         return max(self.winning, key=_area)
 
 
-def _vote_track(dets: list[Detection]) -> VotedSign | None:
+def _vote_track(dets: list[Detection], by_size: bool = False) -> VotedSign | None:
     mapped = [d for d in dets if d.sign_code is not None]
     if not mapped:
         return None
     scores: dict[tuple[str, int | None], float] = defaultdict(float)
     for d in mapped:
-        scores[(d.sign_code, d.value)] += d.conf
+        scores[(d.sign_code, d.value)] += d.conf * (_area(d) ** 0.5 if by_size else 1.0)
     code, value = max(scores, key=scores.get)
     winning = [d for d in mapped if (d.sign_code, d.value) == (code, value)]
     return VotedSign(code, value, sorted(dets, key=lambda d: (d.t, d.frame_idx)), winning)
@@ -105,7 +107,8 @@ def vote(detections: list[Detection], cfg: dict, frame_width: int) -> list[Voted
     for d in detections:
         if d.track_id is not None:
             tracks[d.track_id].append(d)
-    candidates = [s for s in (_vote_track(dets) for dets in tracks.values()) if s is not None]
+    by_size = v.get("weight", "confidence") == "size"
+    candidates = [s for s in (_vote_track(dets, by_size) for dets in tracks.values()) if s is not None]
     merged = _merge_id_switches(candidates, v["dedupe_window_s"], v["dedupe_max_center_dist"] * frame_width)
     kept = [s for s in merged if s.n_frames >= v["min_frames"] and s.conf >= v["min_conf"]]
     return sorted(kept, key=lambda s: s.t_last)

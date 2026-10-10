@@ -66,6 +66,7 @@ track:                            # pipeline/tracking.py — links one sign's bo
 vote:
   min_frames: 3
   min_conf: 0.5                   # mean confidence of the winning class
+  weight: size                    # size = each frame's vote is conf x sqrt(box area) (near, sharp views decide); confidence = conf only
   dedupe_window_s: 2.0            # merge same code split by tracker ID switches
   dedupe_max_center_dist: 0.15    # ... if box centres are within this fraction of frame width
   single_frame_baseline: false    # true = no voting (ablation for eval/)
