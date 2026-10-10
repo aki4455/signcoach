@@ -25,6 +25,9 @@ MODELS = {
     "streetsignsense-yolo12s.pt": (
         "https://huggingface.co/AlessandroFerrante/StreetSignSenseY12s/resolve/main/streetsignsense-yolo12s.pt",
         "ea716000d066b3c48de91583210e8934de1865cb1956857c9c0fb89f7ec9ef9e"),
+    "license-plate-finetune-v1s.pt": (
+        "https://huggingface.co/morsetechlab/yolov11-license-plate-detection/resolve/main/license-plate-finetune-v1s.pt",
+        "95e50c25ab7066dd0ca5aec18fa80349676db08697780d1149576461174d2381"),
     "face_detection_yunet_2023mar.onnx": (
         "https://huggingface.co/opencv/face_detection_yunet/resolve/main/face_detection_yunet_2023mar.onnx",
         "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4"),

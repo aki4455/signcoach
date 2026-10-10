@@ -23,7 +23,7 @@ from pipeline.catalogue import Catalogue
 from pipeline.detect import ClassMap, SignDetector, build_detector
 from pipeline.privacy import FaceDetector
 from pipeline.types import LessonEvent, Report
-from pipeline.vehicles import VehicleDetector
+from pipeline.vehicles import PlateDetector, VehicleDetector
 
 I18N = Path(__file__).resolve().parents[1] / "config" / "i18n" / "en.json"
 
@@ -39,16 +39,19 @@ class Models:
     signs: SignDetector
     detectable: set[str]          # catalogue codes the sign detector can output
     vehicles: VehicleDetector
+    plates: PlateDetector
     faces: FaceDetector
     device: str
 
     @classmethod
     def load(cls, cfg: dict, models_dir: Path, device: str, replay_file: Path | None = None) -> "Models":
         detector = build_detector(cfg, models_dir, device, replay_file)
-        vcfg = cfg["models"]["vehicles"]
+        vcfg, pcfg = cfg["models"]["vehicles"], cfg["models"]["plates"]
         return cls(signs=detector, detectable=ClassMap.for_model(cfg["detect"]["model"]).codes,
                    vehicles=VehicleDetector(models_dir / vcfg["weights"], vcfg["imgsz"], vcfg["conf"], device,
                                             cfg["detect"].get("half", True)),
+                   plates=PlateDetector(models_dir / pcfg["weights"], pcfg["imgsz"], pcfg["conf"], device,
+                                        cfg["detect"].get("half", True)),
                    faces=FaceDetector(models_dir / cfg["models"]["faces"]["weights"],
                                       cfg["privacy"]["face_score_threshold"]),
                    device=device)
@@ -129,12 +132,17 @@ def process_job(job: JobInput, cfg: dict, models: Models, catalogue: Catalogue, 
             check_deadline()
             detections += models.signs.detect(frame, ts, idx)
             objects = models.vehicles.detect(frame)
-            objects_by_frame.append(objects)
             ego.update(frame, ts, [o.box for o in objects])
+            objects_by_frame.append(objects + models.plates.detect(frame))
             if idx % 10 == 0:
                 progress("analysis", 0.1 + 0.55 * min(1.0, idx / expected))
         timings["analysis"] = time.monotonic() - t
         n_frames = len(objects_by_frame)
+        # A plate found in a neighbouring frame is hidden here too (no single-frame flashes).
+        k = cfg["privacy"]["plate_neighbour_frames"]
+        plates = [[o for o in objs if o.kind == "plate"] for objs in objects_by_frame]
+        objects_by_frame = [objs + [o for j in range(max(0, i - k), min(n_frames, i + k + 1)) if j != i for o in plates[j]]
+                            for i, objs in enumerate(objects_by_frame)]
 
         # 3. Voting and relevance -------------------------------------------------------------------
         t = time.monotonic()

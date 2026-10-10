@@ -1,11 +1,13 @@
 """Blur faces and licence plates in every frame we publish (CLAUDE.md hard rule 4, §10.9).
 
-Three sources of regions to hide, all applied to the rendered (720p) frame:
+Four sources of regions to hide, all applied to the rendered (720p) frame:
 1. faces found by the YuNet face detector (OpenCV Zoo, MIT licence);
 2. the head area of every person box from the COCO detector — YuNet misses small and side-on
    faces, a person box does not;
-3. a band in the lower-middle part of every vehicle box, where the licence plate usually is
-   (no plate detector with a clear licence was available, so this fallback band is used).
+3. licence plates found by the plate detector (also those found one frame before or after, so a
+   single missed frame does not flash a readable plate);
+4. a fallback area over the lower part of every vehicle box, for plates the detector misses (on
+   close cars seen from a dashcam the plate sits around the middle of the box, so the area is big).
 
 Regions are pixelated strongly (unrecoverable) instead of a light blur.
 """
@@ -45,6 +47,8 @@ def regions_to_hide(objects: list[ObjectBox], scale: float, band: dict) -> list[
         w, h = x2 - x1, y2 - y1
         if o.kind == "person":
             regions.append((x1 + 0.1 * w, y1, x2 - 0.1 * w, y1 + 0.28 * h))       # head and shoulders
+        elif o.kind == "plate":
+            regions.append((x1, y1, x2, y2))
         elif o.kind in VEHICLES:
             regions.append((x1 + band["x_from"] * w, y1 + band["y_from"] * h,
                             x1 + band["x_to"] * w, y1 + band["y_to"] * h))

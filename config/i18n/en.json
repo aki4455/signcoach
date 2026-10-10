@@ -105,5 +105,6 @@
   "ui.speed_source.video": "estimated from the video",
   "ui.speed_source.gps": "GPS",
   "ui.speed_source.none": "not measured",
-  "ui.lesson_report": "Lesson report"
+  "ui.lesson_report": "Lesson report",
+  "detail.reason.uncalibrated": "The speed is estimated from the video and this camera was not calibrated, so this is only a possible violation."
 }

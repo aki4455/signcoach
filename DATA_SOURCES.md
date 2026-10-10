@@ -8,7 +8,7 @@ Weights and datasets are not in this repository; they are downloaded into `$SIGN
 | Name | Link | Used for | Licence | Attribution |
 |---|---|---|---|---|
 | Dognellaf / russian-road-signs | https://huggingface.co/datasets/Dognellaf/russian-road-signs | Training and validating the sign detector (38,918 labelled frames, 89 classes, split by source video) | CC BY 4.0 (LICENSE file in the dataset repo, checked 2026-10-10) | "Russian Road Signs" dataset by Dognellaf, CC BY 4.0 |
-| Team recordings | — | Demo lessons and evaluation | Recorded/provided by the team; published only blurred, without audio | SignCoach team |
+| Moscow dashcam clips `ru_01`…`ru_04` (3 min each) | provided by the team (shared via Telegram) | Sample lessons, demo uploads, evaluation (speed: `ru_01` calibration, `ru_02` test) | Free to use (confirmed by the team, 2026-10-11); only blurred, soundless outputs are published; raw clips are never in git | SignCoach team |
 
 ## Model weights
 
@@ -19,7 +19,7 @@ Weights and datasets are not in this repository; they are downloaded into `$SIGN
 | StreetSignSense YOLO12s | https://huggingface.co/AlessandroFerrante/StreetSignSenseY12s | Placeholder sign detector until the fine-tuned model is ready | CC BY 4.0 (model card; README also shows an MIT badge); trained with Ultralytics (AGPL-3.0) | `ea716000d066b3c48de91583210e8934de1865cb1956857c9c0fb89f7ec9ef9e` |
 | SignCoach sign detector (fine-tuned YOLO11s) | trained by us (`training/`) | Sign detection | AGPL-3.0 (derived from Ultralytics weights) | recorded after training (M6) |
 | YuNet face detector (`face_detection_yunet_2023mar.onnx`) | https://huggingface.co/opencv/face_detection_yunet (OpenCV Zoo) | Face blur | MIT (LICENSE file checked 2026-10-10), © 2020 Shiqi Yu | `8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4` |
-| Licence-plate detector | not used | Plates are hidden by pixelating a band in the lower middle of every vehicle box (`privacy.plate_band`) | — | — |
+| Licence-plate detector YOLO11s (`license-plate-finetune-v1s.pt`) | https://huggingface.co/morsetechlab/yolov11-license-plate-detection | Plate blur, together with a fallback area on every vehicle box (`privacy.plate_band`) | AGPL-3.0 (model card); trained on Roboflow "license-plate-recognition-rxg4e" — the card notes train/test leakage, so we judged it on our own clips | `95e50c25ab7066dd0ca5aec18fa80349676db08697780d1149576461174d2381` |
 | Piper TTS (`piper-tts` 1.8, offline tool, optional `voice` dependency group — not installed on the server) | https://github.com/OHF-Voice/piper1-gpl | Generating the English voice prompt MP3s (`scripts/generate_voice.py`) | GPL-3.0-or-later | — |
 | Piper voice `en_US-ljspeech-high` | https://huggingface.co/rhasspy/piper-voices/tree/main/en/en_US/ljspeech/high | Voice of the prompts in `assets/voice/en/` | Trained on the LJ Speech dataset (public domain, per the model card) | `5d4f08ba6a2a48c44592eed3ce56bf85e9de3dd4e20df90541ae68a8310c029a` |
 
