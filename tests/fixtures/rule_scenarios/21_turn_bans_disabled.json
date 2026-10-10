@@ -1,0 +1,33 @@
+{
+ "name": "21_turn_bans_disabled",
+ "description": "turn_bans_enabled=false: bans are explained only, never judged.",
+ "settings": {
+  "turn_bans_enabled": false
+ },
+ "signs": [
+  {
+   "id": "s1",
+   "code": "3.18.1",
+   "value": null,
+   "t": 10
+  }
+ ],
+ "speed": [
+  [
+   0,
+   30,
+   25
+  ]
+ ],
+ "turns": [
+  {
+   "t_start": 14,
+   "t_end": 17,
+   "direction": "right",
+   "angle_deg": 85
+  }
+ ],
+ "expect": {
+  "events": []
+ }
+}

@@ -1,0 +1,68 @@
+{
+ "name": "01_explained_once_per_code_and_value",
+ "description": "Each sign code+value is explained once; a new limit value gets its own explanation.",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "3.24",
+   "value": 60,
+   "t": 5
+  },
+  {
+   "id": "s2",
+   "code": "3.24",
+   "value": 60,
+   "t": 20
+  },
+  {
+   "id": "s3",
+   "code": "3.24",
+   "value": 40,
+   "t": 35
+  }
+ ],
+ "speed": [
+  [
+   0,
+   40,
+   30
+  ]
+ ],
+ "check_explained": true,
+ "expect": {
+  "events": [
+   {
+    "type": "sign_explained",
+    "severity": "info",
+    "t": 5,
+    "detail": {
+     "sign_code": "3.24",
+     "value": 60
+    }
+   },
+   {
+    "type": "sign_explained",
+    "severity": "info",
+    "t": 35,
+    "detail": {
+     "sign_code": "3.24",
+     "value": 40
+    }
+   }
+  ],
+  "limit_at": [
+   [
+    1,
+    60
+   ],
+   [
+    10,
+    60
+   ],
+   [
+    36,
+    40
+   ]
+  ]
+ }
+}

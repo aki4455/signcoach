@@ -1,0 +1,28 @@
+{
+ "name": "19_no_entry_is_only_possible",
+ "description": "Passing a relevant no-entry sign is reported as possible, never a hard violation.",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "3.1",
+   "value": null,
+   "t": 10
+  }
+ ],
+ "speed": [
+  [
+   0,
+   20,
+   30
+  ]
+ ],
+ "expect": {
+  "events": [
+   {
+    "type": "no_entry_possible",
+    "severity": "possible",
+    "t": 10
+   }
+  ]
+ }
+}

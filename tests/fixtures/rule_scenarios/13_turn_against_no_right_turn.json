@@ -1,0 +1,41 @@
+{
+ "name": "13_turn_against_no_right_turn",
+ "description": "Right turn after 'no right turn' -> violation.",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "3.18.1",
+   "value": null,
+   "t": 10
+  }
+ ],
+ "speed": [
+  [
+   0,
+   30,
+   25
+  ]
+ ],
+ "turns": [
+  {
+   "t_start": 14,
+   "t_end": 17,
+   "direction": "right",
+   "angle_deg": 85
+  }
+ ],
+ "expect": {
+  "events": [
+   {
+    "type": "turn_ban_violation",
+    "severity": "violation",
+    "t": 14,
+    "detail": {
+     "kind": "ban",
+     "ban": "right",
+     "turn_direction": "right"
+    }
+   }
+  ]
+ }
+}

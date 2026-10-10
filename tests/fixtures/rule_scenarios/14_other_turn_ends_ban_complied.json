@@ -1,0 +1,39 @@
+{
+ "name": "14_other_turn_ends_ban_complied",
+ "description": "Turning left under 'no right turn' ends the ban -> complied.",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "3.18.1",
+   "value": null,
+   "t": 10
+  }
+ ],
+ "speed": [
+  [
+   0,
+   30,
+   25
+  ]
+ ],
+ "turns": [
+  {
+   "t_start": 14,
+   "t_end": 17,
+   "direction": "left",
+   "angle_deg": 80
+  }
+ ],
+ "expect": {
+  "events": [
+   {
+    "type": "turn_ban_complied",
+    "severity": "complied",
+    "t": 14,
+    "detail": {
+     "ended_by": "turn"
+    }
+   }
+  ]
+ }
+}

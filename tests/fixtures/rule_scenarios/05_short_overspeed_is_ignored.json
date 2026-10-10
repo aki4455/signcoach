@@ -1,0 +1,32 @@
+{
+ "name": "05_short_overspeed_is_ignored",
+ "description": "2 s over the limit is shorter than speeding.min_duration_s (3 s).",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "3.24",
+   "value": 60,
+   "t": 2
+  }
+ ],
+ "speed": [
+  [
+   0,
+   10,
+   50
+  ],
+  [
+   10,
+   12,
+   80
+  ],
+  [
+   12,
+   30,
+   50
+  ]
+ ],
+ "expect": {
+  "events": []
+ }
+}

@@ -1,0 +1,37 @@
+{
+ "name": "24_end_of_built_up_area_switches_default",
+ "description": "5.24.1: outside a built-up area the default is 90, so 85 km/h is fine.",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "5.24.1",
+   "value": null,
+   "t": 10
+  }
+ ],
+ "speed": [
+  [
+   0,
+   10,
+   50
+  ],
+  [
+   10,
+   30,
+   85
+  ]
+ ],
+ "expect": {
+  "events": [],
+  "limit_at": [
+   [
+    5,
+    60
+   ],
+   [
+    15,
+    90
+   ]
+  ]
+ }
+}

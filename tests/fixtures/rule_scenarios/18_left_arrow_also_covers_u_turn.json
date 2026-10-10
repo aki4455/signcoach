@@ -1,0 +1,40 @@
+{
+ "name": "18_left_arrow_also_covers_u_turn",
+ "description": "U-turn after 'left only': allowed by ПДД (left arrow covers U-turn).",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "4.1.3",
+   "value": null,
+   "t": 10
+  }
+ ],
+ "speed": [
+  [
+   0,
+   30,
+   20
+  ]
+ ],
+ "turns": [
+  {
+   "t_start": 14,
+   "t_end": 20,
+   "direction": "uturn",
+   "angle_deg": 175
+  }
+ ],
+ "expect": {
+  "events": [
+   {
+    "type": "turn_ban_complied",
+    "severity": "complied",
+    "t": 14,
+    "detail": {
+     "kind": "mandatory",
+     "ended_by": "turn"
+    }
+   }
+  ]
+ }
+}

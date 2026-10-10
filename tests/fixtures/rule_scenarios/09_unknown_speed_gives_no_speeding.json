@@ -1,0 +1,22 @@
+{
+ "name": "09_unknown_speed_gives_no_speeding",
+ "description": "No speed estimate -> no speeding events (never guessed).",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "3.24",
+   "value": 60,
+   "t": 2
+  }
+ ],
+ "speed": [
+  [
+   0,
+   30,
+   null
+  ]
+ ],
+ "expect": {
+  "events": []
+ }
+}
