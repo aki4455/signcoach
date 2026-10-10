@@ -6,7 +6,9 @@ rules in force (speed limit, turn bans, mandatory directions, inside/outside a b
 stores a `RuleState` snapshot every time they change. Then it judges speed and stops against them.
 
 What it reports (severity decides colour and score):
-- sign_explained   first time each sign code + value appears (explanation + voice prompt)
+- sign_explained   first time each sign code + value appears (explanation + voice prompt); it is said when
+                   the sign is confirmed while we approach (`announce_at`, as a system in the car could),
+                   while its rule takes effect when we pass it
 - speeding         over the limit even after subtracting the speed error -> violation
 - possible_speeding over the limit but within the error, or the speed/limit is uncertain: a default
                    limit we cannot confirm without settlement signs, a sign with a conditions plate,
@@ -100,9 +102,12 @@ def _expiry(t_start: float, motion: list[MotionSample], scope: dict) -> tuple[fl
 
 
 def run(sign_events: list[SignEvent], motion: list[MotionSample], turns: list[TurnEvent],
-        catalogue: Catalogue, settings: dict, duration_s: float | None = None
-        ) -> tuple[list[LessonEvent], list[RuleState]]:
-    """Return (lesson events sorted by time, rule-state timeline)."""
+        catalogue: Catalogue, settings: dict, duration_s: float | None = None,
+        announce_at: dict[str, float] | None = None) -> tuple[list[LessonEvent], list[RuleState]]:
+    """Return (lesson events sorted by time, rule-state timeline).
+
+    `announce_at`: sign event id -> time to say/explain the sign (default: when we pass it)."""
+    announce_at = announce_at or {}
     defaults = catalogue.rules.get("defaults", {})
     inside = defaults.get("assume_in_settlement", True)
     bans_enabled = settings.get("turn_bans_enabled", True)
@@ -162,7 +167,8 @@ def run(sign_events: list[SignEvent], motion: list[MotionSample], turns: list[Tu
             s = item
             if (s.sign_code, s.value) not in explained:
                 explained.add((s.sign_code, s.value))
-                events.append(_event(s.t_pass, "sign_explained", "info", s, title="event.sign_explained",
+                events.append(_event(min(s.t_pass, announce_at.get(s.id, s.t_pass)), "sign_explained", "info", s,
+                                     title="event.sign_explained",
                                      detail={"sign_code": s.sign_code, "value": s.value},
                                      voice=catalogue.voice_key(s.sign_code, s.value),
                                      clip=(round(max(0.0, s.t_first - 1.0), 2), round(s.t_pass + 2.0, 2))))

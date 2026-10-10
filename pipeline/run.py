@@ -164,7 +164,16 @@ def process_job(job: JobInput, cfg: dict, models: Models, catalogue: Catalogue, 
             warnings.append("warning.camera_uncalibrated")
 
         # 5. Rules ------------------------------------------------------------------------------------
-        events, timeline = rules_engine.run(sign_events, motion, turns, catalogue, cfg, duration_s=ninfo.duration_s)
+        # Each sign is announced when it is confirmed — the vote.min_frames-th sighting of its final
+        # class — which is when a system in the car could have spoken; its rule applies when we pass it.
+        announce_at = {}
+        if cfg.get("voice", {}).get("announce_at", "confirmed") == "confirmed":
+            k = cfg["vote"]["min_frames"]
+            for e, v in zip(sign_events, sign_votes):
+                seen = sorted(d.t for d in v.winning)
+                announce_at[e.id] = seen[min(k, len(seen)) - 1]
+        events, timeline = rules_engine.run(sign_events, motion, turns, catalogue, cfg, duration_s=ninfo.duration_s,
+                                            announce_at=announce_at)
         if not any(s.relevant for s in sign_events):
             warnings.append("warning.no_signs")
         timings["signs_and_rules"] = time.monotonic() - t
@@ -181,8 +190,8 @@ def process_job(job: JobInput, cfg: dict, models: Models, catalogue: Catalogue, 
         for e in sign_events:
             if any(ev.sign_event_id == e.id for ev in events):
                 thumbs.setdefault(e.best_frame_idx, []).append((f"{e.id}.jpg", e.best_bbox))
-        subtitles = [(e.t, e.t + 3.0, event_text(e, catalogue, strings)) for e in events
-                     if e.voice_key or e.severity in ("violation", "possible")]
+        subtitles = render.merge_subtitles([(e.t, e.t + 3.0, event_text(e, catalogue, strings)) for e in events
+                                            if e.voice_key or e.severity in ("violation", "possible")])
         poster = events[0].t if events else ninfo.duration_s / 3
         saved = render.render(
             render.RenderJob(normalized=normalized, width=ninfo.width, height=ninfo.height, video_fps=ninfo.fps, step=step,
