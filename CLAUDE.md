@@ -549,7 +549,7 @@ If time runs short, cut in this order: student progress page → conditional-pla
 
 - M0: done except re-running `sudo bash deploy/setup_host.sh` (installs the runner service) and merging PR #1.
 - M1 (now): Russian dashcam test clips — a teammate collects them (licence/permission recorded, not from the training data, 30–180 s, landscape, many signs, some with violations, some at night).
-- M2: a Russian-speaking team member checks `docs/RULES_CHECKLIST.md` against ПДД and marks entries verified (§11.2).
+- M2: **done** — the team checked `docs/RULES_CHECKLIST.md` against ПДД on 2026-10-11 and confirmed it; all catalogue entries and the default limits are `verified: true`.
 - M3: if possible, 2–3 collected clips whose dashcam shows its GPS speed on screen, with the speed written down every ~5 s (`speed_<clip>.csv`).
 - M4: nothing — voice prompts are generated with a TTS model (Claude provides the list of keys and texts for review).
 - M6: the decision on which model to use.
