@@ -89,14 +89,31 @@ def _draw_hud(frame, state: RuleState, sample: MotionSample | None):
     _text(frame, f"Speed: {speed}", (24, 66), 0.6, RED if over else WHITE, 2 if over else 1)
 
 
+def merge_subtitles(subs: list[tuple[float, float, str]]) -> list[tuple[float, float, str]]:
+    """Subtitles that overlap in time become one line ("Main road · Pedestrian crossing"), so two signs
+    on one pole are not drawn on top of each other."""
+    merged: list[tuple[float, float, str]] = []
+    for t0, t1, text in sorted(subs):
+        if merged and t0 < merged[-1][1]:
+            m0, m1, mtext = merged[-1]
+            merged[-1] = (m0, max(m1, t1), mtext if text in mtext.split(" · ") else f"{mtext} · {text}")
+        else:
+            merged.append((t0, t1, text))
+    return merged
+
+
 def _draw_subtitle(frame, text):
     h, w = frame.shape[:2]
-    (tw, th), _ = cv2.getTextSize(text, FONT, 0.65, 2)
+    scale = 0.65
+    (tw, th), _ = cv2.getTextSize(text, FONT, scale, 2)
+    if tw > w - 60:                                   # long merged lines: smaller letters, still one line
+        scale *= (w - 60) / tw
+        (tw, th), _ = cv2.getTextSize(text, FONT, scale, 2)
     x = max(10, (w - tw) // 2)
     overlay = frame.copy()
     cv2.rectangle(overlay, (x - 12, h - 52 - th), (x + tw + 12, h - 30), DARK, -1)
     cv2.addWeighted(overlay, 0.65, frame, 0.35, 0, frame)
-    _text(frame, text, (x, h - 40), 0.65, WHITE, 2)
+    _text(frame, text, (x, h - 40), scale, WHITE, 2)
 
 
 def _crop(frame, box, min_side=128):
