@@ -1,0 +1,59 @@
+# Class map for the detector fine-tuned on Dognellaf/russian-road-signs (CLAUDE.md §10.3, §14.2).
+# Maps the model's class name -> catalogue sign code (+ km/h value for speed limits).
+# Classes not listed here are kept with sign_code = null and shown only in debug.
+#
+# Speed-limit values were read from example crops of each class (training/class_crops.py) on
+# 2026-10-10: 3.24.1 shows "10", 3.24.2 "20", ... 3.24.11 "110". The bare "3.24" class mixes
+# different values (crops show 40 and 60), so its value is unknown (null).
+# Codes are Russian GOST numbers, the same numbering the training data uses.
+model: dognellaf_y11s
+classes:
+  # Speed limits
+  "3.24.1": {code: "3.24", value: 10}
+  "3.24.2": {code: "3.24", value: 20}
+  "3.24.3": {code: "3.24", value: 30}
+  "3.24.4": {code: "3.24", value: 40}
+  "3.24.5": {code: "3.24", value: 50}
+  "3.24.6": {code: "3.24", value: 60}
+  "3.24.7": {code: "3.24", value: 70}
+  "3.24.8": {code: "3.24", value: 80}
+  "3.24.9": {code: "3.24", value: 90}
+  "3.24.10": {code: "3.24", value: 100}
+  "3.24.11": {code: "3.24", value: 110}
+  "3.24": {code: "3.24", value: null}
+  "3.25": {code: "3.25"}          # end of speed limit — only 5 training examples, rarely detected
+  "3.31": {code: "3.31"}
+  # Prohibitory
+  "3.1": {code: "3.1"}
+  "3.18.1": {code: "3.18.1"}      # 3.18.2 (no left turn) and 3.19 (no U-turn) are not in the dataset
+  "3.20": {code: "3.20"}
+  "3.21": {code: "3.21"}
+  "3.27": {code: "3.27"}
+  "3.28": {code: "3.28"}
+  # Priority
+  "2.1": {code: "2.1"}
+  "2.2": {code: "2.2"}
+  "2.4": {code: "2.4"}
+  "2.5": {code: "2.5"}
+  # Mandatory directions and roundabout
+  "4.1.1": {code: "4.1.1"}
+  "4.1.2": {code: "4.1.2"}
+  "4.1.3": {code: "4.1.3"}
+  "4.1.4": {code: "4.1.4"}
+  "4.1.5": {code: "4.1.5"}
+  "4.1.6": {code: "4.1.6"}
+  "4.3": {code: "4.3"}
+  # Pedestrians, children, speed bumps
+  "5.19.1": {code: "5.19.1"}
+  "5.19.2": {code: "5.19.2"}
+  "1.22": {code: "1.22"}
+  "1.23": {code: "1.23"}
+  "5.20": {code: "5.20"}
+  "1.17": {code: "1.17"}
+  # Supplementary plates (used by the "conditional sign" check, not explained on their own)
+  "8.1.1": {code: "8.1.1"}
+  "8.2.1": {code: "8.2.1"}
+  "8.5.4": {code: "8.5.4"}
+  "8.13": {code: "8.13"}
+  "8.22.1": {code: "8.22.1"}
+  "8.22.3": {code: "8.22.3"}
