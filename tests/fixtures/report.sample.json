@@ -1,0 +1,2564 @@
+{
+ "lesson": {
+  "id": "sample-fixture",
+  "student": "Demo student",
+  "label": "Synthetic fixture \u2014 not produced by the pipeline",
+  "created_at": "2026-10-10T17:00:00Z",
+  "duration_s": 95.0,
+  "is_sample": false
+ },
+ "media": {
+  "annotated_video_url": "/media/sample-fixture/annotated.mp4",
+  "poster_url": "/media/sample-fixture/poster.jpg"
+ },
+ "speed_source": "video",
+ "calibration": {
+  "scale_k": 1.0,
+  "err_model": {
+   "a": 3.0,
+   "b": 0.1
+  },
+  "camera_height_m": 1.3,
+  "hfov_deg": 70,
+  "calibrated": false
+ },
+ "summary": {
+  "score": 64,
+  "signs_passed": 9,
+  "violations": 3,
+  "possible": 2,
+  "complied": 2
+ },
+ "events": [
+  {
+   "id": "e1",
+   "t": 4.2,
+   "type": "sign_explained",
+   "severity": "info",
+   "sign_code": "3.24",
+   "value": 60,
+   "title_key": "event.sign_explained",
+   "detail": {
+    "sign_code": "3.24",
+    "value": 60
+   },
+   "clip": [
+    1.2000000000000002,
+    9.2
+   ],
+   "voice_key": "speed_limit_60",
+   "thumbnail": "/media/sample-fixture/thumbs/e1.jpg",
+   "sign_event_id": "s1"
+  },
+  {
+   "id": "e2",
+   "t": 12.0,
+   "type": "sign_explained",
+   "severity": "info",
+   "sign_code": "5.19.1",
+   "value": null,
+   "title_key": "event.sign_explained",
+   "detail": {
+    "sign_code": "5.19.1"
+   },
+   "clip": [
+    9.0,
+    17.0
+   ],
+   "voice_key": "pedestrian_crossing",
+   "thumbnail": "/media/sample-fixture/thumbs/e2.jpg",
+   "sign_event_id": "s2"
+  },
+  {
+   "id": "e3",
+   "t": 18.5,
+   "type": "sign_explained",
+   "severity": "info",
+   "sign_code": "2.5",
+   "value": null,
+   "title_key": "event.sign_explained",
+   "detail": {
+    "sign_code": "2.5"
+   },
+   "clip": [
+    15.5,
+    23.5
+   ],
+   "voice_key": "stop",
+   "thumbnail": "/media/sample-fixture/thumbs/e3.jpg",
+   "sign_event_id": "s3"
+  },
+  {
+   "id": "e4",
+   "t": 19.0,
+   "type": "stop_not_made",
+   "severity": "violation",
+   "sign_code": "2.5",
+   "value": null,
+   "title_key": "event.stop_not_made",
+   "detail": {
+    "min_speed_kmh": 14.0,
+    "window_s": [
+     -2,
+     6
+    ]
+   },
+   "clip": [
+    16.0,
+    24.0
+   ],
+   "voice_key": "stop_not_made",
+   "thumbnail": "/media/sample-fixture/thumbs/e4.jpg",
+   "sign_event_id": "s3"
+  },
+  {
+   "id": "e5",
+   "t": 27.3,
+   "type": "speeding",
+   "severity": "violation",
+   "sign_code": "3.24",
+   "value": 60,
+   "title_key": "event.speeding",
+   "detail": {
+    "limit_kmh": 60,
+    "max_speed_kmh": 78.0,
+    "min_speed_kmh": 72.1,
+    "duration_s": 6.5,
+    "err_kmh": 10.8
+   },
+   "clip": [
+    24.3,
+    32.3
+   ],
+   "voice_key": "speeding",
+   "thumbnail": "/media/sample-fixture/thumbs/e5.jpg",
+   "sign_event_id": "s1"
+  },
+  {
+   "id": "e6",
+   "t": 33.0,
+   "type": "sign_explained",
+   "severity": "info",
+   "sign_code": "1.23",
+   "value": null,
+   "title_key": "event.sign_explained",
+   "detail": {
+    "sign_code": "1.23"
+   },
+   "clip": [
+    30.0,
+    38.0
+   ],
+   "voice_key": "children",
+   "thumbnail": "/media/sample-fixture/thumbs/e6.jpg",
+   "sign_event_id": "s4"
+  },
+  {
+   "id": "e7",
+   "t": 40.1,
+   "type": "possible_speeding",
+   "severity": "possible",
+   "sign_code": "3.24",
+   "value": 60,
+   "title_key": "event.possible_speeding",
+   "detail": {
+    "limit_kmh": 60,
+    "max_speed_kmh": 66.0,
+    "min_speed_kmh": 64.2,
+    "duration_s": 4.0,
+    "err_kmh": 9.6
+   },
+   "clip": [
+    37.1,
+    45.1
+   ],
+   "voice_key": null,
+   "thumbnail": "/media/sample-fixture/thumbs/e7.jpg",
+   "sign_event_id": "s1"
+  },
+  {
+   "id": "e8",
+   "t": 48.0,
+   "type": "sign_explained",
+   "severity": "info",
+   "sign_code": "3.18.1",
+   "value": null,
+   "title_key": "event.sign_explained",
+   "detail": {
+    "sign_code": "3.18.1"
+   },
+   "clip": [
+    45.0,
+    53.0
+   ],
+   "voice_key": "no_right_turn",
+   "thumbnail": "/media/sample-fixture/thumbs/e8.jpg",
+   "sign_event_id": "s5"
+  },
+  {
+   "id": "e9",
+   "t": 55.0,
+   "type": "turn_ban_violation",
+   "severity": "violation",
+   "sign_code": "3.18.1",
+   "value": null,
+   "title_key": "event.turn_ban_violation",
+   "detail": {
+    "kind": "ban",
+    "ban": "right",
+    "turn_direction": "right",
+    "angle_deg": 84.0
+   },
+   "clip": [
+    52.0,
+    60.0
+   ],
+   "voice_key": "turn_ban_violation",
+   "thumbnail": "/media/sample-fixture/thumbs/e9.jpg",
+   "sign_event_id": "s5"
+  },
+  {
+   "id": "e10",
+   "t": 60.2,
+   "type": "sign_explained",
+   "severity": "info",
+   "sign_code": "4.1.1",
+   "value": null,
+   "title_key": "event.sign_explained",
+   "detail": {
+    "sign_code": "4.1.1"
+   },
+   "clip": [
+    57.2,
+    65.2
+   ],
+   "voice_key": "mandatory_straight",
+   "thumbnail": "/media/sample-fixture/thumbs/e10.jpg",
+   "sign_event_id": "s7"
+  },
+  {
+   "id": "e11",
+   "t": 70.5,
+   "type": "sign_explained",
+   "severity": "info",
+   "sign_code": "3.1",
+   "value": null,
+   "title_key": "event.sign_explained",
+   "detail": {
+    "sign_code": "3.1"
+   },
+   "clip": [
+    67.5,
+    75.5
+   ],
+   "voice_key": "no_entry",
+   "thumbnail": "/media/sample-fixture/thumbs/e11.jpg",
+   "sign_event_id": "s8"
+  },
+  {
+   "id": "e12",
+   "t": 70.6,
+   "type": "no_entry_possible",
+   "severity": "possible",
+   "sign_code": "3.1",
+   "value": null,
+   "title_key": "event.no_entry_possible",
+   "detail": {},
+   "clip": [
+    67.6,
+    75.6
+   ],
+   "voice_key": null,
+   "thumbnail": "/media/sample-fixture/thumbs/e12.jpg",
+   "sign_event_id": "s8"
+  },
+  {
+   "id": "e13",
+   "t": 75.0,
+   "type": "sign_explained",
+   "severity": "info",
+   "sign_code": "3.24",
+   "value": 40,
+   "title_key": "event.sign_explained",
+   "detail": {
+    "sign_code": "3.24",
+    "value": 40
+   },
+   "clip": [
+    72.0,
+    80.0
+   ],
+   "voice_key": "speed_limit_40",
+   "thumbnail": "/media/sample-fixture/thumbs/e13.jpg",
+   "sign_event_id": "s9"
+  },
+  {
+   "id": "e14",
+   "t": 80.0,
+   "type": "stop_ok",
+   "severity": "complied",
+   "sign_code": "2.5",
+   "value": null,
+   "title_key": "event.stop_ok",
+   "detail": {
+    "min_speed_kmh": 0.0
+   },
+   "clip": [
+    77.0,
+    85.0
+   ],
+   "voice_key": null,
+   "thumbnail": "/media/sample-fixture/thumbs/e14.jpg",
+   "sign_event_id": "s10"
+  },
+  {
+   "id": "e15",
+   "t": 85.0,
+   "type": "info",
+   "severity": "info",
+   "sign_code": null,
+   "value": null,
+   "title_key": "event.speed_not_checked",
+   "detail": {
+    "from_s": 85.0,
+    "to_s": 95.0
+   },
+   "clip": [
+    82.0,
+    90.0
+   ],
+   "voice_key": null,
+   "thumbnail": null,
+   "sign_event_id": null
+  },
+  {
+   "id": "e16",
+   "t": 86.0,
+   "type": "turn_ban_complied",
+   "severity": "complied",
+   "sign_code": "4.1.1",
+   "value": null,
+   "title_key": "event.turn_ban_complied",
+   "detail": {
+    "kind": "mandatory",
+    "allowed": [
+     "straight"
+    ],
+    "ended_by": "max_distance"
+   },
+   "clip": [
+    83.0,
+    91.0
+   ],
+   "voice_key": null,
+   "thumbnail": "/media/sample-fixture/thumbs/e16.jpg",
+   "sign_event_id": "s7"
+  }
+ ],
+ "timeline": [
+  {
+   "t": 0.0,
+   "speed_limit_kmh": null,
+   "limit_source": "unknown",
+   "limit_sign_event_id": null,
+   "active_bans": [],
+   "mandatory": []
+  },
+  {
+   "t": 4.2,
+   "speed_limit_kmh": 60,
+   "limit_source": "sign",
+   "limit_sign_event_id": "s1",
+   "active_bans": [],
+   "mandatory": []
+  },
+  {
+   "t": 48.0,
+   "speed_limit_kmh": 60,
+   "limit_source": "sign",
+   "limit_sign_event_id": "s1",
+   "active_bans": [
+    "right"
+   ],
+   "mandatory": []
+  },
+  {
+   "t": 55.0,
+   "speed_limit_kmh": null,
+   "limit_source": "unknown",
+   "limit_sign_event_id": null,
+   "active_bans": [],
+   "mandatory": []
+  },
+  {
+   "t": 60.2,
+   "speed_limit_kmh": null,
+   "limit_source": "unknown",
+   "limit_sign_event_id": null,
+   "active_bans": [],
+   "mandatory": [
+    "straight"
+   ]
+  },
+  {
+   "t": 75.0,
+   "speed_limit_kmh": 40,
+   "limit_source": "sign",
+   "limit_sign_event_id": "s9",
+   "active_bans": [],
+   "mandatory": [
+    "straight"
+   ]
+  },
+  {
+   "t": 86.0,
+   "speed_limit_kmh": 40,
+   "limit_source": "sign",
+   "limit_sign_event_id": "s9",
+   "active_bans": [],
+   "mandatory": []
+  }
+ ],
+ "motion": [
+  {
+   "t": 0.0,
+   "speed_kmh": 0.0,
+   "speed_err_kmh": 3.0,
+   "source": "video",
+   "quality": 0.75,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": true
+  },
+  {
+   "t": 0.5,
+   "speed_kmh": 6.7,
+   "speed_err_kmh": 3.7,
+   "source": "video",
+   "quality": 0.8,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 1.0,
+   "speed_kmh": 13.3,
+   "speed_err_kmh": 4.3,
+   "source": "video",
+   "quality": 0.83,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 1.5,
+   "speed_kmh": 20.0,
+   "speed_err_kmh": 5.0,
+   "source": "video",
+   "quality": 0.85,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 2.0,
+   "speed_kmh": 26.7,
+   "speed_err_kmh": 5.7,
+   "source": "video",
+   "quality": 0.84,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 2.5,
+   "speed_kmh": 33.3,
+   "speed_err_kmh": 6.3,
+   "source": "video",
+   "quality": 0.81,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 3.0,
+   "speed_kmh": 42.0,
+   "speed_err_kmh": 7.2,
+   "source": "video",
+   "quality": 0.76,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 3.5,
+   "speed_kmh": 42.2,
+   "speed_err_kmh": 7.2,
+   "source": "video",
+   "quality": 0.71,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 4.0,
+   "speed_kmh": 42.4,
+   "speed_err_kmh": 7.2,
+   "source": "video",
+   "quality": 0.67,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 4.5,
+   "speed_kmh": 42.6,
+   "speed_err_kmh": 7.3,
+   "source": "video",
+   "quality": 0.65,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 5.0,
+   "speed_kmh": 42.8,
+   "speed_err_kmh": 7.3,
+   "source": "video",
+   "quality": 0.65,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 5.5,
+   "speed_kmh": 43.0,
+   "speed_err_kmh": 7.3,
+   "source": "video",
+   "quality": 0.68,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 6.0,
+   "speed_kmh": 43.2,
+   "speed_err_kmh": 7.3,
+   "source": "video",
+   "quality": 0.72,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 6.5,
+   "speed_kmh": 43.3,
+   "speed_err_kmh": 7.3,
+   "source": "video",
+   "quality": 0.77,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 7.0,
+   "speed_kmh": 43.5,
+   "speed_err_kmh": 7.4,
+   "source": "video",
+   "quality": 0.82,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 7.5,
+   "speed_kmh": 43.7,
+   "speed_err_kmh": 7.4,
+   "source": "video",
+   "quality": 0.84,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 8.0,
+   "speed_kmh": 43.9,
+   "speed_err_kmh": 7.4,
+   "source": "video",
+   "quality": 0.85,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 8.5,
+   "speed_kmh": 44.1,
+   "speed_err_kmh": 7.4,
+   "source": "video",
+   "quality": 0.83,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 9.0,
+   "speed_kmh": 44.3,
+   "speed_err_kmh": 7.4,
+   "source": "video",
+   "quality": 0.79,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 9.5,
+   "speed_kmh": 44.5,
+   "speed_err_kmh": 7.5,
+   "source": "video",
+   "quality": 0.74,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 10.0,
+   "speed_kmh": 44.7,
+   "speed_err_kmh": 7.5,
+   "source": "video",
+   "quality": 0.7,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 10.5,
+   "speed_kmh": 44.9,
+   "speed_err_kmh": 7.5,
+   "source": "video",
+   "quality": 0.66,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 11.0,
+   "speed_kmh": 45.1,
+   "speed_err_kmh": 7.5,
+   "source": "video",
+   "quality": 0.65,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 11.5,
+   "speed_kmh": 45.3,
+   "speed_err_kmh": 7.5,
+   "source": "video",
+   "quality": 0.66,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 12.0,
+   "speed_kmh": 45.5,
+   "speed_err_kmh": 7.5,
+   "source": "video",
+   "quality": 0.7,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 12.5,
+   "speed_kmh": 45.7,
+   "speed_err_kmh": 7.6,
+   "source": "video",
+   "quality": 0.74,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 13.0,
+   "speed_kmh": 45.8,
+   "speed_err_kmh": 7.6,
+   "source": "video",
+   "quality": 0.79,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 13.5,
+   "speed_kmh": 46.0,
+   "speed_err_kmh": 7.6,
+   "source": "video",
+   "quality": 0.83,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 14.0,
+   "speed_kmh": 46.2,
+   "speed_err_kmh": 7.6,
+   "source": "video",
+   "quality": 0.85,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 14.5,
+   "speed_kmh": 46.4,
+   "speed_err_kmh": 7.6,
+   "source": "video",
+   "quality": 0.84,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 15.0,
+   "speed_kmh": 46.6,
+   "speed_err_kmh": 7.7,
+   "source": "video",
+   "quality": 0.82,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 15.5,
+   "speed_kmh": 46.8,
+   "speed_err_kmh": 7.7,
+   "source": "video",
+   "quality": 0.77,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 16.0,
+   "speed_kmh": 45.0,
+   "speed_err_kmh": 7.5,
+   "source": "video",
+   "quality": 0.72,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 16.5,
+   "speed_kmh": 39.8,
+   "speed_err_kmh": 7.0,
+   "source": "video",
+   "quality": 0.68,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 17.0,
+   "speed_kmh": 34.7,
+   "speed_err_kmh": 6.5,
+   "source": "video",
+   "quality": 0.65,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 17.5,
+   "speed_kmh": 29.5,
+   "speed_err_kmh": 6.0,
+   "source": "video",
+   "quality": 0.65,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 18.0,
+   "speed_kmh": 24.3,
+   "speed_err_kmh": 5.4,
+   "source": "video",
+   "quality": 0.67,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 18.5,
+   "speed_kmh": 19.2,
+   "speed_err_kmh": 4.9,
+   "source": "video",
+   "quality": 0.72,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 19.0,
+   "speed_kmh": 14.0,
+   "speed_err_kmh": 4.4,
+   "source": "video",
+   "quality": 0.76,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 19.5,
+   "speed_kmh": 20.8,
+   "speed_err_kmh": 5.1,
+   "source": "video",
+   "quality": 0.81,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 20.0,
+   "speed_kmh": 27.7,
+   "speed_err_kmh": 5.8,
+   "source": "video",
+   "quality": 0.84,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 20.5,
+   "speed_kmh": 34.5,
+   "speed_err_kmh": 6.5,
+   "source": "video",
+   "quality": 0.85,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 21.0,
+   "speed_kmh": 41.3,
+   "speed_err_kmh": 7.1,
+   "source": "video",
+   "quality": 0.83,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 21.5,
+   "speed_kmh": 48.2,
+   "speed_err_kmh": 7.8,
+   "source": "video",
+   "quality": 0.8,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 22.0,
+   "speed_kmh": 55.0,
+   "speed_err_kmh": 8.5,
+   "source": "video",
+   "quality": 0.75,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 22.5,
+   "speed_kmh": 56.7,
+   "speed_err_kmh": 8.7,
+   "source": "video",
+   "quality": 0.7,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 23.0,
+   "speed_kmh": 58.4,
+   "speed_err_kmh": 8.8,
+   "source": "video",
+   "quality": 0.67,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 23.5,
+   "speed_kmh": 60.1,
+   "speed_err_kmh": 9.0,
+   "source": "video",
+   "quality": 0.65,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 24.0,
+   "speed_kmh": 61.8,
+   "speed_err_kmh": 9.2,
+   "source": "video",
+   "quality": 0.66,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 24.5,
+   "speed_kmh": 63.5,
+   "speed_err_kmh": 9.4,
+   "source": "video",
+   "quality": 0.69,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 25.0,
+   "speed_kmh": 65.2,
+   "speed_err_kmh": 9.5,
+   "source": "video",
+   "quality": 0.74,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 25.5,
+   "speed_kmh": 66.9,
+   "speed_err_kmh": 9.7,
+   "source": "video",
+   "quality": 0.79,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 26.0,
+   "speed_kmh": 68.6,
+   "speed_err_kmh": 9.9,
+   "source": "video",
+   "quality": 0.83,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 26.5,
+   "speed_kmh": 70.3,
+   "speed_err_kmh": 10.0,
+   "source": "video",
+   "quality": 0.85,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 27.0,
+   "speed_kmh": 72.0,
+   "speed_err_kmh": 10.2,
+   "source": "video",
+   "quality": 0.85,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 27.5,
+   "speed_kmh": 72.4,
+   "speed_err_kmh": 10.2,
+   "source": "video",
+   "quality": 0.82,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 28.0,
+   "speed_kmh": 72.9,
+   "speed_err_kmh": 10.3,
+   "source": "video",
+   "quality": 0.78,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 28.5,
+   "speed_kmh": 73.3,
+   "speed_err_kmh": 10.3,
+   "source": "video",
+   "quality": 0.73,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 29.0,
+   "speed_kmh": 73.7,
+   "speed_err_kmh": 10.4,
+   "source": "video",
+   "quality": 0.68,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 29.5,
+   "speed_kmh": 74.1,
+   "speed_err_kmh": 10.4,
+   "source": "video",
+   "quality": 0.66,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 30.0,
+   "speed_kmh": 74.6,
+   "speed_err_kmh": 10.5,
+   "source": "video",
+   "quality": 0.65,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 30.5,
+   "speed_kmh": 75.0,
+   "speed_err_kmh": 10.5,
+   "source": "video",
+   "quality": 0.67,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 31.0,
+   "speed_kmh": 75.4,
+   "speed_err_kmh": 10.5,
+   "source": "video",
+   "quality": 0.71,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 31.5,
+   "speed_kmh": 75.9,
+   "speed_err_kmh": 10.6,
+   "source": "video",
+   "quality": 0.76,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 32.0,
+   "speed_kmh": 76.3,
+   "speed_err_kmh": 10.6,
+   "source": "video",
+   "quality": 0.81,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 32.5,
+   "speed_kmh": 76.7,
+   "speed_err_kmh": 10.7,
+   "source": "video",
+   "quality": 0.84,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 33.0,
+   "speed_kmh": 77.1,
+   "speed_err_kmh": 10.7,
+   "source": "video",
+   "quality": 0.85,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 33.5,
+   "speed_kmh": 77.6,
+   "speed_err_kmh": 10.8,
+   "source": "video",
+   "quality": 0.84,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 34.0,
+   "speed_kmh": 76.0,
+   "speed_err_kmh": 10.6,
+   "source": "video",
+   "quality": 0.8,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 34.5,
+   "speed_kmh": 74.8,
+   "speed_err_kmh": 10.5,
+   "source": "video",
+   "quality": 0.76,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 35.0,
+   "speed_kmh": 73.6,
+   "speed_err_kmh": 10.4,
+   "source": "video",
+   "quality": 0.71,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 35.5,
+   "speed_kmh": 72.4,
+   "speed_err_kmh": 10.2,
+   "source": "video",
+   "quality": 0.67,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 36.0,
+   "speed_kmh": 71.2,
+   "speed_err_kmh": 10.1,
+   "source": "video",
+   "quality": 0.65,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 36.5,
+   "speed_kmh": 70.0,
+   "speed_err_kmh": 10.0,
+   "source": "video",
+   "quality": 0.66,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 37.0,
+   "speed_kmh": 68.8,
+   "speed_err_kmh": 9.9,
+   "source": "video",
+   "quality": 0.69,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 37.5,
+   "speed_kmh": 67.6,
+   "speed_err_kmh": 9.8,
+   "source": "video",
+   "quality": 0.73,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 38.0,
+   "speed_kmh": 66.4,
+   "speed_err_kmh": 9.6,
+   "source": "video",
+   "quality": 0.78,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 38.5,
+   "speed_kmh": 65.2,
+   "speed_err_kmh": 9.5,
+   "source": "video",
+   "quality": 0.82,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 39.0,
+   "speed_kmh": 64.0,
+   "speed_err_kmh": 9.4,
+   "source": "video",
+   "quality": 0.85,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 39.5,
+   "speed_kmh": 64.2,
+   "speed_err_kmh": 9.4,
+   "source": "video",
+   "quality": 0.85,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 40.0,
+   "speed_kmh": 64.3,
+   "speed_err_kmh": 9.4,
+   "source": "video",
+   "quality": 0.82,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 40.5,
+   "speed_kmh": 64.5,
+   "speed_err_kmh": 9.4,
+   "source": "video",
+   "quality": 0.78,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 41.0,
+   "speed_kmh": 64.7,
+   "speed_err_kmh": 9.5,
+   "source": "video",
+   "quality": 0.73,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 41.5,
+   "speed_kmh": 64.8,
+   "speed_err_kmh": 9.5,
+   "source": "video",
+   "quality": 0.69,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 42.0,
+   "speed_kmh": 65.0,
+   "speed_err_kmh": 9.5,
+   "source": "video",
+   "quality": 0.66,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 42.5,
+   "speed_kmh": 65.2,
+   "speed_err_kmh": 9.5,
+   "source": "video",
+   "quality": 0.65,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 43.0,
+   "speed_kmh": 65.3,
+   "speed_err_kmh": 9.5,
+   "source": "video",
+   "quality": 0.67,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 43.5,
+   "speed_kmh": 65.5,
+   "speed_err_kmh": 9.6,
+   "source": "video",
+   "quality": 0.7,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 44.0,
+   "speed_kmh": 65.7,
+   "speed_err_kmh": 9.6,
+   "source": "video",
+   "quality": 0.75,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 44.5,
+   "speed_kmh": 65.8,
+   "speed_err_kmh": 9.6,
+   "source": "video",
+   "quality": 0.8,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 45.0,
+   "speed_kmh": 60.0,
+   "speed_err_kmh": 9.0,
+   "source": "video",
+   "quality": 0.84,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 45.5,
+   "speed_kmh": 57.5,
+   "speed_err_kmh": 8.8,
+   "source": "video",
+   "quality": 0.85,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 46.0,
+   "speed_kmh": 55.0,
+   "speed_err_kmh": 8.5,
+   "source": "video",
+   "quality": 0.84,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 46.5,
+   "speed_kmh": 52.5,
+   "speed_err_kmh": 8.2,
+   "source": "video",
+   "quality": 0.81,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 47.0,
+   "speed_kmh": 50.0,
+   "speed_err_kmh": 8.0,
+   "source": "video",
+   "quality": 0.76,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 47.5,
+   "speed_kmh": 47.5,
+   "speed_err_kmh": 7.8,
+   "source": "video",
+   "quality": 0.71,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 48.0,
+   "speed_kmh": 45.0,
+   "speed_err_kmh": 7.5,
+   "source": "video",
+   "quality": 0.67,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 48.5,
+   "speed_kmh": 42.5,
+   "speed_err_kmh": 7.2,
+   "source": "video",
+   "quality": 0.65,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 49.0,
+   "speed_kmh": 40.0,
+   "speed_err_kmh": 7.0,
+   "source": "video",
+   "quality": 0.65,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 49.5,
+   "speed_kmh": 37.5,
+   "speed_err_kmh": 6.8,
+   "source": "video",
+   "quality": 0.68,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 50.0,
+   "speed_kmh": 35.0,
+   "speed_err_kmh": 6.5,
+   "source": "video",
+   "quality": 0.72,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 50.5,
+   "speed_kmh": 32.5,
+   "speed_err_kmh": 6.2,
+   "source": "video",
+   "quality": 0.77,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 51.0,
+   "speed_kmh": 30.0,
+   "speed_err_kmh": 6.0,
+   "source": "video",
+   "quality": 0.82,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 51.5,
+   "speed_kmh": 27.5,
+   "speed_err_kmh": 5.8,
+   "source": "video",
+   "quality": 0.84,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 52.0,
+   "speed_kmh": 25.0,
+   "speed_err_kmh": 5.5,
+   "source": "video",
+   "quality": 0.85,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 52.5,
+   "speed_kmh": 22.5,
+   "speed_err_kmh": 5.2,
+   "source": "video",
+   "quality": 0.83,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 0.0,
+   "stopped": false
+  },
+  {
+   "t": 53.0,
+   "speed_kmh": 19.0,
+   "speed_err_kmh": 4.9,
+   "source": "video",
+   "quality": 0.79,
+   "yaw_rate_dps": 28.0,
+   "heading_deg": 14.0,
+   "stopped": false
+  },
+  {
+   "t": 53.5,
+   "speed_kmh": 19.0,
+   "speed_err_kmh": 4.9,
+   "source": "video",
+   "quality": 0.74,
+   "yaw_rate_dps": 28.0,
+   "heading_deg": 28.0,
+   "stopped": false
+  },
+  {
+   "t": 54.0,
+   "speed_kmh": 19.0,
+   "speed_err_kmh": 4.9,
+   "source": "video",
+   "quality": 0.69,
+   "yaw_rate_dps": 28.0,
+   "heading_deg": 42.0,
+   "stopped": false
+  },
+  {
+   "t": 54.5,
+   "speed_kmh": 19.0,
+   "speed_err_kmh": 4.9,
+   "source": "video",
+   "quality": 0.66,
+   "yaw_rate_dps": 28.0,
+   "heading_deg": 56.0,
+   "stopped": false
+  },
+  {
+   "t": 55.0,
+   "speed_kmh": 19.0,
+   "speed_err_kmh": 4.9,
+   "source": "video",
+   "quality": 0.65,
+   "yaw_rate_dps": 28.0,
+   "heading_deg": 70.0,
+   "stopped": false
+  },
+  {
+   "t": 55.5,
+   "speed_kmh": 19.0,
+   "speed_err_kmh": 4.9,
+   "source": "video",
+   "quality": 0.66,
+   "yaw_rate_dps": 28.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 56.0,
+   "speed_kmh": 20.0,
+   "speed_err_kmh": 5.0,
+   "source": "video",
+   "quality": 0.7,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 56.5,
+   "speed_kmh": 21.7,
+   "speed_err_kmh": 5.2,
+   "source": "video",
+   "quality": 0.75,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 57.0,
+   "speed_kmh": 23.3,
+   "speed_err_kmh": 5.3,
+   "source": "video",
+   "quality": 0.79,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 57.5,
+   "speed_kmh": 25.0,
+   "speed_err_kmh": 5.5,
+   "source": "video",
+   "quality": 0.83,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 58.0,
+   "speed_kmh": 26.7,
+   "speed_err_kmh": 5.7,
+   "source": "video",
+   "quality": 0.85,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 58.5,
+   "speed_kmh": 28.3,
+   "speed_err_kmh": 5.8,
+   "source": "video",
+   "quality": 0.84,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 59.0,
+   "speed_kmh": 30.0,
+   "speed_err_kmh": 6.0,
+   "source": "video",
+   "quality": 0.81,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 59.5,
+   "speed_kmh": 31.7,
+   "speed_err_kmh": 6.2,
+   "source": "video",
+   "quality": 0.77,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 60.0,
+   "speed_kmh": 33.3,
+   "speed_err_kmh": 6.3,
+   "source": "video",
+   "quality": 0.72,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 60.5,
+   "speed_kmh": 35.0,
+   "speed_err_kmh": 6.5,
+   "source": "video",
+   "quality": 0.68,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 61.0,
+   "speed_kmh": 36.7,
+   "speed_err_kmh": 6.7,
+   "source": "video",
+   "quality": 0.65,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 61.5,
+   "speed_kmh": 38.3,
+   "speed_err_kmh": 6.8,
+   "source": "video",
+   "quality": 0.65,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 62.0,
+   "speed_kmh": 38.0,
+   "speed_err_kmh": 6.8,
+   "source": "video",
+   "quality": 0.68,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 62.5,
+   "speed_kmh": 38.1,
+   "speed_err_kmh": 6.8,
+   "source": "video",
+   "quality": 0.72,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 63.0,
+   "speed_kmh": 38.2,
+   "speed_err_kmh": 6.8,
+   "source": "video",
+   "quality": 0.77,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 63.5,
+   "speed_kmh": 38.4,
+   "speed_err_kmh": 6.8,
+   "source": "video",
+   "quality": 0.81,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 64.0,
+   "speed_kmh": 38.5,
+   "speed_err_kmh": 6.8,
+   "source": "video",
+   "quality": 0.84,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 64.5,
+   "speed_kmh": 38.6,
+   "speed_err_kmh": 6.9,
+   "source": "video",
+   "quality": 0.85,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 65.0,
+   "speed_kmh": 38.7,
+   "speed_err_kmh": 6.9,
+   "source": "video",
+   "quality": 0.83,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 65.5,
+   "speed_kmh": 38.8,
+   "speed_err_kmh": 6.9,
+   "source": "video",
+   "quality": 0.8,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 66.0,
+   "speed_kmh": 38.9,
+   "speed_err_kmh": 6.9,
+   "source": "video",
+   "quality": 0.75,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 66.5,
+   "speed_kmh": 39.1,
+   "speed_err_kmh": 6.9,
+   "source": "video",
+   "quality": 0.7,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 67.0,
+   "speed_kmh": 39.2,
+   "speed_err_kmh": 6.9,
+   "source": "video",
+   "quality": 0.66,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 67.5,
+   "speed_kmh": 39.3,
+   "speed_err_kmh": 6.9,
+   "source": "video",
+   "quality": 0.65,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 68.0,
+   "speed_kmh": 39.4,
+   "speed_err_kmh": 6.9,
+   "source": "video",
+   "quality": 0.66,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 68.5,
+   "speed_kmh": 39.5,
+   "speed_err_kmh": 7.0,
+   "source": "video",
+   "quality": 0.69,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 69.0,
+   "speed_kmh": 39.6,
+   "speed_err_kmh": 7.0,
+   "source": "video",
+   "quality": 0.74,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 69.5,
+   "speed_kmh": 39.8,
+   "speed_err_kmh": 7.0,
+   "source": "video",
+   "quality": 0.79,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 70.0,
+   "speed_kmh": 39.9,
+   "speed_err_kmh": 7.0,
+   "source": "video",
+   "quality": 0.83,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 70.5,
+   "speed_kmh": 40.0,
+   "speed_err_kmh": 7.0,
+   "source": "video",
+   "quality": 0.85,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 71.0,
+   "speed_kmh": 40.1,
+   "speed_err_kmh": 7.0,
+   "source": "video",
+   "quality": 0.85,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 71.5,
+   "speed_kmh": 40.2,
+   "speed_err_kmh": 7.0,
+   "source": "video",
+   "quality": 0.82,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 72.0,
+   "speed_kmh": 40.4,
+   "speed_err_kmh": 7.0,
+   "source": "video",
+   "quality": 0.78,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 72.5,
+   "speed_kmh": 40.5,
+   "speed_err_kmh": 7.0,
+   "source": "video",
+   "quality": 0.73,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 73.0,
+   "speed_kmh": 40.6,
+   "speed_err_kmh": 7.1,
+   "source": "video",
+   "quality": 0.68,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 73.5,
+   "speed_kmh": 40.7,
+   "speed_err_kmh": 7.1,
+   "source": "video",
+   "quality": 0.66,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 74.0,
+   "speed_kmh": 40.8,
+   "speed_err_kmh": 7.1,
+   "source": "video",
+   "quality": 0.65,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 74.5,
+   "speed_kmh": 40.9,
+   "speed_err_kmh": 7.1,
+   "source": "video",
+   "quality": 0.67,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 75.0,
+   "speed_kmh": 41.1,
+   "speed_err_kmh": 7.1,
+   "source": "video",
+   "quality": 0.71,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 75.5,
+   "speed_kmh": 41.2,
+   "speed_err_kmh": 7.1,
+   "source": "video",
+   "quality": 0.76,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 76.0,
+   "speed_kmh": 41.3,
+   "speed_err_kmh": 7.1,
+   "source": "video",
+   "quality": 0.81,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 76.5,
+   "speed_kmh": 41.4,
+   "speed_err_kmh": 7.1,
+   "source": "video",
+   "quality": 0.84,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 77.0,
+   "speed_kmh": 41.5,
+   "speed_err_kmh": 7.2,
+   "source": "video",
+   "quality": 0.85,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 77.5,
+   "speed_kmh": 41.6,
+   "speed_err_kmh": 7.2,
+   "source": "video",
+   "quality": 0.84,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 78.0,
+   "speed_kmh": 41.8,
+   "speed_err_kmh": 7.2,
+   "source": "video",
+   "quality": 0.8,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 78.5,
+   "speed_kmh": 41.9,
+   "speed_err_kmh": 7.2,
+   "source": "video",
+   "quality": 0.75,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 79.0,
+   "speed_kmh": 40.0,
+   "speed_err_kmh": 7.0,
+   "source": "video",
+   "quality": 0.71,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 79.5,
+   "speed_kmh": 26.7,
+   "speed_err_kmh": 5.7,
+   "source": "video",
+   "quality": 0.67,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 80.0,
+   "speed_kmh": 13.3,
+   "speed_err_kmh": 4.3,
+   "source": "video",
+   "quality": 0.65,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 80.5,
+   "speed_kmh": 0.0,
+   "speed_err_kmh": 3.0,
+   "source": "video",
+   "quality": 0.66,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": true
+  },
+  {
+   "t": 81.0,
+   "speed_kmh": 0.0,
+   "speed_err_kmh": 3.0,
+   "source": "video",
+   "quality": 0.69,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": true
+  },
+  {
+   "t": 81.5,
+   "speed_kmh": 0.0,
+   "speed_err_kmh": 3.0,
+   "source": "video",
+   "quality": 0.73,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": true
+  },
+  {
+   "t": 82.0,
+   "speed_kmh": 0.0,
+   "speed_err_kmh": 3.0,
+   "source": "video",
+   "quality": 0.78,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": true
+  },
+  {
+   "t": 82.5,
+   "speed_kmh": 0.0,
+   "speed_err_kmh": 3.0,
+   "source": "video",
+   "quality": 0.82,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": true
+  },
+  {
+   "t": 83.0,
+   "speed_kmh": 5.0,
+   "speed_err_kmh": 3.5,
+   "source": "video",
+   "quality": 0.85,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 83.5,
+   "speed_kmh": 10.0,
+   "speed_err_kmh": 4.0,
+   "source": "video",
+   "quality": 0.85,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 84.0,
+   "speed_kmh": 15.0,
+   "speed_err_kmh": 4.5,
+   "source": "video",
+   "quality": 0.82,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 84.5,
+   "speed_kmh": 20.0,
+   "speed_err_kmh": 5.0,
+   "source": "video",
+   "quality": 0.78,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 85.0,
+   "speed_kmh": null,
+   "speed_err_kmh": null,
+   "source": "video",
+   "quality": 0.2,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 85.5,
+   "speed_kmh": null,
+   "speed_err_kmh": null,
+   "source": "video",
+   "quality": 0.2,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 86.0,
+   "speed_kmh": null,
+   "speed_err_kmh": null,
+   "source": "video",
+   "quality": 0.2,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 86.5,
+   "speed_kmh": null,
+   "speed_err_kmh": null,
+   "source": "video",
+   "quality": 0.2,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 87.0,
+   "speed_kmh": null,
+   "speed_err_kmh": null,
+   "source": "video",
+   "quality": 0.2,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 87.5,
+   "speed_kmh": null,
+   "speed_err_kmh": null,
+   "source": "video",
+   "quality": 0.2,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 88.0,
+   "speed_kmh": null,
+   "speed_err_kmh": null,
+   "source": "video",
+   "quality": 0.2,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 88.5,
+   "speed_kmh": null,
+   "speed_err_kmh": null,
+   "source": "video",
+   "quality": 0.2,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 89.0,
+   "speed_kmh": null,
+   "speed_err_kmh": null,
+   "source": "video",
+   "quality": 0.2,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 89.5,
+   "speed_kmh": null,
+   "speed_err_kmh": null,
+   "source": "video",
+   "quality": 0.2,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 90.0,
+   "speed_kmh": null,
+   "speed_err_kmh": null,
+   "source": "video",
+   "quality": 0.2,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 90.5,
+   "speed_kmh": null,
+   "speed_err_kmh": null,
+   "source": "video",
+   "quality": 0.2,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 91.0,
+   "speed_kmh": null,
+   "speed_err_kmh": null,
+   "source": "video",
+   "quality": 0.2,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 91.5,
+   "speed_kmh": null,
+   "speed_err_kmh": null,
+   "source": "video",
+   "quality": 0.2,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 92.0,
+   "speed_kmh": null,
+   "speed_err_kmh": null,
+   "source": "video",
+   "quality": 0.2,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 92.5,
+   "speed_kmh": null,
+   "speed_err_kmh": null,
+   "source": "video",
+   "quality": 0.2,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 93.0,
+   "speed_kmh": null,
+   "speed_err_kmh": null,
+   "source": "video",
+   "quality": 0.2,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 93.5,
+   "speed_kmh": null,
+   "speed_err_kmh": null,
+   "source": "video",
+   "quality": 0.2,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 94.0,
+   "speed_kmh": null,
+   "speed_err_kmh": null,
+   "source": "video",
+   "quality": 0.2,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  },
+  {
+   "t": 94.5,
+   "speed_kmh": null,
+   "speed_err_kmh": null,
+   "source": "video",
+   "quality": 0.2,
+   "yaw_rate_dps": 0.0,
+   "heading_deg": 84.0,
+   "stopped": false
+  }
+ ],
+ "signs": [
+  {
+   "id": "s1",
+   "sign_code": "3.24",
+   "value": 60,
+   "t_first": 1.6,
+   "t_last": 4.2,
+   "t_pass": 4.2,
+   "conf": 0.82,
+   "n_frames": 39,
+   "side": "right",
+   "relevant": true,
+   "relevance_reason": "right side, facing us, approaching",
+   "conditional": false,
+   "best_frame_idx": 51,
+   "best_bbox": [
+    1480.0,
+    310.0,
+    1560.0,
+    392.0
+   ]
+  },
+  {
+   "id": "s2",
+   "sign_code": "5.19.1",
+   "value": null,
+   "t_first": 9.4,
+   "t_last": 12.0,
+   "t_pass": 12.0,
+   "conf": 0.82,
+   "n_frames": 39,
+   "side": "right",
+   "relevant": true,
+   "relevance_reason": "right side, facing us, approaching",
+   "conditional": false,
+   "best_frame_idx": 168,
+   "best_bbox": [
+    1480.0,
+    310.0,
+    1560.0,
+    392.0
+   ]
+  },
+  {
+   "id": "s3",
+   "sign_code": "2.5",
+   "value": null,
+   "t_first": 15.9,
+   "t_last": 18.5,
+   "t_pass": 18.5,
+   "conf": 0.82,
+   "n_frames": 39,
+   "side": "right",
+   "relevant": true,
+   "relevance_reason": "right side, facing us, approaching",
+   "conditional": false,
+   "best_frame_idx": 265,
+   "best_bbox": [
+    1480.0,
+    310.0,
+    1560.0,
+    392.0
+   ]
+  },
+  {
+   "id": "s4",
+   "sign_code": "1.23",
+   "value": null,
+   "t_first": 30.4,
+   "t_last": 33.0,
+   "t_pass": 33.0,
+   "conf": 0.82,
+   "n_frames": 39,
+   "side": "right",
+   "relevant": true,
+   "relevance_reason": "right side, facing us, approaching",
+   "conditional": false,
+   "best_frame_idx": 483,
+   "best_bbox": [
+    1480.0,
+    310.0,
+    1560.0,
+    392.0
+   ]
+  },
+  {
+   "id": "s5",
+   "sign_code": "3.18.1",
+   "value": null,
+   "t_first": 45.4,
+   "t_last": 48.0,
+   "t_pass": 48.0,
+   "conf": 0.82,
+   "n_frames": 39,
+   "side": "right",
+   "relevant": true,
+   "relevance_reason": "right side, facing us, approaching",
+   "conditional": false,
+   "best_frame_idx": 708,
+   "best_bbox": [
+    1480.0,
+    310.0,
+    1560.0,
+    392.0
+   ]
+  },
+  {
+   "id": "s6",
+   "sign_code": "3.27",
+   "value": null,
+   "t_first": 49.4,
+   "t_last": 52.0,
+   "t_pass": 52.0,
+   "conf": 0.82,
+   "n_frames": 39,
+   "side": "left",
+   "relevant": false,
+   "relevance_reason": "left side and facing a side road",
+   "conditional": false,
+   "best_frame_idx": 768,
+   "best_bbox": [
+    1480.0,
+    310.0,
+    1560.0,
+    392.0
+   ]
+  },
+  {
+   "id": "s7",
+   "sign_code": "4.1.1",
+   "value": null,
+   "t_first": 57.6,
+   "t_last": 60.2,
+   "t_pass": 60.2,
+   "conf": 0.82,
+   "n_frames": 39,
+   "side": "right",
+   "relevant": true,
+   "relevance_reason": "right side, facing us, approaching",
+   "conditional": false,
+   "best_frame_idx": 891,
+   "best_bbox": [
+    1480.0,
+    310.0,
+    1560.0,
+    392.0
+   ]
+  },
+  {
+   "id": "s8",
+   "sign_code": "3.1",
+   "value": null,
+   "t_first": 67.9,
+   "t_last": 70.5,
+   "t_pass": 70.5,
+   "conf": 0.82,
+   "n_frames": 39,
+   "side": "right",
+   "relevant": true,
+   "relevance_reason": "right side, facing us, approaching",
+   "conditional": false,
+   "best_frame_idx": 1045,
+   "best_bbox": [
+    1480.0,
+    310.0,
+    1560.0,
+    392.0
+   ]
+  },
+  {
+   "id": "s9",
+   "sign_code": "3.24",
+   "value": 40,
+   "t_first": 72.4,
+   "t_last": 75.0,
+   "t_pass": 75.0,
+   "conf": 0.82,
+   "n_frames": 39,
+   "side": "right",
+   "relevant": true,
+   "relevance_reason": "right side, facing us, approaching",
+   "conditional": false,
+   "best_frame_idx": 1113,
+   "best_bbox": [
+    1480.0,
+    310.0,
+    1560.0,
+    392.0
+   ]
+  },
+  {
+   "id": "s10",
+   "sign_code": "2.5",
+   "value": null,
+   "t_first": 77.4,
+   "t_last": 80.0,
+   "t_pass": 80.0,
+   "conf": 0.82,
+   "n_frames": 39,
+   "side": "right",
+   "relevant": true,
+   "relevance_reason": "right side, facing us, approaching",
+   "conditional": false,
+   "best_frame_idx": 1188,
+   "best_bbox": [
+    1480.0,
+    310.0,
+    1560.0,
+    392.0
+   ]
+  }
+ ],
+ "signs_not_met": [
+  "2.4",
+  "2.1",
+  "4.3",
+  "5.20",
+  "1.17"
+ ],
+ "quality_warnings": [
+  "warning.speed_not_checked_partial",
+  "warning.camera_uncalibrated"
+ ],
+ "processing": {
+  "model": "fixture",
+  "model_version": null,
+  "device": "cpu",
+  "git_sha": "fixture",
+  "seconds_per_stage": {
+   "ingest": 3.1,
+   "analysis": 41.0,
+   "rules": 0.02,
+   "render": 18.4,
+   "report": 0.3
+  },
+  "total_seconds": 62.8,
+  "fps_analysed": 33.0,
+  "peak_vram_mb": null,
+  "note": "Synthetic fixture for frontend development; every number here is made up."
+ }
+}
