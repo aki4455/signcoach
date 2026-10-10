@@ -47,17 +47,20 @@ export default function ReportPage({ id }: { id: string }) {
   const seek = (to: number) => {
     const v = video.current;
     if (!v) return;
+    voice.stop();
     v.currentTime = Math.max(0, to);
     lastTime.current = v.currentTime;
     void v.play().catch(() => undefined);
   };
-  // Play a prompt when normal playback crosses an event time (not when the user jumps around).
+  // Play the prompts whose events normal playback just crossed (not when the user jumps around);
+  // several can fall in one tick (signs on one pole) — VoicePrompts queues them.
   const onTimeUpdate = () => {
     const now = video.current?.currentTime ?? 0;
     const prev = lastTime.current;
     if (now > prev && now - prev < 1.5) {
-      const due = report.events.find((e) => e.voice_key && e.t > prev && e.t <= now);
-      if (due?.voice_key) voice.play(due.voice_key);
+      for (const e of report.events) {
+        if (e.voice_key && e.t > prev && e.t <= now) voice.play(e.voice_key);
+      }
     }
     lastTime.current = now;
     setTime(now);
@@ -78,7 +81,10 @@ export default function ReportPage({ id }: { id: string }) {
       <section className="space-y-2">
         <video ref={video} src={report.media.annotated_video_url} poster={report.media.poster_url} controls playsInline
                preload="metadata" onPlay={() => voice.unlock()} onTimeUpdate={onTimeUpdate}
-               onSeeked={() => (lastTime.current = video.current?.currentTime ?? 0)}
+               onSeeked={() => {
+                 voice.stop();
+                 lastTime.current = video.current?.currentTime ?? 0;
+               }}
                className="max-h-[70vh] w-full rounded-xl bg-black" />
         <Timeline duration={duration} events={report.events} timeline={report.timeline} time={time} onSeek={seek} />
         <SpeedChart duration={duration} motion={report.motion} timeline={report.timeline} time={time} onSeek={seek} />
