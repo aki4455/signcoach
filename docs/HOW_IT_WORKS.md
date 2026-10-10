@@ -107,7 +107,9 @@ Because uploads come from many cameras, speeding is only ever "possible".
 the speed limit (from 3.24, ended by 3.25 / 3.31 / a new limit / settlement signs / our next turn), turn bans
 (3.18.x, 3.19) and mandatory directions (4.1.x) until our next turn or 300 m / 60 s, and judges:
 speeding (violation only if over even after subtracting the speed error), stops at 2.5 (slowest speed in
-[−2 s, +6 s]), turns against a sign, no entry (always "possible"). 25 JSON scenarios test every rule.
+[−2 s, +6 s]), turns against a sign, no entry (always "possible"; a no-entry sign at the side of the road
+usually closes a side road, so it counts only if we turned that way around it — overhead signs always count).
+27 JSON scenarios test every rule.
 
 **Where the rules come from.** `scripts/extract_pdd.py` copies the sign definitions, zones of action and
 default limits (60 km/h in built-up areas, 90 outside) verbatim from ПДД РФ; a Russian-speaking team member

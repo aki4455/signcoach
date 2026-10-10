@@ -44,7 +44,7 @@ the moments they would have sounded in the car, and faces and number plates blur
   were copied verbatim from ПДД РФ (Government Decree No. 1090, ред. от 28.08.2026) by
   `scripts/extract_pdd.py` and checked by a Russian-speaking team member (`docs/RULES_CHECKLIST.md`).
   The engine reports speeding, possible speeding, stop not made / made, turns against a sign, possible
-  no-entry, and explains each new sign once.
+  no-entry (an overhead sign, or a side sign we turned toward), and explains each new sign once.
 - **Honesty by design:** a violation is reported only when the evidence is strong; otherwise it is
   "possible" (speed within its error, an assumed default limit, a sign with a conditions plate, or a
   camera whose speed was never calibrated). Unmeasurable speed is "not measured", never a guess.
