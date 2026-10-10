@@ -79,11 +79,26 @@ bev:
   z_range_m: [6, 26]
   m_per_px: 0.05
 
+egomotion:
+  sample_frames: 30               # frames spread over the video for the horizon and the static-overlay mask
+  static_std: 6.0                 # brightness std below this over the whole video = overlay/dashboard
+  min_road_coverage: 0.25         # share of the bird's-eye view that must show free road
+  max_static_share: 0.6           # more of the road static than this = the car is standing, not an overlay
+  min_texture_std: 4.0            # bird's-eye view this flat (dark, featureless) cannot be measured
+  max_kmh: 180                    # shifts beyond this are mismatches
+  max_backward_kmh: 5
+  turn_rate_min_dps: 3.0          # yaw rate that counts as turning
+  min_forward_shift_px: 1.5       # smaller road shifts count as standing still (~3 km/h at 12.5 fps)
+  max_lateral_shift_px: 8         # the road hardly moves sideways between two frames
+  forward_peak_ratio: 0.5         # forward match must be this strong vs the 'nothing moved' match
+  background_alpha: 0.1           # running average of the road picture, subtracted before matching
+
 speed:
   smooth_s: 1.0
   scale_k: 1.0                    # set by scripts/calibrate_speed.py
+  calibrated: false               # true once scale_k/err_model come from a calibration clip
   err_model: {a: 3.0, b: 0.10}    # km/h, err = a + b * v; replaced by calibration results
-  min_quality: 0.3                # below -> speed_kmh = None
+  min_quality: 0.2                # correlation peak strength below this -> speed_kmh = None
 
 stop:
   speed_kmh: 2.0

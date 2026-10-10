@@ -18,7 +18,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
-from pipeline import frames, ingest, relevance, render, report, rules_engine, signs
+from pipeline import egomotion, frames, ingest, relevance, render, report, rules_engine, signs
 from pipeline.catalogue import Catalogue
 from pipeline.detect import ClassMap, SignDetector, build_detector
 from pipeline.privacy import FaceDetector
@@ -107,18 +107,30 @@ def process_job(job: JobInput, cfg: dict, models: Models, catalogue: Catalogue, 
         timings["ingest"] = time.monotonic() - t
 
         # 2. Analysis pass: signs (with tracking) and people/vehicles, frame by frame ---------------
-        fps = min(float(cfg["analysis_fps"]), ninfo.fps)  # never analyse duplicated frames
+        step = frames.analysis_step(ninfo.fps, float(cfg["analysis_fps"]))  # keep every step-th frame
+        fps = ninfo.fps / step
         expected = max(1, int(ninfo.duration_s * fps))
+        # Camera model and masks for speed/turns (horizon and static overlays need the whole video).
+        ego_cfg = cfg["egomotion"]
+        grays = egomotion.sample_grays(normalized, ego_cfg["sample_frames"])
+        horizon, horizon_method = egomotion.estimate_horizon(grays, cfg["camera"]["horizon_fallback_frac"])
+        hfov = job.hfov_deg or cfg["camera"]["hfov_deg"]
+        cam_height = job.camera_height_m or cfg["camera"]["height_m"]
+        cam = egomotion.Camera(ninfo.width, ninfo.height, egomotion.focal_length(ninfo.width, hfov), ninfo.width / 2,
+                               horizon, cam_height)
+        ego = egomotion.EgoMotion(cam, egomotion.static_mask(grays, ego_cfg["static_std"]), fps, cfg)
         models.signs.reset()
         detections, objects_by_frame = [], []
         t = time.monotonic()
         if models.device.startswith("cuda"):
             import torch
             torch.cuda.reset_peak_memory_stats()
-        for idx, ts, frame in frames.iter_frames(normalized, ninfo.width, ninfo.height, fps):
+        for idx, ts, frame in frames.iter_frames(normalized, ninfo.width, ninfo.height, ninfo.fps, step):
             check_deadline()
             detections += models.signs.detect(frame, ts, idx)
-            objects_by_frame.append(models.vehicles.detect(frame))
+            objects = models.vehicles.detect(frame)
+            objects_by_frame.append(objects)
+            ego.update(frame, ts, [o.box for o in objects])
             if idx % 10 == 0:
                 progress("analysis", 0.1 + 0.55 * min(1.0, idx / expected))
         timings["analysis"] = time.monotonic() - t
@@ -132,11 +144,16 @@ def process_job(job: JobInput, cfg: dict, models: Models, catalogue: Catalogue, 
         sign_events = [relevance.assess(v, f"s{i}", plates, ninfo.width, ninfo.height,
                                         catalogue.shape(v.sign_code), cfg) for i, v in enumerate(sign_votes, 1)]
 
-        # 4. Ego-motion (M3). Until then there is no speed, so speed-based rules are not checked.
-        motion, turns = [], []
-        speed_source = "none"
-        if not motion:
+        # 4. Ego-motion: speed, turns and stops from the video itself.
+        motion, turns = ego.finish()
+        measured = sum(m.speed_kmh is not None for m in motion) / max(1, len(motion))
+        speed_source = "video" if measured > 0 else "none"
+        if measured == 0:
             warnings.append("warning.speed_not_checked")
+        elif measured < 0.8:
+            warnings.append("warning.speed_not_checked_partial")
+        if speed_source == "video" and not cfg["speed"].get("calibrated", False):
+            warnings.append("warning.camera_uncalibrated")
 
         # 5. Rules ------------------------------------------------------------------------------------
         events, timeline = rules_engine.run(sign_events, motion, turns, catalogue, cfg, duration_s=ninfo.duration_s)
@@ -160,7 +177,7 @@ def process_job(job: JobInput, cfg: dict, models: Models, catalogue: Catalogue, 
                      if e.voice_key or e.severity in ("violation", "possible")]
         poster = events[0].t if events else ninfo.duration_s / 3
         saved = render.render(
-            render.RenderJob(normalized=normalized, width=ninfo.width, height=ninfo.height, fps=fps,
+            render.RenderJob(normalized=normalized, width=ninfo.width, height=ninfo.height, video_fps=ninfo.fps, step=step,
                              objects_by_frame=objects_by_frame, sign_boxes=sign_boxes, timeline=timeline,
                              motion=motion, subtitles=subtitles, thumbnails=thumbs,
                              poster_frame=min(n_frames - 1, int(poster * fps)) if n_frames else 0),
@@ -188,8 +205,10 @@ def process_job(job: JobInput, cfg: dict, models: Models, catalogue: Catalogue, 
                    "poster_url": f"/media/{job.lesson_id}/poster.jpg"},
             speed_source=speed_source,
             calibration={"scale_k": cfg["speed"]["scale_k"], "err_model": cfg["speed"]["err_model"],
-                         "camera_height_m": job.camera_height_m or cfg["camera"]["height_m"],
-                         "hfov_deg": job.hfov_deg or cfg["camera"]["hfov_deg"], "calibrated": False},
+                         "camera_height_m": cam_height, "hfov_deg": hfov,
+                         "calibrated": bool(cfg["speed"].get("calibrated", False)),
+                         "horizon_y": round(horizon, 1), "horizon_method": horizon_method,
+                         "speed_measured_fraction": round(measured, 3), "turns_detected": len(turns)},
             events=events, timeline=timeline, motion=motion, signs=sign_events,
             signs_not_met=[c for c in catalogue.explainable_codes(models.detectable) if c not in seen],
             quality_warnings=warnings, score_weights=cfg["score"]["weights"],
