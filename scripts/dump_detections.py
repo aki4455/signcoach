@@ -43,9 +43,10 @@ def main() -> None:
                                    args.imgsz or det_cfg["imgsz"], det_cfg["conf"], args.device or s.device,
                                    det_cfg.get("half", True), det_cfg["tracker"])
     info = ingest.probe(args.video)
-    fps = min(args.fps or cfg["analysis_fps"], info.fps)
+    step = frames.analysis_step(info.fps, args.fps or cfg["analysis_fps"])
+    fps = info.fps / step
     detections = []
-    for idx, t, frame in frames.iter_frames(args.video, info.width, info.height, fps):
+    for idx, t, frame in frames.iter_frames(args.video, info.width, info.height, info.fps, step):
         detections += detector.detect(frame, t, idx)
     args.out.write_text(json.dumps({"model": args.model, "weights": str(weights), "fps": fps,
                                     "detections": [d.model_dump(mode="json") for d in detections]}), encoding="utf-8")
