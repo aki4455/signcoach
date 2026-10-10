@@ -30,8 +30,8 @@ analysis_fps: 15                  # frames analysed per second
 
 detect:
   backend: ultralytics            # ultralytics | replay
-  model: streetsignsense_y12s     # switched at the M6 decision
-  imgsz: 1280
+  model: dognellaf_y11s          # M6 decision (Sunday 02:10): our fine-tuned YOLO11s; eval/results/model_comparison.md
+  imgsz: 1280                     # trained at 1024; 1280 scored higher on held-out videos (0.81 vs 0.79)
   conf: 0.25                      # low on purpose; voting filters
   half: true                      # FP16 on CUDA
   tracker: bytetrack.yaml
