@@ -2,7 +2,7 @@
 
 Each JSON file in tests/fixtures/rule_scenarios/ is a lesson in miniature:
 - "signs":  [{"id", "code", "value", "t", "relevant"?, "conditional"?}]  (t = moment we pass the sign)
-- "speed":  [[t_start, t_end, km/h or null], ...]  -> motion sampled every 0.2 s, error = a + b*v
+- "speed":  [[t_start, t_end, km/h or null], ...]  -> motion sampled every 0.2 s, error = 3 + 0.1*v
 - "turns":  [{"t_start", "t_end", "direction", "angle_deg"}]
 - "settings" / "defaults": overrides (defaults are fixed here so the tests don't depend on rules.json)
 - "expect": {"events": [{"type", "severity", "t", "detail"?}], "limit_at": [[t, km/h], ...]}
@@ -33,8 +33,13 @@ def merge(base: dict, extra: dict) -> dict:
     return out
 
 
+# The scenarios are written for this error model (km/h, a + b*v); calibration may change the one in
+# settings.yaml, which must not change what the rules engine is tested for.
+SCENARIO_ERR_MODEL = {"speed": {"err_model": {"a": 3.0, "b": 0.10}}}
+
+
 def build(sc: dict):
-    settings = merge(get_settings().cfg, sc.get("settings", {}))
+    settings = merge(merge(get_settings().cfg, SCENARIO_ERR_MODEL), sc.get("settings", {}))
     err = settings["speed"]["err_model"]
     signs = [SignEvent(id=s["id"], sign_code=s["code"], value=s.get("value"), t_first=s["t"] - 2, t_last=s["t"],
                        t_pass=s["t"], conf=0.9, n_frames=20, side="right", relevant=s.get("relevant", True),
