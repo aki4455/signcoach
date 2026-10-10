@@ -20,7 +20,8 @@ Weights and datasets are not in this repository; they are downloaded into `$SIGN
 | SignCoach sign detector (fine-tuned YOLO11s) | trained by us (`training/`) | Sign detection | AGPL-3.0 (derived from Ultralytics weights) | recorded after training (M6) |
 | YuNet face detector (`face_detection_yunet_2023mar.onnx`) | https://huggingface.co/opencv/face_detection_yunet (OpenCV Zoo) | Face blur | MIT (LICENSE file checked 2026-10-10), © 2020 Shiqi Yu | `8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4` |
 | Licence-plate detector | not used | Plates are hidden by pixelating a band in the lower middle of every vehicle box (`privacy.plate_band`) | — | — |
-| Text-to-speech model for English voice prompts | to be decided in M4 | Pre-generated voice prompt MP3s | to be verified | — |
+| Piper TTS (`piper-tts` 1.8, offline tool, optional `voice` dependency group — not installed on the server) | https://github.com/OHF-Voice/piper1-gpl | Generating the English voice prompt MP3s (`scripts/generate_voice.py`) | GPL-3.0-or-later | — |
+| Piper voice `en_US-ljspeech-high` | https://huggingface.co/rhasspy/piper-voices/tree/main/en/en_US/ljspeech/high | Voice of the prompts in `assets/voice/en/` | Trained on the LJ Speech dataset (public domain, per the model card) | `5d4f08ba6a2a48c44592eed3ce56bf85e9de3dd4e20df90541ae68a8310c029a` |
 
 ## Software
 
