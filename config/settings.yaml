@@ -144,6 +144,7 @@ privacy:
   face_score_threshold: 0.6       # YuNet
   blur_person_heads: true         # also blur the head area of COCO "person" boxes (YuNet misses small/side faces)
   plate_band: {y_from: 0.35, y_to: 1.0, x_from: 0.1, x_to: 0.9}    # fallback plate area inside a vehicle box
+  own_hood: {min_width: 0.5, min_top: 0.6, min_bottom: 0.97}      # a vehicle box this wide, low and touching the bottom is our bonnet: no plate band
   plate_neighbour_frames: 1       # also hide plates detected this many frames before/after
   delete_unblurred_after_processing: true   # raw upload + normalized video
 
