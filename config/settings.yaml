@@ -47,7 +47,11 @@ models:                           # weights live in {data}/models, never in git
   vehicles:
     weights: yolo11n.pt           # COCO; cars, buses, trucks, motorcycles, persons
     imgsz: 640
-    conf: 0.3
+    conf: 0.2                     # low on purpose: an extra blurred box is harmless, a missed plate is not
+  plates:
+    weights: license-plate-finetune-v1s.pt   # morsetechlab/yolov11-license-plate-detection, AGPL-3.0
+    imgsz: 1280
+    conf: 0.15
   faces:
     weights: face_detection_yunet_2023mar.onnx   # OpenCV Zoo YuNet, MIT
 
@@ -128,7 +132,8 @@ quality:
 privacy:
   face_score_threshold: 0.6       # YuNet
   blur_person_heads: true         # also blur the head area of COCO "person" boxes (YuNet misses small/side faces)
-  plate_band: {y_from: 0.55, y_to: 0.95, x_from: 0.2, x_to: 0.8}   # fallback plate area inside a vehicle box
+  plate_band: {y_from: 0.35, y_to: 1.0, x_from: 0.1, x_to: 0.9}    # fallback plate area inside a vehicle box
+  plate_neighbour_frames: 1       # also hide plates detected this many frames before/after
   delete_unblurred_after_processing: true   # raw upload + normalized video
 
 output:
