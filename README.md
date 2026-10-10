@@ -3,7 +3,7 @@
 A driving-school instructor uploads the **dashcam video** of a student's lesson and gets a report of
 every road sign the car passed, what it means (official text of the traffic rules), which rule was in
 force, and where the student may have broken it — with the video moment as evidence, voice prompts at
-the moments they would have sounded in the car (when the sign is recognised, a median 2.2 s before
+the moments they would have sounded in the car (when the sign is recognised, a median 2.1 s before
 passing it), and faces and number plates blurred.
 
 - **Live site:** https://signcoach.taild1ce46.ts.net
@@ -126,6 +126,10 @@ Funnel publishes it over HTTPS. Setup steps: [`deploy/FUNNEL.md`](deploy/FUNNEL.
   (overhead ones always): driving straight into a one-way street past a side sign is missed.
 - **Speed-limit digits** are sometimes misread (an 80 read as 60 in a winter video, a 30 read as 50 on a
   Tashkent clip); voting over many frames fixes some, not all ([`failure_gallery/`](eval/results/failure_gallery/)).
+  The confidence of a reading does not tell right from wrong (misreads 0.54–0.73, correct readings 0.55–0.81
+  on the demo clips), so no threshold can filter them.
+- **Round signs the detector was never trained on** are read as the closest class it knows: "no trucks"
+  (3.4) as a 100 km/h limit (end of the Islam Karimov street sample), "no pedestrians" (3.10) as 70.
 - **Signs missing from the training data:** no-left-turn (3.18.2), no-U-turn (3.19), start/end of a
   built-up area (5.23/5.24); end-of-speed-limit (3.25) has only 5 examples. Without settlement signs the
   built-up-area default limit is assumed, so speeding against it is only "possible".

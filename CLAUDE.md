@@ -312,7 +312,7 @@ The final model does not exist yet, so nothing outside `detect.py` may depend on
 - `scripts/dump_detections.py` runs a detector over a video and saves the JSON that `ReplayDetector` reads, so later stages can be iterated without re-running detection.
 
 ### 10.4 Track voting (`signs.py`)
-- Per track: winning class = argmax of summed confidence; keep if `n_frames ≥ vote.min_frames` and mean winning conf ≥ `vote.min_conf`.
+- Per track: winning class = argmax of summed confidence; keep if `n_frames ≥ vote.min_frames` and mean winning conf ≥ `vote.min_conf`. Since Sunday 04:30 (`vote.weight: size`) each frame's confidence is multiplied by sqrt(box area): far views of a speed limit flicker between digits, near views are sharp. On the 12 demo clips this changed 2 of 265 decisions, both 60 → 50 on signs that show 50 (checked on crops).
 - `t_pass` = last time seen. Merge tracks with the same code whose times overlap or are within `vote.dedupe_window_s` and whose boxes are near (tracker ID switches).
 - Keep a single-frame baseline path (no voting) behind a flag so `eval/` can measure what voting adds.
 
@@ -462,7 +462,7 @@ Pages:
    - Annotated video player (HUD is burned into the video).
    - Timeline under the player with event markers coloured by severity (grey info, red violation, amber possible, green complied); click → seek.
    - Voice prompts: when playback crosses an event with a `voice_key`, play `assets/voice/en/<voice_key>.mp3` (TTS-generated; fallback: `speechSynthesis` with the English text). A toggle turns voice on/off. iPhones block audio that is not started by a tap, so the first tap on Play unlocks one shared audio element that all prompts reuse.
-   - Voice timing (team, Sunday 04:00): `sign_explained` is placed when the sign is **confirmed** (the `vote.min_frames`-th sighting of its final class, `voice.announce_at: confirmed`) — what an in-car system could do — not when we pass it; its rule still applies from `t_pass`. Median 2.2 s before passing on the 12 demo clips (`eval/results/tracker_comparison.md`). Prompts never cut each other off: one due while another speaks waits and follows joined by "and" (`and.mp3`); > 4 s late → dropped; seeking clears the queue; overlapping burned-in subtitles merge into one line.
+   - Voice timing (team, Sunday 04:00): `sign_explained` is placed when the sign is **confirmed** (the `vote.min_frames`-th sighting of its final class, `voice.announce_at: confirmed`) — what an in-car system could do — not when we pass it; its rule still applies from `t_pass`. Median 2.1 s before passing on the 12 demo clips (`eval/results/tracker_comparison.md`). Prompts never cut each other off: one due while another speaks waits and follows joined by "and" (`and.mp3`); > 4 s late → dropped; seeking clears the queue; overlapping burned-in subtitles merge into one line.
    - Summary cards: score (labelled indicative), signs passed, violations, possible.
    - Event list: time, sign icon/thumbnail, title, detail, severity pill; click → seek to `clip[0]`.
    - "Signs not met yet" chips.
