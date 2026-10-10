@@ -10,6 +10,8 @@ It fits
 - ``speed.err_model`` a + b*v from the 68th percentile of the remaining error in speed bands,
   which the rules engine uses to tell "speeding" from "possible speeding".
 Results go to eval/results/speed_calibration.json; with --write also into config/settings.yaml.
+`speed.calibrated` is only set with --mark-calibrated: a calibration from one dashcam does not make
+every uploaded camera calibrated, so by default speeding stays "possible" everywhere.
 
     uv run python scripts/calibrate_speed.py --video ~/signcoach-data/datasets/own/ru_01_moscow_kremlin_speedOSD.mp4 \
         --truth eval/ground_truth/speed_ru_01.csv --write
@@ -35,6 +37,8 @@ def main() -> None:
     ap.add_argument("--hfov", type=float)
     ap.add_argument("--height", type=float)
     ap.add_argument("--write", action="store_true", help="store scale_k and err_model in config/settings.yaml")
+    ap.add_argument("--mark-calibrated", action="store_true",
+                    help="also set speed.calibrated=true (only if every upload comes from this camera model)")
     args = ap.parse_args()
 
     s = get_settings()
@@ -64,7 +68,8 @@ def main() -> None:
         text = settings.read_text(encoding="utf-8")
         text = re.sub(r"(\n  scale_k: )[0-9.]+", rf"\g<1>{k:.3f}", text, count=1)
         text = re.sub(r"(\n  err_model: )\{[^}]*\}", rf"\g<1>{{a: {a}, b: {b}}}", text, count=1)
-        text = re.sub(r"(\n  calibrated: )\w+", r"\g<1>true", text, count=1)
+        if args.mark_calibrated:
+            text = re.sub(r"(\n  calibrated: )\w+", r"\g<1>true", text, count=1)
         settings.write_text(text, encoding="utf-8")
         print(f"updated {settings.relative_to(REPO_DIR)}")
 
