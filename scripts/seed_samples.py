@@ -1,9 +1,10 @@
 """Create the sample lessons everyone sees on the website (CLAUDE.md M8, hard rule 1).
 
 Each sample video goes through the real pipeline — `process_job`, exactly like an upload — and the
-lesson is marked as a sample. Nothing in the reports is edited by hand. Re-running replaces the old
-samples (their generated media are removed first). Run it against the server's instance once the
-model choice is made, with the GPU free:
+lesson is marked as a sample. Nothing in the reports is edited by hand. After a full run the site's
+samples are exactly SAMPLES: older samples (also ones no longer listed) are removed with their
+generated media; `--only` re-seeds just the named files. Run it against the server's instance, with
+the GPU free:
 
     SIGNCOACH_INSTANCE=prod SIGNCOACH_DEVICE=cuda:0 uv run python scripts/seed_samples.py
 
@@ -24,10 +25,11 @@ from pipeline.catalogue import Catalogue
 from pipeline.run import JobInput, Models, process_job
 
 CLIPS = Path("~/signcoach-data/datasets/own").expanduser()
-SAMPLES = [  # file, lesson label (the clips are free to use, provided by the team — DATA_SOURCES.md)
-    ("ru_01_moscow_kremlin_speedOSD.mp4", "Moscow centre at dusk: stops and a U-turn"),
-    ("ru_02_moscow_yaroslavka_speedOSD.mp4", "Yaroslavskoye highway: speed limits"),
-    ("ru_04_moscow_wet_winter.mp4", "Wet winter city centre: many signs"),
+SAMPLES = [  # file under CLIPS, lesson label — Tashkent clips used with the owners' consent (DATA_SOURCES.md)
+    ("tashkent/UZB_Toshkent_Qf6QPtOhC7I_s17-137.mp4", "Tashkent, Islam Karimov street"),
+    ("tashkent/UZB_Toshkent_nxg4Fm4VazQ_s0-120.mp4", "Tashkent, Alisher Navoi street"),
+    ("tashkent/UZB_Toshkent_EG0g-sB1lOk_s0-120.mp4", "Tashkent, downtown Presidential track"),
+    ("tashkent/UZB_Toshkent_ibv10yurtIg_s14-134.mp4", "Tashkent, Shota Rustaveli street"),
 ]
 
 
@@ -41,9 +43,9 @@ def main() -> None:
     models = Models.load(s.cfg, s.models_dir, s.device)
     wanted = [x for x in SAMPLES if not args.only or x[0] in args.only]
 
-    with db.session(s.db_path) as con:  # remove previous samples of the same videos
+    with db.session(s.db_path) as con:  # remove the samples being replaced (all of them on a full run)
         for row in con.execute("SELECT id, label FROM lessons WHERE is_sample = 1").fetchall():
-            if any(row["label"] == label for _, label in wanted):
+            if not args.only or any(row["label"] == label for _, label in wanted):
                 shutil.rmtree(s.media_dir / row["id"], ignore_errors=True)
                 con.execute("DELETE FROM lessons WHERE id = ?", (row["id"],))
 

@@ -11,7 +11,9 @@
 **Decisions already made:**
 - We **fine-tuned** a sign detector on the Dognellaf dataset (§14.2): training finished at 01:43 (early stop at epoch 35, best epoch 25). Weights: `~/signcoach-data/models/dognellaf_y11s_1024.pt` (sha256 in DATA_SOURCES.md). The live site runs on `cuda:0` since 01:45.
 - **Deadline: Sunday 11 October 2026, 13:00 Asia/Tashkent.**
-- **Demo footage is Russian dashcam video** that the team gives the jury to upload. Sign codes are the **Russian GOST numbers** used by the training data (e.g. 3.24 = speed limit). No Uzbek numbering layer.
+- **Demo footage is Tashkent driving video** (team decision, Sunday 03:45): 8 clips cut from YouTube driving videos whose owners consented (`DATA_SOURCES.md`), given to the jury to upload and used as the public sample lessons; the 4 Moscow dashcam clips (ru_01–ru_04) stay for evaluation (on-screen speed). Sign codes are the **Russian GOST numbers** used by the training data (e.g. 3.24 = speed limit); Uzbek signs use the same numbering. No Uzbek numbering layer.
+- **Rules stay ПДД РФ** (team decision, Sunday 03:45, "keep"): official texts and sources stay Russian. On the Tashkent clips the default limit is still right: the Uzbek rules (lex.uz, docs/5953887) allow 70 km/h in settlements but **60 km/h in Nukus, Tashkent and regional/district centres** — the same 60 as ПДД РФ §10.2.
+- **Our own sign tracker** replaced ByteTrack (team decision, Sunday 03:45): ByteTrack needs boxes to overlap between analysed frames and dropped close signs at speed; `pipeline/tracking.py` predicts each sign's motion instead (`eval/results/tracker_comparison.md`).
 - **Input is the dashcam video only** (scope clarified Saturday 23:20): no phone app, no live streaming, no GPS logger / GPX upload. Everything — signs, speed, stops, turns — comes from the video.
 - **Ground truth = plan B** (team decision, Sunday 01:35): the only human ground truth is the on-screen GPS speed of ru_01 (calibration) and ru_02 (test), typed from the sheets into `speed_ru_01.csv` / `speed_ru_02.csv`. Everything else is measured by scripts on data that is already labelled — detector accuracy on the held-out Dognellaf videos, the model comparison, processing speed/cost and a failure gallery. `speed.calibrated` stays false (one dashcam's calibration does not cover every upload), so speeding is only ever "possible"; the calibration supplies scale_k, a measured error model and the deck's speed-accuracy number (ru_02). The developer speed check on ru_01 (M3 notes) is internal and must not be quoted.
 - **English only.** No UZ/RU localisation; voice prompts are **English, generated with a text-to-speech model** (not recorded by the team).
@@ -104,7 +106,7 @@
 | Area | Choice |
 |---|---|
 | Python | 3.12, managed with `uv` |
-| Detection & tracking | Ultralytics (YOLO11 / YOLO12), built-in ByteTrack via `model.track(..., persist=True, tracker="bytetrack.yaml")` |
+| Detection & tracking | Ultralytics (YOLO11 / YOLO12) `model.predict` (class-agnostic NMS) + **our sign tracker** `pipeline/tracking.py` (motion prediction; replaced ByteTrack on Sunday, team decision — ByteTrack lost close signs at speed; still selectable with `detect.tracker: bytetrack.yaml` for comparison) |
 | Deep learning | PyTorch with CUDA |
 | Vision | OpenCV (`opencv-python-headless`), NumPy |
 | Video | `ffmpeg` / `ffprobe` via `subprocess` (normalize, rotate, encode); render by piping raw frames to `ffmpeg` stdin rather than `cv2.VideoWriter` |
@@ -121,7 +123,7 @@
  upload (chunked) ──> job queue (SQLite, 1 worker)
                           │
                           ▼
-  ingest ──> frames @ analysis_fps ──┬──> sign detector + ByteTrack ──> track voting ──> relevance ──┐
+  ingest ──> frames @ analysis_fps ──┬──> sign detector + tracker ───> track voting ──> relevance ──┐
   (ffprobe, normalize,               ├──> vehicle detector (COCO) ──> masks for speed, plate blur     │
    rotation, strip audio)            ├──> ego-motion: speed (road-plane BEV), yaw/turns, stops ───────┤
                                      └──> faces (YuNet) ──> blur                                       │
@@ -302,15 +304,16 @@ All models forbid unknown fields. `tests/fixtures/report.sample.json` is generat
 The final model does not exist yet, so nothing outside `detect.py` may depend on a specific model.
 - `SignDetector` protocol: `reset()` (new video) and `detect(frame, t, frame_idx) -> list[Detection]` (with track ids).
 - `ReplayDetector`: reads detections from a JSON file. Used by tests, by the frontend fixtures, and to develop every later stage without a GPU.
-- `UltralyticsDetector(model_name)`: loads weights and class map from config and runs `model.track(frame, persist=True, tracker="bytetrack.yaml", imgsz=detect.imgsz, conf=detect.conf, device=...)` frame by frame. Used with the placeholder now and the fine-tuned model later.
+- `UltralyticsDetector(model_name)`: loads weights and class map from config and runs `model.predict(frame, imgsz=detect.imgsz, conf=detect.conf, agnostic_nms=True, device=...)` frame by frame; `SignTracker` (`pipeline/tracking.py`, thresholds under `track.*`) links the boxes into tracks by predicting each sign's motion (centre velocity + growth) and matching by distance in sign sizes, closest pairs first. `detect.tracker: bytetrack.yaml` switches back to Ultralytics' ByteTrack (`model.track(..., persist=True)`) for comparison (`eval/compare_trackers.py`).
 - Selected by `detect.backend` (`ultralytics` | `replay`) and `detect.model`.
-- Ultralytics 8.4 notes: its default tracker is TrackTrack, so `bytetrack.yaml` is passed explicitly; FP16 is `quantize=16` (`half` is deprecated); `reset()` resets the trackers and their id counter between videos.
+- Ultralytics 8.4 notes: its default tracker is TrackTrack, so `bytetrack.yaml` is passed explicitly when ByteTrack is chosen; FP16 is `quantize=16` (`half` is deprecated); `reset()` resets the tracker and its id counter between videos.
+- Why our own tracker: ByteTrack links boxes only when they overlap; at 12.5–15 analysed frames/s a close sign at 50–80 km/h moves more than its own width between frames, so ByteTrack dropped it (ru_02: 0 signs although the detector saw a keep-right sign at 0.95 in 9 consecutive frames).
 - Map `model.names[class_id]` → `sign_code` (+ `value` for speed limits) using `config/class_maps/<model>.yaml`. Classes not in the map are kept with `sign_code=None` (shown only in debug). Swapping the model must only require a config change and a class map.
 - `scripts/dump_detections.py` runs a detector over a video and saves the JSON that `ReplayDetector` reads, so later stages can be iterated without re-running detection.
 
 ### 10.4 Track voting (`signs.py`)
 - Per track: winning class = argmax of summed confidence; keep if `n_frames ≥ vote.min_frames` and mean winning conf ≥ `vote.min_conf`.
-- `t_pass` = last time seen. Merge tracks with the same code whose times overlap or are within `vote.dedupe_window_s` and whose boxes are near (ByteTrack ID switches).
+- `t_pass` = last time seen. Merge tracks with the same code whose times overlap or are within `vote.dedupe_window_s` and whose boxes are near (tracker ID switches).
 - Keep a single-frame baseline path (no voting) behind a flag so `eval/` can measure what voting adds.
 
 ### 10.5 Relevance (`relevance.py`)
@@ -361,7 +364,7 @@ Dataset status (`eval/results/dataset_inventory.md`): **missing** 3.18.2 (no lef
 | speed_limit_<v> | 3.24 (+ value) | set limit |
 | end_speed_limit | 3.25 | end limit |
 | end_all_restrictions | 3.31 | end limits and bans |
-| no_entry | 3.1 | possible violation if passed and relevant |
+| no_entry | 3.1 | possible violation if relevant and overhead, or we turned toward it |
 | no_right_turn / no_left_turn | 3.18.1 / 3.18.2 | turn ban |
 | no_u_turn | 3.19 | turn ban |
 | no_overtaking / end_no_overtaking | 3.20 / 3.21 | explain only |
@@ -422,7 +425,7 @@ If a required class is missing from the detector, report it in the M6 review and
 - **speeding:** with a known limit, if `speed − err > limit + tolerance` for ≥ `speeding.min_duration_s` → `speeding` / `violation`; if `speed > limit + tolerance` but `speed − err ≤ limit + tolerance` for that duration → `possible_speeding` / `possible`. Merge contiguous seconds into one event with min/max speed and duration. If speed is unavailable → no speeding events, and a `speed_not_checked` warning.
 - **stop:** after a relevant stop sign, if the minimum speed in `stop.window_s` around `t_pass` > `stop.speed_kmh` → `stop_not_made` (`violation`) with the minimum speed; else `stop_ok` (`complied`). No valid speed sample in the window → `info` "stop not checked" — never a violation.
 - **turn bans:** while a ban is active, a matching `TurnEvent` → `turn_ban_violation` (`detail.kind = "ban"`); a ban that expires without a matching turn → `turn_ban_complied`. Mandatory-direction signs (4.1.x) work the same way: a turn outside the allowed directions → `turn_ban_violation` with `detail.kind = "mandatory"`. Scope per `ban_scope` (approximation, documented in the README).
-- **no entry:** a relevant no-entry sign passed → `no_entry_possible` (`possible`), never a hard violation.
+- **no entry:** a relevant no-entry sign we may have driven into → `no_entry_possible` (`possible`), never a hard violation. Team decision (Sunday 03:45): a sign at the side of the road usually closes the side road it stands at (e.g. service-road exits on the Tashkent clips), so it counts only if we turned toward its side within `no_entry.turn_window_s` of passing it; an overhead sign always counts. Driving straight past a side no-entry sign is only explained (misses a straight-on wrong-way entry — no map).
 - **conditional signs:** any violation from a sign with `conditional=true` is downgraded: speeding becomes `possible_speeding`; other types keep their type with severity `possible` and `detail.reason = "conditional"`.
 - **default limit is uncertain:** speeding measured against a *default* limit (60/90 km/h from ПДД §10.2/10.3) is only `possible_speeding` (`detail.reason = "default_limit"`): the detector cannot see settlement signs, so whether we are inside a built-up area is an assumption.
 - **from the official text (M2):** 3.31 ends speed-limit and no-overtaking zones, not turn bans; a speed limit also ends at 5.23.x/5.24.x; 3.18.x and 4.1.x apply to the next intersection; a left-turn arrow (4.1.3/4.1.5/4.1.6) also covers a U-turn; a ban is judged only for its own direction (a U-turn under 3.18.2 is not reported); an unreadable limit value makes the limit `unknown`.

@@ -1,0 +1,29 @@
+{
+ "name": "27_no_entry_overhead_counts_without_turn",
+ "description": "An overhead no-entry sign hangs over our own road: driving under it is possible no entry even without a turn.",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "3.1",
+   "value": null,
+   "t": 10,
+   "side": "overhead"
+  }
+ ],
+ "speed": [
+  [
+   0,
+   20,
+   30
+  ]
+ ],
+ "expect": {
+  "events": [
+   {
+    "type": "no_entry_possible",
+    "severity": "possible",
+    "t": 10
+   }
+  ]
+ }
+}

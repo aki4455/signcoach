@@ -41,7 +41,7 @@ def main() -> None:
     weights = args.weights or s.models_dir / cfg["models"][args.model]["weights"]
     detector = UltralyticsDetector(args.model, weights.expanduser(), ClassMap.for_model(args.model),
                                    args.imgsz or det_cfg["imgsz"], det_cfg["conf"], args.device or s.device,
-                                   det_cfg.get("half", True), det_cfg["tracker"])
+                                   det_cfg.get("half", True), det_cfg["tracker"], cfg.get("track"))
     info = ingest.probe(args.video)
     step = frames.analysis_step(info.fps, args.fps or cfg["analysis_fps"])
     fps = info.fps / step

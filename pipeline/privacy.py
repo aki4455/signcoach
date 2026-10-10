@@ -39,12 +39,26 @@ class FaceDetector:
         return [(int(x), int(y), int(x + fw), int(y + fh)) for x, y, fw, fh in faces[:, :4]]
 
 
-def regions_to_hide(objects: list[ObjectBox], scale: float, band: dict) -> list[tuple[int, int, int, int]]:
-    """Head areas of people and plate bands of vehicles, scaled to the rendered frame."""
+def is_own_hood(box: tuple[float, float, float, float], frame_w: int, frame_h: int, hood: dict) -> bool:
+    """A 'vehicle' box that is wide, low and glued to the bottom edge is our own car's bonnet."""
+    x1, y1, x2, y2 = box
+    return (x2 - x1 >= hood["min_width"] * frame_w and y1 >= hood["min_top"] * frame_h
+            and y2 >= hood["min_bottom"] * frame_h)
+
+
+def regions_to_hide(objects: list[ObjectBox], scale: float, band: dict, frame_wh: tuple[int, int] | None = None,
+                    hood: dict | None = None) -> list[tuple[int, int, int, int]]:
+    """Head areas of people and plate bands of vehicles, scaled to the rendered frame.
+
+    Our own bonnet (in view on many phone/action-camera videos) is detected as a car; its fallback plate
+    band would pixelate the bottom of every frame, so it is skipped. Plates found by the plate detector
+    are always hidden."""
     regions = []
     for o in objects:
         x1, y1, x2, y2 = (v * scale for v in o.box)
         w, h = x2 - x1, y2 - y1
+        if o.kind in VEHICLES and hood and frame_wh and is_own_hood((x1, y1, x2, y2), *frame_wh, hood):
+            continue
         if o.kind == "person":
             regions.append((x1 + 0.1 * w, y1, x2 - 0.1 * w, y1 + 0.28 * h))       # head and shoulders
         elif o.kind == "plate":
@@ -75,7 +89,8 @@ def blur_frame(frame: np.ndarray, faces: FaceDetector | None, objects: list[Obje
                cfg: dict) -> None:
     """Hide faces, heads and plates in a rendered frame (in place)."""
     regions = regions_to_hide(objects if cfg.get("blur_person_heads", True) else
-                              [o for o in objects if o.kind != "person"], scale, cfg["plate_band"])
+                              [o for o in objects if o.kind != "person"], scale, cfg["plate_band"],
+                              (frame.shape[1], frame.shape[0]), cfg.get("own_hood"))
     if faces is not None:
         regions += faces.detect(frame)
     pixelate(frame, regions)

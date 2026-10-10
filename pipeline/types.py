@@ -43,7 +43,7 @@ class _Contract(BaseModel):
 
 
 class Detection(_Contract):
-    """One box in one analysed frame, as returned by a SignDetector (with a ByteTrack id)."""
+    """One box in one analysed frame, as returned by a SignDetector (with a track id)."""
 
     frame_idx: int
     t: float

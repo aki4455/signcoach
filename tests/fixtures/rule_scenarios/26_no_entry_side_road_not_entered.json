@@ -1,0 +1,36 @@
+{
+ "name": "26_no_entry_side_road_not_entered",
+ "description": "A no-entry sign at the side of the road, passed without turning that way (it closes a side road): explained only, no event.",
+ "signs": [
+  {
+   "id": "s1",
+   "code": "3.1",
+   "value": null,
+   "t": 10
+  }
+ ],
+ "speed": [
+  [
+   0,
+   30,
+   40
+  ]
+ ],
+ "turns": [
+  {
+   "t_start": 25,
+   "t_end": 29,
+   "direction": "right",
+   "angle_deg": 90
+  },
+  {
+   "t_start": 9,
+   "t_end": 13,
+   "direction": "left",
+   "angle_deg": 85
+  }
+ ],
+ "expect": {
+  "events": []
+ }
+}

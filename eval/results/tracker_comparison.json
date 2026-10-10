@@ -1,0 +1,333 @@
+{
+ "rows": [
+  {
+   "clip": "UZB_Toshkent_0Gnk1Xv7rSY_s18-138",
+   "boxes": {
+    "bytetrack": 922,
+    "signcoach": 1082
+   },
+   "bytetrack": {
+    "signs": 4,
+    "relevant": 3
+   },
+   "signcoach": {
+    "signs": 4,
+    "relevant": 3
+   },
+   "only_signcoach": [],
+   "only_bytetrack": []
+  },
+  {
+   "clip": "UZB_Toshkent_EG0g-sB1lOk_s0-120",
+   "boxes": {
+    "bytetrack": 471,
+    "signcoach": 1159
+   },
+   "bytetrack": {
+    "signs": 12,
+    "relevant": 9
+   },
+   "signcoach": {
+    "signs": 25,
+    "relevant": 12
+   },
+   "only_signcoach": [
+    "2.1@5s (not ours)",
+    "2.4@9s (not ours)",
+    "5.19.1@45s",
+    "5.19.1@50s",
+    "5.19.1@57s",
+    "2.4@58s (not ours)",
+    "4.1.6@58s (not ours)",
+    "4.1.1@71s (not ours)",
+    "5.19.2@100s (not ours)",
+    "5.19.1@101s (not ours)",
+    "2.4@106s (not ours)",
+    "5.19.1@111s",
+    "5.19.2@114s (not ours)"
+   ],
+   "only_bytetrack": []
+  },
+  {
+   "clip": "UZB_Toshkent_Fr526_8i3r8_s7-127",
+   "boxes": {
+    "bytetrack": 2481,
+    "signcoach": 2967
+   },
+   "bytetrack": {
+    "signs": 20,
+    "relevant": 16
+   },
+   "signcoach": {
+    "signs": 20,
+    "relevant": 15
+   },
+   "only_signcoach": [
+    "4.1.1@11s (not ours)",
+    "3.24/50@98s"
+   ],
+   "only_bytetrack": [
+    "3.28@82s (not ours)",
+    "3.24/60@98s"
+   ]
+  },
+  {
+   "clip": "UZB_Toshkent_PX41-v48Ouo_s0-50",
+   "boxes": {
+    "bytetrack": 2236,
+    "signcoach": 2349
+   },
+   "bytetrack": {
+    "signs": 3,
+    "relevant": 1
+   },
+   "signcoach": {
+    "signs": 3,
+    "relevant": 1
+   },
+   "only_signcoach": [],
+   "only_bytetrack": []
+  },
+  {
+   "clip": "UZB_Toshkent_Qf6QPtOhC7I_s17-137",
+   "boxes": {
+    "bytetrack": 3925,
+    "signcoach": 4728
+   },
+   "bytetrack": {
+    "signs": 22,
+    "relevant": 12
+   },
+   "signcoach": {
+    "signs": 35,
+    "relevant": 23
+   },
+   "only_signcoach": [
+    "3.27@30s",
+    "4.1.5@34s (not ours)",
+    "5.19.1@42s",
+    "4.1.2@45s",
+    "3.27@74s",
+    "4.1.1@74s (not ours)",
+    "5.19.2@74s (not ours)",
+    "3.1@75s (not ours)",
+    "5.19.1@76s",
+    "3.1@82s",
+    "3.1@92s",
+    "3.1@98s"
+   ],
+   "only_bytetrack": []
+  },
+  {
+   "clip": "UZB_Toshkent_fRbskHFS9-0_s0-120",
+   "boxes": {
+    "bytetrack": 383,
+    "signcoach": 526
+   },
+   "bytetrack": {
+    "signs": 6,
+    "relevant": 4
+   },
+   "signcoach": {
+    "signs": 7,
+    "relevant": 6
+   },
+   "only_signcoach": [
+    "5.19.1@9s",
+    "3.1@78s"
+   ],
+   "only_bytetrack": [
+    "3.1@76s (not ours)"
+   ]
+  },
+  {
+   "clip": "UZB_Toshkent_ibv10yurtIg_s14-134",
+   "boxes": {
+    "bytetrack": 1619,
+    "signcoach": 2077
+   },
+   "bytetrack": {
+    "signs": 20,
+    "relevant": 16
+   },
+   "signcoach": {
+    "signs": 23,
+    "relevant": 18
+   },
+   "only_signcoach": [
+    "3.24/30@52s",
+    "5.19.1@62s",
+    "3.24/50@69s",
+    "5.19.2@75s (not ours)"
+   ],
+   "only_bytetrack": [
+    "3.24/20@52s"
+   ]
+  },
+  {
+   "clip": "UZB_Toshkent_nxg4Fm4VazQ_s0-120",
+   "boxes": {
+    "bytetrack": 3248,
+    "signcoach": 4362
+   },
+   "bytetrack": {
+    "signs": 21,
+    "relevant": 16
+   },
+   "signcoach": {
+    "signs": 28,
+    "relevant": 20
+   },
+   "only_signcoach": [
+    "5.19.2@3s (not ours)",
+    "3.27@15s",
+    "4.1.1@26s (not ours)",
+    "3.27@29s (not ours)",
+    "3.1@75s",
+    "5.19.1@108s",
+    "3.27@118s"
+   ],
+   "only_bytetrack": []
+  },
+  {
+   "clip": "ru_01_moscow_kremlin_speedOSD",
+   "boxes": {
+    "bytetrack": 1916,
+    "signcoach": 3323
+   },
+   "bytetrack": {
+    "signs": 23,
+    "relevant": 10
+   },
+   "signcoach": {
+    "signs": 36,
+    "relevant": 17
+   },
+   "only_signcoach": [
+    "3.27@2s (not ours)",
+    "3.27@6s (not ours)",
+    "2.1@31s (not ours)",
+    "4.1.1@31s (not ours)",
+    "4.1.1@31s (not ours)",
+    "3.27@34s (not ours)",
+    "4.1.1@40s",
+    "3.27@42s (not ours)",
+    "3.24/80@49s (not ours)",
+    "4.1.1@65s",
+    "2.4@102s (not ours)",
+    "3.1@105s",
+    "4.1.1@114s",
+    "2.1@114s",
+    "2.1@128s",
+    "4.1.4@128s",
+    "3.27@145s (not ours)"
+   ],
+   "only_bytetrack": [
+    "4.1.5@60s (not ours)",
+    "2.4@161s (not ours)",
+    "3.1@161s (not ours)",
+    "2.1@163s"
+   ]
+  },
+  {
+   "clip": "ru_02_moscow_yaroslavka_speedOSD",
+   "boxes": {
+    "bytetrack": 0,
+    "signcoach": 77
+   },
+   "bytetrack": {
+    "signs": 0,
+    "relevant": 0
+   },
+   "signcoach": {
+    "signs": 1,
+    "relevant": 0
+   },
+   "only_signcoach": [
+    "3.24/70@100s (not ours)"
+   ],
+   "only_bytetrack": []
+  },
+  {
+   "clip": "ru_03_moscow_vdnkh_lubyanka",
+   "boxes": {
+    "bytetrack": 320,
+    "signcoach": 1629
+   },
+   "bytetrack": {
+    "signs": 4,
+    "relevant": 4
+   },
+   "signcoach": {
+    "signs": 30,
+    "relevant": 26
+   },
+   "only_signcoach": [
+    "3.27@6s",
+    "4.1.1@6s",
+    "2.4@6s",
+    "2.4@55s",
+    "3.27@56s",
+    "3.24/40@71s",
+    "3.27@71s",
+    "5.19.2@72s",
+    "5.19.2@78s",
+    "3.27@79s",
+    "2.4@83s",
+    "3.27@85s (not ours)",
+    "3.27@107s",
+    "2.4@119s",
+    "4.1.1@122s",
+    "4.1.2@123s (not ours)",
+    "2.4@123s (not ours)",
+    "3.27@124s",
+    "2.1@133s",
+    "5.19.1@136s",
+    "2.4@136s",
+    "4.1.1@136s",
+    "2.1@144s",
+    "3.24/100@175s (not ours)",
+    "3.24/70@177s"
+   ],
+   "only_bytetrack": []
+  },
+  {
+   "clip": "ru_04_moscow_wet_winter",
+   "boxes": {
+    "bytetrack": 1734,
+    "signcoach": 4856
+   },
+   "bytetrack": {
+    "signs": 31,
+    "relevant": 24
+   },
+   "signcoach": {
+    "signs": 42,
+    "relevant": 29
+   },
+   "only_signcoach": [
+    "3.1@4s",
+    "5.19.2@4s",
+    "3.1@41s",
+    "3.27@46s",
+    "3.1@46s",
+    "2.1@67s (not ours)",
+    "2.1@127s (not ours)",
+    "3.28@127s",
+    "2.1@140s (not ours)",
+    "4.1.4@157s (not ours)"
+   ],
+   "only_bytetrack": [
+    "2.1@91s (not ours)",
+    "3.27@121s",
+    "3.28@126s"
+   ]
+  }
+ ],
+ "total": {
+  "bytetrack_signs": 166,
+  "bytetrack_relevant": 115,
+  "signcoach_signs": 254,
+  "signcoach_relevant": 170
+ }
+}

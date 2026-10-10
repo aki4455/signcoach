@@ -5,9 +5,10 @@ pipeline was being built. Every other module only sees `Detection` objects from 
 so swapping models is a config change (`detect.backend`, `detect.model`) plus a class map.
 
 Implementations:
-- `UltralyticsDetector`: runs a YOLO model with ByteTrack tracking frame by frame
-  (`model.track(..., persist=True)`), then maps the model's class names to catalogue sign codes
-  (and km/h values) with ``config/class_maps/<model>.yaml``.
+- `UltralyticsDetector`: runs a YOLO model frame by frame and links the boxes of one physical sign
+  into a track — with our `SignTracker` (``pipeline/tracking.py``, `detect.tracker: signcoach`) or,
+  for comparison, Ultralytics' ByteTrack (`detect.tracker: bytetrack.yaml`) — then maps the model's
+  class names to catalogue sign codes (and km/h values) with ``config/class_maps/<model>.yaml``.
 - `ReplayDetector`: replays detections saved in a JSON file (``scripts/dump_detections.py``), for
   tests and for working on later stages without a GPU.
 
@@ -23,6 +24,7 @@ from typing import Protocol
 import numpy as np
 import yaml
 
+from pipeline.tracking import SignTracker
 from pipeline.types import Detection
 
 CLASS_MAP_DIR = Path(__file__).resolve().parents[1] / "config" / "class_maps"
@@ -59,20 +61,33 @@ class ClassMap:
 
 
 class UltralyticsDetector:
-    """YOLO + ByteTrack, one frame at a time."""
+    """YOLO + a tracker, one frame at a time."""
 
     def __init__(self, name: str, weights: Path, class_map: ClassMap, imgsz: int, conf: float,
-                 device: str, half: bool, tracker: str = "bytetrack.yaml"):
+                 device: str, half: bool, tracker: str = "signcoach", track_cfg: dict | None = None):
         from ultralytics import YOLO
 
         self.name = name
         self.model = YOLO(str(weights))
         self.class_map = class_map
-        self.kwargs = dict(imgsz=imgsz, conf=conf, device=device, **({"quantize": 16} if half and device != "cpu" else {}),
-                           tracker=tracker, persist=True, verbose=False)
+        common = dict(imgsz=imgsz, conf=conf, device=device, verbose=False,
+                      **({"quantize": 16} if half and device != "cpu" else {}))
+        if tracker == "signcoach":
+            if track_cfg is None:
+                raise ValueError("detect.tracker 'signcoach' needs the 'track' settings")
+            # One box per physical sign (class-agnostic NMS): a sign read as "60" and "80" in the same
+            # frame stays one sign, and voting over its frames decides the class.
+            self.sign_tracker: SignTracker | None = SignTracker(track_cfg)
+            self.kwargs = dict(common, agnostic_nms=True)
+        else:
+            self.sign_tracker = None
+            self.kwargs = dict(common, tracker=tracker, persist=True)
 
     def reset(self) -> None:
-        # Trackers live on the predictor after the first call; resetting them (and the id counter)
+        if self.sign_tracker is not None:
+            self.sign_tracker.reset()
+            return
+        # ByteTrack lives on the predictor after the first call; resetting it (and the id counter)
         # starts the next video with fresh tracks and ids from 1.
         predictor = getattr(self.model, "predictor", None)
         for tracker in getattr(predictor, "trackers", None) or []:
@@ -81,11 +96,17 @@ class UltralyticsDetector:
                 tracker.reset_id()
 
     def detect(self, frame: np.ndarray, t: float, frame_idx: int) -> list[Detection]:
-        result = self.model.track(frame, **self.kwargs)[0]
-        boxes = result.boxes
-        if boxes is None or len(boxes) == 0:
-            return []
-        ids = boxes.id.int().tolist() if boxes.id is not None else [None] * len(boxes)
+        if self.sign_tracker is not None:
+            boxes = self.model.predict(frame, **self.kwargs)[0].boxes
+            if boxes is None or len(boxes) == 0:
+                self.sign_tracker.update(t, [], [])
+                return []
+            ids = self.sign_tracker.update(t, boxes.xyxy.tolist(), [self.model.names[c] for c in boxes.cls.int().tolist()])
+        else:
+            boxes = self.model.track(frame, **self.kwargs)[0].boxes
+            if boxes is None or len(boxes) == 0:
+                return []
+            ids = boxes.id.int().tolist() if boxes.id is not None else [None] * len(boxes)
         out = []
         for cls_id, conf, xyxy, track_id in zip(boxes.cls.int().tolist(), boxes.conf.tolist(),
                                                 boxes.xyxy.tolist(), ids):
@@ -124,4 +145,5 @@ def build_detector(cfg: dict, models_dir: Path, device: str, replay_file: Path |
     model_cfg = cfg["models"][name]
     return UltralyticsDetector(name=name, weights=models_dir / model_cfg["weights"],
                                class_map=ClassMap.for_model(name), imgsz=det["imgsz"], conf=det["conf"],
-                               device=device, half=det.get("half", True), tracker=det["tracker"])
+                               device=device, half=det.get("half", True), tracker=det["tracker"],
+                               track_cfg=cfg.get("track"))

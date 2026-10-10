@@ -34,7 +34,7 @@ detect:
   imgsz: 1280                     # trained at 1024; 1280 scored higher on held-out videos (0.81 vs 0.79)
   conf: 0.25                      # low on purpose; voting filters
   half: true                      # FP16 on CUDA
-  tracker: bytetrack.yaml
+  tracker: signcoach              # signcoach = our motion-predicting tracker (pipeline/tracking.py); bytetrack.yaml = Ultralytics' (comparison)
   replay_file: null               # detections JSON for backend=replay
 
 models:                           # weights live in {data}/models, never in git
@@ -55,10 +55,18 @@ models:                           # weights live in {data}/models, never in git
   faces:
     weights: face_detection_yunet_2023mar.onnx   # OpenCV Zoo YuNet, MIT
 
+track:                            # pipeline/tracking.py — links one sign's boxes across analysed frames
+  max_gap_s: 0.5                  # a sign unseen this long ends its track
+  gate: 1.0                       # max distance (in sign sizes) between a track's predicted box and a new box
+  gate_new: 2.5                   # the same for a track seen once (its motion is still unknown)
+  max_size_ratio: 1.8             # a sign cannot grow or shrink more than this between two analysed frames
+  class_change_cost: 0.3          # extra cost when the model's class differs from the track's last box
+  velocity_smoothing: 0.5         # weight of the newest motion estimate
+
 vote:
   min_frames: 3
   min_conf: 0.5                   # mean confidence of the winning class
-  dedupe_window_s: 2.0            # merge same code split by ByteTrack ID switches
+  dedupe_window_s: 2.0            # merge same code split by tracker ID switches
   dedupe_max_center_dist: 0.15    # ... if box centres are within this fraction of frame width
   single_frame_baseline: false    # true = no voting (ablation for eval/)
 
@@ -120,6 +128,9 @@ turn:
 
 turn_bans_enabled: true           # false -> bans are explained but never judged
 ban_scope: {until_turn: true, max_distance_m: 300, max_time_s: 60}   # approximation of "until the next junction" (no map)
+no_entry:                         # a side no-entry sign closes the side road it stands at (team decision, Sunday 03:45)
+  require_turn_toward_sign: true  # report it only if we turned that way; overhead signs always count
+  turn_window_s: [-3, 8]          # the turn must overlap this window around passing the sign
 
 score:
   weights: {violation: 10, possible: 3}   # score = max(0, 100 - sum); shown as "indicative"
@@ -133,6 +144,7 @@ privacy:
   face_score_threshold: 0.6       # YuNet
   blur_person_heads: true         # also blur the head area of COCO "person" boxes (YuNet misses small/side faces)
   plate_band: {y_from: 0.35, y_to: 1.0, x_from: 0.1, x_to: 0.9}    # fallback plate area inside a vehicle box
+  own_hood: {min_width: 0.5, min_top: 0.6, min_bottom: 0.97}      # a vehicle box this wide, low and touching the bottom is our bonnet: no plate band
   plate_neighbour_frames: 1       # also hide plates detected this many frames before/after
   delete_unblurred_after_processing: true   # raw upload + normalized video
 

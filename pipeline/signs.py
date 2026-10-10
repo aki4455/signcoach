@@ -1,7 +1,7 @@
 """Track voting: many per-frame detections of one physical sign -> one decision (CLAUDE.md §10.4).
 
 A sign is usually seen in 10-60 consecutive frames, and a single frame can be wrong (a "60" read
-as "80", a reflection mistaken for a sign). ByteTrack gives each physical sign a track id; for each
+as "80", a reflection mistaken for a sign). The tracker gives each physical sign a track id; for each
 track we pick the class with the highest *sum* of confidences and keep the sign only if it was seen
 in enough frames with enough mean confidence. Tracks of the same sign split by an id switch are
 merged first (same class, close in time and position).

@@ -8,7 +8,23 @@ Weights and datasets are not in this repository; they are downloaded into `$SIGN
 | Name | Link | Used for | Licence | Attribution |
 |---|---|---|---|---|
 | Dognellaf / russian-road-signs | https://huggingface.co/datasets/Dognellaf/russian-road-signs | Training and validating the sign detector (38,918 labelled frames, 89 classes, split by source video) | CC BY 4.0 (LICENSE file in the dataset repo, checked 2026-10-10) | "Russian Road Signs" dataset by Dognellaf, CC BY 4.0 |
-| Moscow dashcam clips `ru_01`…`ru_04` (3 min each) | provided by the team (shared via Telegram) | Sample lessons, demo uploads, evaluation (speed: `ru_01` calibration, `ru_02` test) | Free to use (confirmed by the team, 2026-10-11); only blurred, soundless outputs are published; raw clips are never in git | SignCoach team |
+| Moscow dashcam clips `ru_01`…`ru_04` (3 min each) | provided by the team (shared via Telegram) | Evaluation (speed: `ru_01` calibration, `ru_02` test), tracker comparison | Free to use (confirmed by the team, 2026-10-11); only blurred, soundless outputs are published; raw clips are never in git | SignCoach team |
+| Tashkent driving clips (8 × ≤ 2 min, cut from the YouTube videos below, 720p) | see the table below | Sample lessons, demo uploads by the jury, tracker comparison | Used with the video owners' consent (obtained by the team, 2026-10-11); only blurred, soundless outputs are published; raw clips are never in git | the channels below |
+
+### Tashkent clips (demo and sample lessons)
+
+Seconds of each video used; file names `UZB_Toshkent_<video id>_s<start>-<end>.mp4`. Consent of the owners obtained by the team (2026-10-11).
+
+| Video | Seconds | Channel | Title |
+|---|---|---|---|
+| [0Gnk1Xv7rSY](https://www.youtube.com/watch?v=0Gnk1Xv7rSY) | 18–138 | Simply Uzbekistan | Lutfiy street I Tashkent driving tour |
+| [EG0g-sB1lOk](https://www.youtube.com/watch?v=EG0g-sB1lOk) | 0–120 | The Safar | Driving Downtown in Presidential Track - Tashkent city |
+| [Fr526_8i3r8](https://www.youtube.com/watch?v=Fr526_8i3r8) | 7–127 | Simply Uzbekistan | Qoraqamish Driving Tour I Tashkent 4K |
+| [PX41-v48Ouo](https://www.youtube.com/watch?v=PX41-v48Ouo) | 0–50 | Simply Uzbekistan | Tashkent driving tour I Abdulla Qodiriy street |
+| [Qf6QPtOhC7I](https://www.youtube.com/watch?v=Qf6QPtOhC7I) | 17–137 | Simply Uzbekistan | Tashkent Driving Tour 4K Islam Karimov street |
+| [fRbskHFS9-0](https://www.youtube.com/watch?v=fRbskHFS9-0) | 0–120 | DB NEVADA (from the video's watermark; title not retrievable — embedding disabled) | — |
+| [ibv10yurtIg](https://www.youtube.com/watch?v=ibv10yurtIg) | 14–134 | Simply Uzbekistan | Tashkent Driving Tour Shota Rustaveli street |
+| [nxg4Fm4VazQ](https://www.youtube.com/watch?v=nxg4Fm4VazQ) | 0–120 | Simply Uzbekistan | Driving in Tashkent I Alisher Navoi street |
 
 ## Model weights
 
