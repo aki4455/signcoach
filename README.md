@@ -124,6 +124,8 @@ Funnel publishes it over HTTPS. Setup steps: [`deploy/FUNNEL.md`](deploy/FUNNEL.
 
 ## Limitations and known failure cases
 
+The full list, with evidence and what we would do next: [`docs/LIMITATIONS.md`](docs/LIMITATIONS.md). How everything works, module by module: [`docs/HOW_IT_WORKS.md`](docs/HOW_IT_WORKS.md).
+
 - **No map.** "Until the next intersection" is approximated by our next turn, 300 m or 60 s. A no-entry sign
   at the side of the road usually closes a side road, so it is reported only if we turned toward it
   (overhead ones always): driving straight into a one-way street past a side sign is missed.
