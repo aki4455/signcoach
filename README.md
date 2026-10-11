@@ -131,6 +131,9 @@ Funnel publishes it over HTTPS. Setup steps: [`deploy/FUNNEL.md`](deploy/FUNNEL.
   on the demo clips), so no threshold can filter them.
 - **Round signs the detector was never trained on** are read as the closest class it knows: "no trucks"
   (3.4) as a 100 km/h limit (end of the Islam Karimov street sample), "no pedestrians" (3.10) as 70.
+- **The back of a sign** can be read as a sign: the grey back of a round sign became "right turn only"
+  (4.1.2) at 0:44 in the Islam Karimov street sample. A colour check (blue signs must contain blue,
+  red-ringed signs red) could reject such boxes; we did not build it in time.
 - **Signs missing from the training data:** no-left-turn (3.18.2), no-U-turn (3.19), start/end of a
   built-up area (5.23/5.24); end-of-speed-limit (3.25) has only 5 examples. Without settlement signs the
   built-up-area default limit is assumed, so speeding against it is only "possible".
@@ -152,4 +155,4 @@ detector.
 
 The code was written with Claude Code (Anthropic) following the build spec in `CLAUDE.md`, milestone by
 milestone; every milestone was reviewed, tested and merged by the team, who also chose the data, checked
-the official rule texts and recorded the evaluation ground truth. Elimination-stage code reused: TODO (team fills in).
+the official rule texts and recorded the evaluation ground truth. Elimination-stage code reused: none.
