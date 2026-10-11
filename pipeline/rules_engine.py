@@ -6,9 +6,11 @@ rules in force (speed limit, turn bans, mandatory directions, inside/outside a b
 stores a `RuleState` snapshot every time they change. Then it judges speed and stops against them.
 
 What it reports (severity decides colour and score):
-- sign_explained   first time each sign code + value appears (explanation + voice prompt); it is said when
-                   the sign is confirmed while we approach (`announce_at`, as a system in the car could),
-                   while its rule takes effect when we pass it
+- sign_explained   every relevant sign we pass (voice prompt + explanation); it is said when the sign is
+                   confirmed while we approach (`announce_at`, as a system in the car could), while its
+                   rule takes effect when we pass it. A sign whose code + value was already explained in
+                   this lesson is marked `detail.repeat`: the voice says it again, the report lists its
+                   explanation only once
 - speeding         over the limit even after subtracting the speed error -> violation
 - possible_speeding over the limit but within the error, or the speed/limit is uncertain: a default
                    limit we cannot confirm without settlement signs, a sign with a conditions plate,
@@ -165,13 +167,13 @@ def run(sign_events: list[SignEvent], motion: list[MotionSample], turns: list[Tu
         expire_until(t)
         if isinstance(item, SignEvent):
             s = item
-            if (s.sign_code, s.value) not in explained:
-                explained.add((s.sign_code, s.value))
-                events.append(_event(min(s.t_pass, announce_at.get(s.id, s.t_pass)), "sign_explained", "info", s,
-                                     title="event.sign_explained",
-                                     detail={"sign_code": s.sign_code, "value": s.value},
-                                     voice=catalogue.voice_key(s.sign_code, s.value),
-                                     clip=(round(max(0.0, s.t_first - 1.0), 2), round(s.t_pass + 2.0, 2))))
+            repeat = (s.sign_code, s.value) in explained
+            explained.add((s.sign_code, s.value))
+            events.append(_event(min(s.t_pass, announce_at.get(s.id, s.t_pass)), "sign_explained", "info", s,
+                                 title="event.sign_explained",
+                                 detail={"sign_code": s.sign_code, "value": s.value} | ({"repeat": True} if repeat else {}),
+                                 voice=catalogue.voice_key(s.sign_code, s.value),
+                                 clip=(round(max(0.0, s.t_first - 1.0), 2), round(s.t_pass + 2.0, 2))))
             # Signs that end the current speed-limit zone (another 3.24, 3.25, 3.31, settlement signs).
             if limit.source == "sign" and f"sign:{s.sign_code}" in _limit_ends(catalogue):
                 set_limit(s.t_pass, default_limit())

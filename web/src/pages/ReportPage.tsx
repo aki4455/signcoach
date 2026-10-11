@@ -66,6 +66,8 @@ export default function ReportPage({ id }: { id: string }) {
     setTime(now);
   };
   const { summary } = report;
+  // Every sign is voiced each time we pass it; a repeat of a sign already explained is not listed again.
+  const listed = report.events.filter((e) => !e.detail?.repeat);
   const speedLabel = t(`ui.speed_source.${report.speed_source}`);
 
   return (
@@ -86,7 +88,7 @@ export default function ReportPage({ id }: { id: string }) {
                  lastTime.current = video.current?.currentTime ?? 0;
                }}
                className="max-h-[70vh] w-full rounded-xl bg-black" />
-        <Timeline duration={duration} events={report.events} timeline={report.timeline} time={time} onSeek={seek} />
+        <Timeline duration={duration} events={listed} timeline={report.timeline} time={time} onSeek={seek} />
         <SpeedChart duration={duration} motion={report.motion} timeline={report.timeline} time={time} onSeek={seek} />
         <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
           <Legend />
@@ -113,9 +115,9 @@ export default function ReportPage({ id }: { id: string }) {
 
       <section>
         <h2 className="mb-2 text-lg font-semibold">{t("ui.events")}</h2>
-        {report.events.length === 0 && <p className="text-slate-600">{t("ui.no_events")}</p>}
+        {listed.length === 0 && <p className="text-slate-600">{t("ui.no_events")}</p>}
         <ul className="space-y-2">
-          {report.events.map((e) => <EventCard key={e.id} event={e} onSeek={seek} />)}
+          {listed.map((e) => <EventCard key={e.id} event={e} onSeek={seek} />)}
         </ul>
       </section>
 

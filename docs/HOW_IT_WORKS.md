@@ -359,7 +359,7 @@ and labelled as such. Nothing is paraphrased and presented as official (CLAUDE.m
 
 | Rule | How it works | Event (severity) |
 |---|---|---|
-| Sign explained | The first time each sign code + value appears in the lesson | `sign_explained` (info) + voice prompt |
+| Sign explained | Every relevant sign we pass is voiced. A repeat of a sign (same code + value) already explained is marked `repeat`: voiced again, but listed only once on the report page | `sign_explained` (info) + voice prompt |
 | Speed limit | Set by 3.24 when we pass it; ended by another 3.24, 3.25, 3.31, settlement signs, or our next turn; otherwise the default (60 in built-up areas, assumed) | Shown in the timeline |
 | Speeding | Over the limit for at least 3 s; "speeding" only if over even after subtracting the speed error, with a limit from a sign and a calibrated camera — in practice always `possible_speeding` (reason: uncalibrated / default limit / conditional) | `possible_speeding` (possible) |
 | Stop sign (2.5) | Slowest speed from 2 s before to 6 s after the sign: above 2 km/h → not made; no speed data → "stop not checked" (never a violation) | `stop_not_made` (violation) / `stop_ok` (complied) / info |
@@ -417,6 +417,13 @@ subtitle line while an event is "spoken" (3 s per event; overlapping subtitles s
 Pedestrian crossing"). Frames are piped as raw pixels into FFmpeg (H.264, no audio). Thumbnails are cut
 around each sign's largest view, from blurred frames only.
 
+**Faster blurring.** The face detector runs on the CPU, and the Ultralytics library switches OpenCV to a
+single thread when it loads, so blurring was most of this pass. Now 6 frames are blurred at the same time,
+each thread with its own face detector (`parallel.blur_threads`); drawing and encoding still take the
+frames strictly in order. On a 2-minute Tashkent clip the annotated video came out byte-for-byte the same
+as before. Running the three detectors of the analysis pass side by side was also tried and gave no gain:
+each model call is mostly fixed per-call overhead in Python, not GPU work.
+
 `report.json` contains the lesson info, events, the rules timeline, speed at 2 Hz, every sign (relevant or
 not, with the reason), signs not met in this lesson, quality warnings, and processing statistics: seconds
 per stage, frames per second, peak GPU memory, model version and git commit.
@@ -440,6 +447,8 @@ the same text.
   when a system in the car could speak. Its rule still starts when we pass it. Across the 12 demo clips that
   is a median of 2.1 s before passing; 85% at least 1 s ahead, 54% at least 2 s
   (`eval/results/tracker_comparison.md`).
+- **Every time.** Each relevant sign is voiced every time we pass it, also the 5th pedestrian crossing of
+  the lesson. The event list shows each sign's explanation once; repeats are only voiced and subtitled.
 - **Never cut off.** A prompt that comes due while another is speaking waits and follows it joined by
   "and" ("Main road… and pedestrian crossing"). A prompt more than 4 s late is dropped, so the voice never
   lags behind the video. Jumping in the video clears the queue.
