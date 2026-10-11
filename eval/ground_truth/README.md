@@ -1,7 +1,7 @@
 # Ground truth formats (CLAUDE.md §15)
 
 Ground truth is created by **people** from the team's collected dashcam clips — never by the
-system and never by an AI model. Clips used to tune or calibrate something are named as such and
+system and never by an AI model (one exception, stated in its section: `sample_signs.csv`). Clips used to tune or calibrate something are named as such and
 are not used to report accuracy for that thing. One CSV per clip, named `<kind>_<clip>.csv`,
 where `<clip>` is the short clip name (e.g. `ru_02`). Times are seconds from the start of the video.
 
@@ -43,4 +43,19 @@ t_start,t_end,limit_kmh
 ```
 t_seconds,full_stop
 88.0,n
+```
+
+## sample_signs.csv — what each sign shown in a sample lesson really is
+
+A check of what the 4 public sample lessons show, not a list of every sign in their videos. One row
+per sign a sample shows as applying to our car, at the moment we pass it (`t_pass` in the report);
+`sign_code`/`value` say what the sign really is, `none` when there is no sign (e.g. the back of a
+sign). Made from crop sheets (one crop per shown sign, at its best frame): Claude Code did a first pass
+and the team confirmed every verdict (Sunday 11 Oct 2026, 09:30). `eval/eval_sample_signs.py` compares
+the current samples with it (precision only).
+
+```
+sample,t_seconds,sign_code,value,notes
+"Tashkent, Islam Karimov street",44.6,none,,the grey back of a round sign; we show 4.1.2 (right turn only)
+"Tashkent, Alisher Navoi street",95.5,3.24,50,
 ```

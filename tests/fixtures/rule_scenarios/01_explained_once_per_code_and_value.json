@@ -1,6 +1,6 @@
 {
  "name": "01_explained_once_per_code_and_value",
- "description": "Each sign code+value is explained once; a new limit value gets its own explanation.",
+ "description": "Every relevant sign is said (voice prompt); a sign whose code+value was already explained is marked repeat, so its explanation is listed once; a new limit value is new.",
  "signs": [
   {
    "id": "s1",
@@ -38,6 +38,16 @@
     "detail": {
      "sign_code": "3.24",
      "value": 60
+    }
+   },
+   {
+    "type": "sign_explained",
+    "severity": "info",
+    "t": 20,
+    "detail": {
+     "sign_code": "3.24",
+     "value": 60,
+     "repeat": true
     }
    },
    {

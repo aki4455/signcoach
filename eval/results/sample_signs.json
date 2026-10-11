@@ -1,0 +1,535 @@
+{
+ "total": {
+  "shown": 68,
+  "right": 66,
+  "wrong": 2,
+  "not_checked": 0,
+  "share_right": 0.971
+ },
+ "samples": {
+  "Tashkent, Alisher Navoi street": {
+   "shown": 19,
+   "right": 19,
+   "wrong": 0,
+   "not_checked": 0,
+   "listed_not_shown": [],
+   "signs": [
+    {
+     "t": 25.2,
+     "shown": "5.19.2",
+     "really": "5.19.2",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 25.9,
+     "shown": "3.1",
+     "really": "3.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 32.1,
+     "shown": "3.27",
+     "really": "3.27",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 46.8,
+     "shown": "5.19.1",
+     "really": "5.19.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 48.1,
+     "shown": "2.1",
+     "really": "2.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 50.8,
+     "shown": "5.19.2",
+     "really": "5.19.2",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 65.2,
+     "shown": "5.19.1",
+     "really": "5.19.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 65.2,
+     "shown": "2.1",
+     "really": "2.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 73.9,
+     "shown": "4.1.1",
+     "really": "4.1.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 74.8,
+     "shown": "2.1",
+     "really": "2.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 74.8,
+     "shown": "3.1",
+     "really": "3.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 76.3,
+     "shown": "3.27",
+     "really": "3.27",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 79.9,
+     "shown": "3.27",
+     "really": "3.27",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 87.5,
+     "shown": "2.1",
+     "really": "2.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 94.4,
+     "shown": "5.19.1",
+     "really": "5.19.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 95.5,
+     "shown": "3.24/50",
+     "really": "3.24/50",
+     "notes": "read as 60 before size-weighted voting (Sunday 09:40)",
+     "verdict": "right"
+    },
+    {
+     "t": 95.5,
+     "shown": "3.27",
+     "really": "3.27",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 108.1,
+     "shown": "5.19.1",
+     "really": "5.19.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 117.8,
+     "shown": "3.27",
+     "really": "3.27",
+     "notes": "",
+     "verdict": "right"
+    }
+   ],
+   "lesson_id": "YJXrLzodE6-emttKsgoqzQ",
+   "model": "dognellaf_y11s",
+   "git_sha": "1efed4c35a26f6c3ca1695668374ba7c4e532fca"
+  },
+  "Tashkent, Islam Karimov street": {
+   "shown": 22,
+   "right": 20,
+   "wrong": 2,
+   "not_checked": 0,
+   "listed_not_shown": [],
+   "signs": [
+    {
+     "t": 25.4,
+     "shown": "5.19.1",
+     "really": "5.19.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 30.3,
+     "shown": "3.27",
+     "really": "3.27",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 39.9,
+     "shown": "2.1",
+     "really": "2.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 40.6,
+     "shown": "3.27",
+     "really": "3.27",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 41.9,
+     "shown": "5.19.1",
+     "really": "5.19.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 42.7,
+     "shown": "5.19.2",
+     "really": "5.19.2",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 43.3,
+     "shown": "4.1.1",
+     "really": "4.1.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 44.6,
+     "shown": "4.1.2",
+     "really": "none",
+     "notes": "the grey back of a round sign; we show 4.1.2 (right turn only)",
+     "verdict": "wrong"
+    },
+    {
+     "t": 45.1,
+     "shown": "5.19.1",
+     "really": "5.19.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 48.1,
+     "shown": "2.1",
+     "really": "2.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 66.6,
+     "shown": "3.27",
+     "really": "3.27",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 69.7,
+     "shown": "3.27",
+     "really": "3.27",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 75.8,
+     "shown": "5.19.1",
+     "really": "5.19.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 76.3,
+     "shown": "3.27",
+     "really": "3.27",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 82.0,
+     "shown": "3.1",
+     "really": "3.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 82.1,
+     "shown": "3.27",
+     "really": "3.27",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 91.2,
+     "shown": "3.27",
+     "really": "3.27",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 92.0,
+     "shown": "3.27",
+     "really": "3.27",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 92.1,
+     "shown": "3.1",
+     "really": "3.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 98.1,
+     "shown": "3.1",
+     "really": "3.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 109.5,
+     "shown": "2.1",
+     "really": "2.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 114.2,
+     "shown": "3.24/100",
+     "really": "3.4",
+     "notes": "no trucks \u2014 not in the training data; we show a 100 km/h limit",
+     "verdict": "wrong"
+    }
+   ],
+   "lesson_id": "2XUM_mAwkVeAtr7uh-9BUw",
+   "model": "dognellaf_y11s",
+   "git_sha": "758d291f814eaf3250450380ff261a0dee76d7b5"
+  },
+  "Tashkent, Qoraqamish": {
+   "shown": 15,
+   "right": 15,
+   "wrong": 0,
+   "not_checked": 0,
+   "listed_not_shown": [],
+   "signs": [
+    {
+     "t": 12.9,
+     "shown": "2.1",
+     "really": "2.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 19.8,
+     "shown": "5.19.2",
+     "really": "5.19.2",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 48.5,
+     "shown": "3.27",
+     "really": "3.27",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 58.8,
+     "shown": "2.1",
+     "really": "2.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 59.9,
+     "shown": "5.19.1",
+     "really": "5.19.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 65.7,
+     "shown": "3.27",
+     "really": "3.27",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 69.7,
+     "shown": "3.27",
+     "really": "3.27",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 73.7,
+     "shown": "3.27",
+     "really": "3.27",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 84.9,
+     "shown": "3.27",
+     "really": "3.27",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 98.2,
+     "shown": "3.24/50",
+     "really": "3.24/50",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 102.8,
+     "shown": "5.19.1",
+     "really": "5.19.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 103.0,
+     "shown": "5.19.1",
+     "really": "5.19.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 111.4,
+     "shown": "2.1",
+     "really": "2.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 116.5,
+     "shown": "3.27",
+     "really": "3.27",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 119.8,
+     "shown": "2.1",
+     "really": "2.1",
+     "notes": "",
+     "verdict": "right"
+    }
+   ],
+   "lesson_id": "tPVExSkxkiQqiMjNICA18A",
+   "model": "dognellaf_y11s",
+   "git_sha": "758d291f814eaf3250450380ff261a0dee76d7b5"
+  },
+  "Tashkent, downtown Presidential track": {
+   "shown": 12,
+   "right": 12,
+   "wrong": 0,
+   "not_checked": 0,
+   "listed_not_shown": [],
+   "signs": [
+    {
+     "t": 44.1,
+     "shown": "2.1",
+     "really": "2.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 44.7,
+     "shown": "5.19.1",
+     "really": "5.19.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 48.7,
+     "shown": "2.1",
+     "really": "2.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 49.7,
+     "shown": "5.19.1",
+     "really": "5.19.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 56.8,
+     "shown": "5.19.1",
+     "really": "5.19.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 64.1,
+     "shown": "2.1",
+     "really": "2.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 66.1,
+     "shown": "5.19.1",
+     "really": "5.19.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 77.3,
+     "shown": "2.4",
+     "really": "2.4",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 99.6,
+     "shown": "5.19.1",
+     "really": "5.19.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 110.2,
+     "shown": "2.1",
+     "really": "2.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 110.8,
+     "shown": "5.19.1",
+     "really": "5.19.1",
+     "notes": "",
+     "verdict": "right"
+    },
+    {
+     "t": 113.7,
+     "shown": "5.19.1",
+     "really": "5.19.1",
+     "notes": "",
+     "verdict": "right"
+    }
+   ],
+   "lesson_id": "J6Jsl_hjwLofGXyxTXvcQA",
+   "model": "dognellaf_y11s",
+   "git_sha": "758d291f814eaf3250450380ff261a0dee76d7b5"
+  }
+ }
+}

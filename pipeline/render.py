@@ -9,11 +9,18 @@ frame rate, so frame i here is frame i of the analysis pass. For every frame we:
 4. draw a subtitle line while an event's voice prompt would be playing.
 Frames are piped as raw pixels into ffmpeg (libx264, +faststart, no audio). Thumbnails and the
 poster are cut from blurred frames only, so nothing unblurred ever leaves the job folder.
+
+Step 1 is most of the work (the face detector runs on the CPU), so `parallel.blur_threads` frames are
+blurred at the same time, each thread with its own face detector; steps 2-4 and the encoder still
+take the frames strictly in order, so the video is the same as with one thread.
 """
 
 from __future__ import annotations
 
 import subprocess
+import threading
+from collections import deque
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable
@@ -140,13 +147,36 @@ def render(job: RenderJob, out_dir: Path, log_path: Path, faces: FaceDetector | 
          str(out_dir / "annotated.mp4")], stdin=subprocess.PIPE, stderr=log)
     saved: dict[str, str] = {}
     n = max(1, len(job.objects_by_frame))
-    try:
-        for idx, t, frame in frames.iter_frames(job.normalized, job.width, job.height, job.video_fps, job.step,
-                                                out_cfg["height"]):
-            check_deadline()
-            objects = job.objects_by_frame[idx] if idx < len(job.objects_by_frame) else []
-            blur_frame(frame, faces, objects, scale, privacy_cfg)            # 1. privacy first
+    n_threads = max(1, int(cfg.get("parallel", {}).get("blur_threads", 1)))
+    local = threading.local()
 
+    def blurred(item):                                                       # 1. privacy first
+        idx, t, frame = item
+        if faces is not None and n_threads > 1 and not hasattr(local, "faces"):
+            local.faces = faces.copy()                                       # one face detector per thread
+        objects = job.objects_by_frame[idx] if idx < len(job.objects_by_frame) else []
+        blur_frame(frame, getattr(local, "faces", faces), objects, scale, privacy_cfg)
+        return item
+
+    source = frames.iter_frames(job.normalized, job.width, job.height, job.video_fps, job.step, out_cfg["height"])
+    pool = ThreadPoolExecutor(n_threads, thread_name_prefix="blur") if n_threads > 1 else None
+
+    def in_order():
+        """Blurred frames in their original order; up to 2 x n_threads frames are in flight."""
+        if pool is None:
+            yield from map(blurred, source)
+            return
+        pending = deque()
+        for item in source:
+            pending.append(pool.submit(blurred, item))
+            if len(pending) >= 2 * n_threads:
+                yield pending.popleft().result()
+        while pending:
+            yield pending.popleft().result()
+
+    try:
+        for idx, t, frame in in_order():
+            check_deadline()
             for name, box in job.thumbnails.get(idx, []):                    # thumbnails: blurred, no overlay
                 crop = _crop(frame, [v * scale for v in box])
                 if crop.size:
@@ -168,6 +198,9 @@ def render(job: RenderJob, out_dir: Path, log_path: Path, faces: FaceDetector | 
             if idx % 15 == 0:
                 progress(min(1.0, idx / n))
     finally:
+        if pool is not None:
+            pool.shutdown(wait=True, cancel_futures=True)
+        source.close()                                                       # stops the decoder
         enc.stdin.close()
         enc.wait()
         log.close()
