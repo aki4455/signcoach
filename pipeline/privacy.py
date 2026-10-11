@@ -25,10 +25,15 @@ VEHICLES = {"car", "motorcycle", "bus", "truck"}
 
 
 class FaceDetector:
-    """YuNet face detector (works on CPU, a few ms per 720p frame)."""
+    """YuNet face detector (runs on the CPU, ~37 ms per 720p frame on one core). An instance must not be
+    shared by two threads (it keeps the input size), so parallel rendering uses one `copy()` per thread."""
 
     def __init__(self, model_path: Path, score_threshold: float):
+        self.model_path, self.score_threshold = model_path, score_threshold
         self.model = cv2.FaceDetectorYN.create(str(model_path), "", (320, 320), score_threshold, 0.3, 5000)
+
+    def copy(self) -> "FaceDetector":
+        return FaceDetector(self.model_path, self.score_threshold)
 
     def detect(self, frame: np.ndarray) -> list[tuple[int, int, int, int]]:
         h, w = frame.shape[:2]

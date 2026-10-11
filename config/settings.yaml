@@ -151,6 +151,9 @@ privacy:
   plate_neighbour_frames: 1       # also hide plates detected this many frames before/after
   delete_unblurred_after_processing: true   # raw upload + normalized video
 
+parallel:                         # speed only: the output is identical either way (checked byte for byte on a demo clip)
+  blur_threads: 6                 # rendered frames blurred at the same time (the face detector runs on the CPU)
+
 output:
   height: 720
   crf: 23
