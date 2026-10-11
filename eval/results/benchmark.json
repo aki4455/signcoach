@@ -1,0 +1,131 @@
+{
+  "device": "cuda:0",
+  "model_load_s": 1.3,
+  "seconds_per_video_minute": 95.0,
+  "cost": {
+    "processing_hours_per_lesson_hour": 1.584,
+    "gpu_power_w_measured": 56.2,
+    "energy_kwh_per_lesson_hour": 0.089
+  },
+  "cost_inputs": {
+    "electricity_price_per_kwh": null,
+    "gpu_power_w": null,
+    "cloud_gpu_price_per_hour": null
+  },
+  "runs": [
+    {
+      "video": "UZB_Toshkent_Qf6QPtOhC7I_s17-137.mp4",
+      "video_s": 120.0,
+      "total_s": 198.39,
+      "s_per_video_min": 99.2,
+      "realtime_factor": 1.65,
+      "fps_analysed": 19.56,
+      "frames": 1800,
+      "stages_s": {
+        "ingest": 10.15,
+        "analysis": 92.04,
+        "signs_and_rules": 0.07,
+        "render": 93.61
+      },
+      "peak_vram_mb": 122,
+      "device": "cuda:0",
+      "model": "dognellaf_y11s",
+      "gpu_power_w": 55.6
+    },
+    {
+      "video": "UZB_Toshkent_nxg4Fm4VazQ_s0-120.mp4",
+      "video_s": 120.0,
+      "total_s": 180.51,
+      "s_per_video_min": 90.3,
+      "realtime_factor": 1.5,
+      "fps_analysed": 20.76,
+      "frames": 1800,
+      "stages_s": {
+        "ingest": 8.99,
+        "analysis": 86.7,
+        "signs_and_rules": 0.07,
+        "render": 82.82
+      },
+      "peak_vram_mb": 122,
+      "device": "cuda:0",
+      "model": "dognellaf_y11s",
+      "gpu_power_w": 60.5
+    },
+    {
+      "video": "UZB_Toshkent_EG0g-sB1lOk_s0-120.mp4",
+      "video_s": 120.0,
+      "total_s": 174.01,
+      "s_per_video_min": 87.0,
+      "realtime_factor": 1.45,
+      "fps_analysed": 22.36,
+      "frames": 1800,
+      "stages_s": {
+        "ingest": 9.78,
+        "analysis": 80.51,
+        "signs_and_rules": 0.06,
+        "render": 82.13
+      },
+      "peak_vram_mb": 122,
+      "device": "cuda:0",
+      "model": "dognellaf_y11s",
+      "gpu_power_w": 60.4
+    },
+    {
+      "video": "UZB_Toshkent_Fr526_8i3r8_s7-127.mp4",
+      "video_s": 120.0,
+      "total_s": 175.48,
+      "s_per_video_min": 87.7,
+      "realtime_factor": 1.46,
+      "fps_analysed": 22.17,
+      "frames": 1800,
+      "stages_s": {
+        "ingest": 9.94,
+        "analysis": 81.2,
+        "signs_and_rules": 0.06,
+        "render": 81.81
+      },
+      "peak_vram_mb": 122,
+      "device": "cuda:0",
+      "model": "dognellaf_y11s",
+      "gpu_power_w": 61.2
+    },
+    {
+      "video": "ru_03_moscow_vdnkh_lubyanka.mp4",
+      "video_s": 180.0,
+      "total_s": 289.59,
+      "s_per_video_min": 96.5,
+      "realtime_factor": 1.61,
+      "fps_analysed": 19.12,
+      "frames": 2662,
+      "stages_s": {
+        "ingest": 24.5,
+        "analysis": 139.21,
+        "signs_and_rules": 0.09,
+        "render": 123.23
+      },
+      "peak_vram_mb": 122,
+      "device": "cuda:0",
+      "model": "dognellaf_y11s",
+      "gpu_power_w": 52.7
+    },
+    {
+      "video": "ru_04_moscow_wet_winter.mp4",
+      "video_s": 180.0,
+      "total_s": 312.67,
+      "s_per_video_min": 104.2,
+      "realtime_factor": 1.74,
+      "fps_analysed": 18.43,
+      "frames": 2700,
+      "stages_s": {
+        "ingest": 31.76,
+        "analysis": 146.52,
+        "signs_and_rules": 0.07,
+        "render": 130.57
+      },
+      "peak_vram_mb": 122,
+      "device": "cuda:0",
+      "model": "dognellaf_y11s",
+      "gpu_power_w": 52.1
+    }
+  ]
+}

@@ -23,16 +23,17 @@ How early relevant signs are announced (confirmation -> passing the sign; the vo
 | Tracker | Relevant signs | Median s | Middle half s | ≥ 1 s ahead | ≥ 2 s ahead |
 |---|---:|---:|---:|---:|---:|
 | bytetrack | 115 | 1.9 | 1.1–3.3 | 79% | 45% |
-| signcoach | 170 | 2.2 | 1.2–3.3 | 85% | 54% |
+| signcoach | 170 | 2.1 | 1.2–3.3 | 85% | 54% |
 
 Signs kept by only one tracker (same code and value not found by the other within 1.5 s):
 
+- **UZB_Toshkent_0Gnk1Xv7rSY_s18-138** — only ours: 3.24/50@38s; only ByteTrack: 3.24/60@37s
 - **UZB_Toshkent_EG0g-sB1lOk_s0-120** — only ours: 2.1@5s (not ours), 2.4@9s (not ours), 5.19.1@45s, 5.19.1@50s, 5.19.1@57s, 2.4@58s (not ours), 4.1.6@58s (not ours), 4.1.1@71s (not ours), 5.19.2@100s (not ours), 5.19.1@101s (not ours), 2.4@106s (not ours), 5.19.1@111s, 5.19.2@114s (not ours); only ByteTrack: –
-- **UZB_Toshkent_Fr526_8i3r8_s7-127** — only ours: 4.1.1@11s (not ours), 3.24/50@98s; only ByteTrack: 3.28@82s (not ours), 3.24/60@98s
+- **UZB_Toshkent_Fr526_8i3r8_s7-127** — only ours: 4.1.1@11s (not ours); only ByteTrack: 3.28@82s (not ours)
 - **UZB_Toshkent_Qf6QPtOhC7I_s17-137** — only ours: 3.27@30s, 4.1.5@34s (not ours), 5.19.1@42s, 4.1.2@45s, 3.27@74s, 4.1.1@74s (not ours), 5.19.2@74s (not ours), 3.1@75s (not ours), 5.19.1@76s, 3.1@82s, 3.1@92s, 3.1@98s; only ByteTrack: –
 - **UZB_Toshkent_fRbskHFS9-0_s0-120** — only ours: 5.19.1@9s, 3.1@78s; only ByteTrack: 3.1@76s (not ours)
 - **UZB_Toshkent_ibv10yurtIg_s14-134** — only ours: 3.24/30@52s, 5.19.1@62s, 3.24/50@69s, 5.19.2@75s (not ours); only ByteTrack: 3.24/20@52s
-- **UZB_Toshkent_nxg4Fm4VazQ_s0-120** — only ours: 5.19.2@3s (not ours), 3.27@15s, 4.1.1@26s (not ours), 3.27@29s (not ours), 3.1@75s, 5.19.1@108s, 3.27@118s; only ByteTrack: –
+- **UZB_Toshkent_nxg4Fm4VazQ_s0-120** — only ours: 5.19.2@3s (not ours), 3.27@15s, 4.1.1@26s (not ours), 3.27@29s (not ours), 3.1@75s, 3.24/50@96s, 5.19.1@108s, 3.27@118s; only ByteTrack: 3.24/60@95s
 - **ru_01_moscow_kremlin_speedOSD** — only ours: 3.27@2s (not ours), 3.27@6s (not ours), 2.1@31s (not ours), 4.1.1@31s (not ours), 4.1.1@31s (not ours), 3.27@34s (not ours), 4.1.1@40s, 3.27@42s (not ours), 3.24/80@49s (not ours), 4.1.1@65s, 2.4@102s (not ours), 3.1@105s, 4.1.1@114s, 2.1@114s, 2.1@128s, 4.1.4@128s, 3.27@145s (not ours); only ByteTrack: 4.1.5@60s (not ours), 2.4@161s (not ours), 3.1@161s (not ours), 2.1@163s
 - **ru_02_moscow_yaroslavka_speedOSD** — only ours: 3.24/70@100s (not ours); only ByteTrack: –
 - **ru_03_moscow_vdnkh_lubyanka** — only ours: 3.27@6s, 4.1.1@6s, 2.4@6s, 2.4@55s, 3.27@56s, 3.24/40@71s, 3.27@71s, 5.19.2@72s, 5.19.2@78s, 3.27@79s, 2.4@83s, 3.27@85s (not ours), 3.27@107s, 2.4@119s, 4.1.1@122s, 4.1.2@123s (not ours), 2.4@123s (not ours), 3.27@124s, 2.1@133s, 5.19.1@136s, 2.4@136s, 4.1.1@136s, 2.1@144s, 3.24/100@175s (not ours), 3.24/70@177s; only ByteTrack: –

@@ -14,8 +14,12 @@
     "signs": 4,
     "relevant": 3
    },
-   "only_signcoach": [],
-   "only_bytetrack": []
+   "only_signcoach": [
+    "3.24/50@38s"
+   ],
+   "only_bytetrack": [
+    "3.24/60@37s"
+   ]
   },
   {
    "clip": "UZB_Toshkent_EG0g-sB1lOk_s0-120",
@@ -63,12 +67,10 @@
     "relevant": 15
    },
    "only_signcoach": [
-    "4.1.1@11s (not ours)",
-    "3.24/50@98s"
+    "4.1.1@11s (not ours)"
    ],
    "only_bytetrack": [
-    "3.28@82s (not ours)",
-    "3.24/60@98s"
+    "3.28@82s (not ours)"
    ]
   },
   {
@@ -184,10 +186,13 @@
     "4.1.1@26s (not ours)",
     "3.27@29s (not ours)",
     "3.1@75s",
+    "3.24/50@96s",
     "5.19.1@108s",
     "3.27@118s"
    ],
-   "only_bytetrack": []
+   "only_bytetrack": [
+    "3.24/60@95s"
+   ]
   },
   {
    "clip": "ru_01_moscow_kremlin_speedOSD",
@@ -341,7 +346,7 @@
   },
   "signcoach": {
    "signs": 170,
-   "median_s": 2.2,
+   "median_s": 2.1,
    "p25_s": 1.2,
    "p75_s": 3.3,
    "share_ge_1s": 0.85,

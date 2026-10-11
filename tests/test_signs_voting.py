@@ -21,6 +21,16 @@ def test_majority_class_wins_by_summed_confidence():
     assert (s.sign_code, s.value, s.n_frames) == ("3.24", 60, 6)
 
 
+def test_near_views_decide_the_digits():
+    # Far away (small) the digits flicker; close up (large) they are sharp: 50, not 60.
+    far = [det(i, 1, "3.24", 60, conf=0.7, x=1500 + i, size=16) for i in range(8)]
+    near = [det(8 + i, 1, "3.24", 50, conf=0.7, x=1520 + 10 * i, size=80) for i in range(4)]
+    [s] = vote(far + near, CFG, W)
+    assert s.value == 50
+    [s] = vote(far + near, CFG | {"vote": CFG["vote"] | {"weight": "confidence"}}, W)
+    assert s.value == 60                                               # plain confidence sum: the far views win
+
+
 def test_short_or_unsure_tracks_are_dropped():
     short = [det(i, 1, "2.5") for i in range(2)]                      # 2 frames < min_frames
     unsure = [det(i, 2, "3.1", conf=0.3) for i in range(10)]          # mean conf < min_conf

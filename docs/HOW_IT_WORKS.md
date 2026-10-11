@@ -74,6 +74,10 @@ merged (same class, ≤2 s apart, close boxes).
 
 **Why.** Single frames are noisy ("60" read as "80", reflections). A switch turns this off (`vote.single_frame_baseline`) to measure what voting adds.
 
+**Near views count more.** Each frame's vote is its confidence × the sign's size on screen: far away a speed
+limit's digits are a few blurry pixels and flicker between 40/60/80, close up they are sharp. On the 12 demo
+clips this changed 2 of 265 decisions — both a "60" that is really a 50.
+
 ## 6. Relevance — `pipeline/relevance.py`
 
 **What.** Decides whether a sign applies to us, and writes the reason in words:
@@ -145,7 +149,7 @@ detected, how it was computed.
 
 **Voice timing.** A sign is said when it is *confirmed* (seen in 3 frames as its final class) — when a system
 in the car could speak — not when we pass it; its rule still starts at the sign. Across the 12 demo clips
-that is a median 2.2 s before passing (`eval/results/tracker_comparison.md`). Prompts never cut each other
+that is a median 2.1 s before passing (`eval/results/tracker_comparison.md`). Prompts never cut each other
 off: one due while another is speaking follows it joined by "and" ("Main road… and pedestrian crossing");
 a prompt more than 4 s late is dropped; burned-in subtitles that overlap share one line.
 
