@@ -510,9 +510,9 @@ the upload API — plus 1 slow end-to-end run of the whole pipeline on a synthet
 | Signs shown in the 4 Tashkent samples | 66 of 68 right (97%) | `eval/results/sample_signs.md` |
 | Speed on the test clip ru_02 (64–89 km/h) | estimate for 28% of moments, mean error 45.6 km/h, p90 70.4 km/h | `eval/results/speed_eval.md` |
 | Speed calibration (ru_01) | scale_k 1.014; error 1.0 + 0.529 × v km/h | `eval/results/speed_calibration.json` |
-| Processing time | 95.0 s per minute of video (1.45–1.74× real time); target was real time | `eval/results/benchmark.md` |
-| GPU time | 1.584 GPU-hours per lesson-hour | `eval/results/benchmark.md` |
-| GPU power and energy | 56.2 W average; 0.089 kWh per lesson-hour | `eval/results/benchmark.md` |
+| Processing time | 80.2 s per minute of video (1.25–1.46× real time; 95.0 s before parallel blurring); target was real time | `eval/results/benchmark.md` |
+| GPU time | 1.336 GPU-hours per lesson-hour | `eval/results/benchmark.md` |
+| GPU power and energy | 58.5 W average; 0.078 kWh per lesson-hour | `eval/results/benchmark.md` |
 | PyTorch GPU memory peak | 122 MB (weights + activations; CUDA runtime not included) | `eval/results/benchmark.md` |
 | Model loading (once per server start) | 1.3 s | `eval/results/benchmark.md` |
 | Detector failure gallery (held-out frames) | 797 misses or misreads, 1,026 false alarms at confidence ≥ 0.25 | `eval/results/failure_gallery/README.md` |
@@ -522,7 +522,7 @@ the upload API — plus 1 slow end-to-end run of the whole pipeline on a synthet
 | Upload limits | 3 minutes, 1.5 GiB, 20 waiting jobs | `config/settings.yaml` |
 
 Cost per lesson-hour in money needs the electricity price, which is not in the repo
-(`cost.electricity_price_per_kwh` is empty): cost = 0.089 kWh × price.
+(`cost.electricity_price_per_kwh` is empty): cost = 0.078 kWh × price.
 
 ---
 
@@ -551,7 +551,7 @@ Cost per lesson-hour in money needs the electricity price, which is not in the r
    on the highway clip it kept no sign at all. Ours predicts each sign's motion. On 12 clips it keeps 254
    signs vs 166.
 8. **Why not just analyse more frames per second?** More frames cost GPU time, and processing is already
-   slower than real time (95 s per video minute). Evenly spaced frames also matter for the speed estimate.
+   slower than real time (80 s per video minute). Evenly spaced frames also matter for the speed estimate.
 9. **What is voting?** A sign is seen in many frames. Every frame votes for a class, closer (bigger) views
    count more, and a sign counts only if its class was seen in at least 3 frames with mean confidence ≥ 0.5.
    It removes one-frame mistakes and fixed a 60/50 misreading on a sample.
@@ -602,7 +602,7 @@ Cost per lesson-hour in money needs the electricity price, which is not in the r
     once it has recognised the sign; earlier would mean using future frames. We announce at confirmation
     (the 3rd sighting): median 2.1 s before passing.
 25. **Can it work live in the car?** Not built; upload only. The voice timing already simulates the in-car
-    moment. Processing is 1.45–1.74× slower than real time on our GPU, so live use needs a faster setup
+    moment. Processing takes 1.25–1.46× the video's length on our GPU, so live use needs a faster setup
     (CLAUDE.md suggests a smaller image size and fewer frames per second).
 26. **What if the jury uploads a strange video?** Tested: iPhone HEVC `.mov`, portrait, HDR, 4K at 60 fps,
     audio-only and non-video files. Over 3 minutes gives a clear error. Odd but valid videos get a report
@@ -624,9 +624,10 @@ Cost per lesson-hour in money needs the electricity price, which is not in the r
 
 **About cost, scale and engineering**
 
-31. **How fast is it and what does it cost?** 95 s of processing per minute of video. The GPU draws 56.2 W
-    on average: 0.089 kWh per lesson-hour (electricity cost = 0.089 kWh × the price). GPU time is the
-    bigger resource: 1.584 GPU-hours per lesson-hour on one RTX 3070 Ti.
+31. **How fast is it and what does it cost?** 80 s of processing per minute of video (95 s before we
+    blurred frames in parallel). The GPU draws 58.5 W on average: 0.078 kWh per lesson-hour (electricity
+    cost = 0.078 kWh × the price). GPU time is the bigger resource: 1.336 GPU-hours per lesson-hour on one
+    RTX 3070 Ti.
 32. **How does it scale?** Today: one worker, one GPU, a queue of up to 20 jobs. More driving schools need
     more GPU workers or faster settings.
 33. **How do you know the deployed site runs the submitted code?** `/health` reports the git commit; the

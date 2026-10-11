@@ -63,7 +63,7 @@ Every number below is written into `eval/results/` by a script (`eval/*.py`, or 
 | Our sign tracker vs ByteTrack on 12 demo clips (8 Tashkent, 4 Moscow) | **254 vs 166** signs kept after voting (170 vs 115 judged to apply to us) | [`tracker_comparison.md`](eval/results/tracker_comparison.md) |
 | Signs shown in the 4 Tashkent sample lessons, each checked by the team (whether what we show is right; missed signs are not counted) | **66 of 68 right (97%)** — wrong: the back of a sign read as "right turn only", a "no trucks" sign read as a 100 km/h limit | [`sample_signs.md`](eval/results/sample_signs.md) |
 | Speed from video vs the dashcam's on-screen GPS speed, test clip ru_02 (highway, 64–89 km/h) | estimate for 28% of moments, mean error 45.6 km/h — **fails at highway speed** | [`speed_eval.md`](eval/results/speed_eval.md) |
-| Processing time and energy (6 clips: 4 Tashkent 720p, 2 Moscow 1080p; RTX 3070 Ti) | **95 s per minute of video** (1.45–1.74× real time — slower than our real-time target); GPU board power 56 W on average → 0.089 kWh per lesson-hour | [`benchmark.md`](eval/results/benchmark.md) |
+| Processing time and energy (6 clips: 4 Tashkent 720p, 2 Moscow 1080p; RTX 3070 Ti) | **80 s per minute of video** (1.25–1.46× real time — still slower than our real-time target; 95 s before frames were blurred in parallel); GPU board power 58.5 W on average → 0.078 kWh per lesson-hour | [`benchmark.md`](eval/results/benchmark.md) |
 | Failure cases on the held-out frames | the largest misses and most confident false alarms, as images | [`failure_gallery/`](eval/results/failure_gallery/) |
 
 ## Run it locally
@@ -146,8 +146,10 @@ The full list, with evidence and what we would do next: [`docs/LIMITATIONS.md`](
   estimate, can read 0 km/h on dark featureless asphalt, and misses some short stops. It is calibrated on
   one dashcam only, so speeding is reported as "possible" for all uploads.
 - **Relevance heuristics** can misjudge signs on wide roads, slip roads and sharp bends.
-- Processing is designed for uploads up to 3 minutes and takes about 1.6× the video's length on our RTX 3070 Ti
-  (analysis and rendering the blurred video take about half each); the target was real time.
+- Processing is designed for uploads up to 3 minutes and takes 1.25–1.46× the video's length on our RTX 3070 Ti
+  (a 2-minute clip: about 85 s of analysis and 55 s of rendering the blurred video); the target was real time.
+  Each model call is mostly fixed per-call overhead, so the next steps are several frames per GPU call and an
+  optimised runtime (TensorRT) — both change the outputs slightly, so they were not done before the deadline.
 
 ## Data sources and licences
 

@@ -27,8 +27,8 @@ Terms used below:
 - **There is no map.** Sign zones that officially end at the next intersection end at our next turn
   instead (turn bans also after 300 m or 60 s). A no-entry sign at the side of the road counts only if we
   turn toward it [config/rules/rules.json, config/settings.yaml].
-- **It is slower than real time.** Processing takes 95 s per minute of video (1.45–1.74× the video's
-  length) on one RTX 3070 Ti, using 0.089 kWh per lesson-hour [eval/results/benchmark.md].
+- **It is slower than real time.** Processing takes 80 s per minute of video (1.25–1.46× the video's
+  length) on one RTX 3070 Ti, using 0.078 kWh per lesson-hour [eval/results/benchmark.md].
 - **Not measured:**
   - how many signs we miss over a whole lesson;
   - whether the speed limit in force is right over time;
@@ -233,21 +233,24 @@ Terms used below:
 
 ## 5. Processing speed and cost
 
-- **What happens:** processing takes 95.0 s per minute of video, on average over 6 clips
+- **What happens:** processing takes 80.2 s per minute of video, on average over 6 clips
   [eval/results/benchmark.md]:
-  - 1.45–1.74× the video's length;
+  - 1.25–1.46× the video's length;
   - on one RTX 3070 Ti;
   - our target was real time [CLAUDE.md §12].
-- **Example:** the 2-minute Islam Karimov street clip took 198.39 s [eval/results/benchmark.json]:
+- **Example:** the 2-minute Islam Karimov street clip took 155.29 s [eval/results/benchmark.json]:
 
   | Stage | Seconds |
   |---|---:|
-  | Ingest | 10.15 |
-  | Analysis | 92.04 |
-  | Rendering the blurred video | 93.61 |
+  | Ingest | 9.7 |
+  | Analysis | 87.43 |
+  | Rendering the blurred video | 55.71 |
   | Signs and rules | 0.07 |
+- **Already done:** blurring 6 frames at the same time cut rendering from 93.61 s to 55.71 s on that clip
+  (95 → 80 s per minute of video overall), with a byte-identical video (benchmark before: commit c3a41b3).
+  Running the three detectors side by side gave nothing: each model call is mostly fixed per-call overhead.
 - **Energy:**
-  - the GPU drew 56.2 W on average, which is 0.089 kWh per lesson-hour. The CPU's power is not included
+  - the GPU drew 58.5 W on average, which is 0.078 kWh per lesson-hour. The CPU's power is not included
     [eval/results/benchmark.md];
   - we have no electricity price, so there is no money figure (`cost.*` is empty
     [config/settings.yaml]).
@@ -256,8 +259,8 @@ Terms used below:
   - uploads are limited to 3 minutes and 1.5 GiB, which is far shorter than a real lesson;
   - a job is stopped after 15 minutes.
 - **Next:**
-  - faster inference;
-  - analysis and rendering in parallel;
+  - several frames per GPU call (batching) and an optimised runtime (TensorRT) — both change the outputs
+    slightly, so they need a new check of the results;
   - fewer analysed frames per second;
   - more workers or GPUs.
 
