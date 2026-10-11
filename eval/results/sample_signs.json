@@ -148,9 +148,9 @@
      "verdict": "right"
     }
    ],
-   "lesson_id": "YJXrLzodE6-emttKsgoqzQ",
+   "lesson_id": "rGBP3cHvuvlRl7mRSmpwZw",
    "model": "dognellaf_y11s",
-   "git_sha": "1efed4c35a26f6c3ca1695668374ba7c4e532fca"
+   "git_sha": "862ee071775b78f7a6bac27df3571854260e79f0"
   },
   "Tashkent, Islam Karimov street": {
    "shown": 22,
@@ -314,9 +314,9 @@
      "verdict": "wrong"
     }
    ],
-   "lesson_id": "2XUM_mAwkVeAtr7uh-9BUw",
+   "lesson_id": "S-y33Bd2G5tfQi7vAhrmYA",
    "model": "dognellaf_y11s",
-   "git_sha": "758d291f814eaf3250450380ff261a0dee76d7b5"
+   "git_sha": "862ee071775b78f7a6bac27df3571854260e79f0"
   },
   "Tashkent, Qoraqamish": {
    "shown": 15,
@@ -431,9 +431,9 @@
      "verdict": "right"
     }
    ],
-   "lesson_id": "tPVExSkxkiQqiMjNICA18A",
+   "lesson_id": "qb16Rnn7CP0AqcMBVsXfJw",
    "model": "dognellaf_y11s",
-   "git_sha": "758d291f814eaf3250450380ff261a0dee76d7b5"
+   "git_sha": "862ee071775b78f7a6bac27df3571854260e79f0"
   },
   "Tashkent, downtown Presidential track": {
    "shown": 12,
@@ -527,9 +527,9 @@
      "verdict": "right"
     }
    ],
-   "lesson_id": "J6Jsl_hjwLofGXyxTXvcQA",
+   "lesson_id": "A8tf2lWNhwFETlg93sac1g",
    "model": "dognellaf_y11s",
-   "git_sha": "758d291f814eaf3250450380ff261a0dee76d7b5"
+   "git_sha": "862ee071775b78f7a6bac27df3571854260e79f0"
   }
  }
 }
