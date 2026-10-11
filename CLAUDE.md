@@ -6,7 +6,9 @@
 
 ---
 
-## Start here (status at Saturday 22:40)
+## Start here (status at Sunday 09:50)
+
+**Now:** M0–M7 done and live; M8 docs in progress. Code freeze 11:30 (team, Sunday 09:30); then two documents for the presentation — `docs/LIMITATIONS.md` (for the deck and the jury) and `docs/HOW_IT_WORKS.md` (how everything works, for the team's Q&A) — and the tag `final-submission` before 13:00.
 
 **Decisions already made:**
 - We **fine-tuned** a sign detector on the Dognellaf dataset (§14.2): training finished at 01:43 (early stop at epoch 35, best epoch 25). Weights: `~/signcoach-data/models/dognellaf_y11s_1024.pt` (sha256 in DATA_SOURCES.md). The live site runs on `cuda:0` since 01:45.
@@ -15,7 +17,8 @@
 - **Rules stay ПДД РФ** (team decision, Sunday 03:45, "keep"): official texts and sources stay Russian. On the Tashkent clips the default limit is still right: the Uzbek rules (lex.uz, docs/5953887) allow 70 km/h in settlements but **60 km/h in Nukus, Tashkent and regional/district centres** — the same 60 as ПДД РФ §10.2.
 - **Our own sign tracker** replaced ByteTrack (team decision, Sunday 03:45): ByteTrack needs boxes to overlap between analysed frames and dropped close signs at speed; `pipeline/tracking.py` predicts each sign's motion instead (`eval/results/tracker_comparison.md`).
 - **Input is the dashcam video only** (scope clarified Saturday 23:20): no phone app, no live streaming, no GPS logger / GPX upload. Everything — signs, speed, stops, turns — comes from the video.
-- **Ground truth = plan B** (team decision, Sunday 01:35): the only human ground truth is the on-screen GPS speed of ru_01 (calibration) and ru_02 (test), typed from the sheets into `speed_ru_01.csv` / `speed_ru_02.csv`. Everything else is measured by scripts on data that is already labelled — detector accuracy on the held-out Dognellaf videos, the model comparison, processing speed/cost and a failure gallery. `speed.calibrated` stays false (one dashcam's calibration does not cover every upload), so speeding is only ever "possible"; the calibration supplies scale_k, a measured error model and the deck's speed-accuracy number (ru_02). The developer speed check on ru_01 (M3 notes) is internal and must not be quoted.
+- **Ground truth = plan B** (team decision, Sunday 01:35): the only human ground truth is the on-screen GPS speed of ru_01 (calibration) and ru_02 (test), typed from the sheets into `speed_ru_01.csv` / `speed_ru_02.csv`. Everything else is measured by scripts on data that is already labelled — detector accuracy on the held-out Dognellaf videos, the model comparison, processing speed/cost and a failure gallery. `speed.calibrated` stays false (one dashcam's calibration does not cover every upload), so speeding is only ever "possible"; the calibration supplies scale_k, a measured error model and the deck's speed-accuracy number (ru_02). The developer speed check on ru_01 (M3 notes) is internal and must not be quoted. Added Sunday 09:30 (team): the check of every sign the 4 sample lessons show (`eval/ground_truth/sample_signs.csv` — what each shown sign really is; Claude's first pass on crop sheets, every verdict confirmed by the team) → `eval/eval_sample_signs.py`: 66 of 68 right. Precision only — missed signs are not counted.
+- **Skipped, documented instead** (team, Sunday 09:30): a colour check against the backs of signs being read as signs (1 case in 68 shown signs). **Elimination-stage code reused: none.**
 - **English only.** No UZ/RU localisation; voice prompts are **English, generated with a text-to-speech model** (not recorded by the team).
 - `MODEL_COVERAGE_TEST.md` is **dropped** (it only decided whether to fine-tune). M6 uses the comparison method defined in §14.2 T6; "core signs" = the §11.1 list.
 - The review fixes approved on Saturday 22:00 are folded into this file (§9 `Report.signs`, §10.1 fps/HDR, §10.2 two passes, §11.4 semantics, §12 API/worker, §16 service).
@@ -172,7 +175,7 @@ signcoach/
   training/
     prepare_dognellaf.py  class_crops.py  train.py  smoke_test.sh  start_full_training.sh  compare_models.py
   eval/
-    eval_detector.py  eval_events.py  eval_speed.py  eval_limit_timeline.py  benchmark.py  failure_gallery.py
+    eval_detector.py  eval_speed.py  eval_sample_signs.py  compare_trackers.py  benchmark.py  failure_gallery.py  privacy_gallery.py
     ground_truth/README.md      # CSV formats (§15)
     results/                    # generated JSON + markdown tables (committed), e.g. dataset_inventory.md
   scripts/
@@ -505,6 +508,9 @@ Pages:
 - `training/compare_models.py` — placeholder vs fine-tuned per sign on the same frames (AP50, P/R at the pipeline threshold, ms/image) → `eval/results/model_comparison.md`.
 - `eval/benchmark.py` — processing seconds per minute of video per stage, frames per second, peak VRAM, cost per lesson-hour.
 - `eval/failure_gallery.py` — worst misses / false positives on the held-out frames (sign crops) for the failure-case slide.
+- `eval/compare_trackers.py` — ByteTrack vs our tracker on the 12 demo clips: signs kept after voting, how early signs are announced.
+- `eval/eval_sample_signs.py` — every sign the 4 sample lessons show vs the team's check (`sample_signs.csv`): share right (precision; recall is not measured).
+- `eval/privacy_gallery.py` — contact sheets of every served frame sample and thumbnail, checked by eye before samples go public.
 Not measured (said so in the deck): event-level sign recall on full lessons, limit-timeline accuracy, stop-sign judgement accuracy.
 
 Original plan (kept for reference):
@@ -549,9 +555,9 @@ Scripts (each writes `eval/results/<name>.json` and a markdown table):
 | M4 | Report UI | 04:15 (code done 00:55) | §13 complete: report page (video, limit band + severity markers on the timeline, voice prompts synced to playback with iPhone audio unlock and on/off toggle, summary cards, events with thumbnails, official ПДД text per sign, signs not met, every sign detected, how it was computed), upload page with drag-and-drop and optional camera details; English; 45 voice prompts generated by `scripts/generate_voice.py` (Piper, LJ Speech voice) served from `/voice`. `scripts/dev_fixture_lesson.py` loads the synthetic fixture into a dev instance (refuses prod).
 | M6 | Model comparison + swap | **done 02:10** | Team chose our fine-tuned YOLO11s at 1280 px: mean AP50 0.81 vs 0.65 for the placeholder on signs both know (3,027 held-out frames), 17 vs 26 ms/image; overall P 0.71 / R 0.65 / mAP50 0.70 / mAP50-95 0.57 (all 89 classes, `eval/results/detector_eval.md`). Known failure: one 80 km/h sign read as 60/40 in a winter video. Speed: plan B results in `eval/results/speed_eval.md` (ru_02 test MAE 45.6 km/h, 28% coverage — fails at highway speed; team chose to report it as is). |
 | M3 | Ego-motion from video (speed, turns, stops) | 06:00 (code done 01:35) | `pipeline/egomotion.py`: road-plane BEV speed with phase correlation that prefers the forward road match over the 'nothing moved' peak and subtracts a running background (compression blocks, reflections, overlays); static overlays/dashboard masked from 30 frames spread over the video; vehicles/people masked; horizon from lane-line vanishing points; yaw from LK flow above the horizon -> heading -> turns/U-turns; stops = speed < 2 km/h for >= 1 s. Frames: every n-th frame (25 fps -> 12.5 fps) so frame spacing is exact. 7 synthetic tests pass (known speeds 20/50/90 km/h through a static display box, stops, right turn, straight). On ru_01 (dev check only): ~56% of moments measured, median error ~8 km/h; turns at 26 s (U), 150 s (L), 168 s (R) confirmed visually. Known failures: dusk low-texture road reads 0; horizon errors scale speed (one stretch ~1.5x high). `scripts/calibrate_speed.py` (ru_01) and `eval/eval_speed.py` (ru_02) wait for the human speed CSVs.
-| M5 | Privacy hardening + quality warnings | 07:00 (plate fix done 01:35) | Blur verified on every output and thumbnail (spot-check gallery); audio stripped; quality warnings shown; temp frames deleted. |
-| M7 | Evaluation | 09:30 | Plan B: `eval_detector.py`, `compare_models.py`, `benchmark.py`, `failure_gallery.py`, plus `calibrate_speed.py` (ru_01) and `eval_speed.py` (ru_02) run; results committed in `eval/results/`. |
-| M8 | Hardening + docs | 12:30 | §18 edge cases pass; `seed_samples.py` produces 2–3 sample lessons (day, night, with violations); README + DATA_SOURCES complete; `docs/HOW_IT_WORKS.md` (one page per module, for the team's Q&A prep); tag `final-submission` before 13:00. |
+| M5 | Privacy hardening + quality warnings | **done** (plate fix 01:35; own bonnet no longer pixelated 03:40; contact sheets of every sample checked, last 09:45) | Blur verified on every output and thumbnail (spot-check gallery); audio stripped; quality warnings shown; temp frames deleted. |
+| M7 | Evaluation | **done 09:30** — benchmark misses the real-time target (95 s per minute of video), reported as is; samples' signs 66 of 68 right | Plan B: `eval_detector.py`, `compare_models.py`, `benchmark.py`, `failure_gallery.py`, plus `calibrate_speed.py` (ru_01) and `eval_speed.py` (ru_02) run; results committed in `eval/results/`. |
+| M8 | Hardening + docs | 12:30 — in progress: §18 cases covered by `tests/test_edge_cases.py`, `test_ingest.py`, `test_api_upload.py`; samples are 4 Tashkent day clips (no night clip; possible-speeding events shown) | §18 edge cases pass; `seed_samples.py` produces 2–3 sample lessons (day, night, with violations); README + DATA_SOURCES complete; `docs/HOW_IT_WORKS.md` (one page per module, for the team's Q&A prep); tag `final-submission` before 13:00. |
 
 If time runs short, cut in this order: student progress page → conditional-plate handling → turn bans (keep as explanations only, flag `turn_bans_enabled: false`). Never cut privacy, evaluation or the deploy pipeline.
 
